@@ -1,0 +1,15 @@
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+.pytest_cache
+__pycache__
+zpgenerator.egg-info
+build
+.eggs/
+dist/
+.idea/
+venv*/
+*.whl
+.ipynb_checkpoints
