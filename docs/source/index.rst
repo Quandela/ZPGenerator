@@ -21,7 +21,7 @@ If you are using ZPGenerator for academic work, please cite the `paper introduci
 
 .. code:: latex
 
-   @article{wein2023simulating,
+   @article{wein2024simulating,
      title={Simulating photon counting from dynamic quantum emitters by exploiting zero-photon measurements},
      author={Wein, Stephen C},
      journal={Physical Review A},
@@ -41,6 +41,7 @@ If you are using ZPGenerator for academic work, please cite the `paper introduci
    notebooks/parameters
    notebooks/pulses
    notebooks/processors
+   notebooks/backend
 
 .. toctree::
    :caption: Catalogue Components
