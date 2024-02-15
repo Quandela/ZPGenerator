@@ -28,7 +28,7 @@ ZPGenerator requires:
 
 * Above Python 3.8 and below Python 3.12
 
-## GitLab
+## GitHub
 ```bash
 git clone https://github.com/Quandela/ZPGenerator.git
 ```
