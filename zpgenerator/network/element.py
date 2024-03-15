@@ -4,6 +4,7 @@ from ..system import AElement, AScatteringMatrix, AQuantumSystem, AQuantumEmitte
 from typing import List, Union
 from math import prod
 from qutip import tensor, Qobj
+from itertools import chain
 
 
 class ElementCollection(AElement, TimeOperatorCollection):
@@ -129,12 +130,15 @@ class ElementCollection(AElement, TimeOperatorCollection):
                    if not isinstance(element, AScatteringMatrix) else
                    element.is_time_dependent(t, parameters) for element in self._elements)
 
-    def evaluate_quadruple(self, t: float, parameters: dict = None):
-        parameters = self.set_parameters(parameters)
+    def evaluate_quadruple(self, t: float, parameters: dict = None) -> EvaluatedQuadruple:
         if self._elements:
-            return self._rule([element.evaluate_quadruple(t, parameters) for element in self._elements])
+            return self._rule(self.gather_quadruples(t, parameters))
         else:
             return EvaluatedQuadruple()
+
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        parameters = self.set_parameters(parameters)
+        return list(chain(*[element.gather_quadruples(t, parameters) for element in self._elements]))
 
     def evaluate_dirac(self, t: float, parameters: dict = None) -> EvaluatedDiracOperator:
         parameters = self.set_parameters(parameters)

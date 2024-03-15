@@ -139,3 +139,6 @@ class EmitterBase(AQuantumEmitter, ControlledSystem):
         super()._add(system, parameters, name)
         if isinstance(system, LindbladVector):
             self.transitions.add(system, parameters, name)
+
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        return [self.evaluate_quadruple(t, parameters)]
