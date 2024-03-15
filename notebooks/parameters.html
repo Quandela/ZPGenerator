@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameters &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pulses" href="pulses.html" />
+    <link rel="prev" title="Components" href="components.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Default-parameters">Default parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Modifying-parameters">Modifying parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Namespace">Namespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Advanced-Features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Wildcard-symbol">Wildcard symbol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Renaming">Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Parameter-functions">Parameter functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Default-parameter-function">Default parameter function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Overwrite-parameter-function">Overwrite parameter function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameters</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/parameters.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Parameters">
+<h1>Parameters<a class="headerlink" href="#Parameters" title="Link to this heading"></a></h1>
+<p>ZPGenerator is built to handle components that have many different parameters. This is particularly important once we start building new components and time-dynamic control pulses in a composable way. Let’s take a look at the basic methods we can use to modify parameters to manipulate the simulation model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[337]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+</pre></div>
+</div>
+</div>
+<p>Components can have many parameters, and only a few could be relevant for a particular simulation. To see what parameters can be modified for a particular component, we can use the ‘parameters’ property to get a list of the parameter keys. As an example, let’s consider a single photon source created by the Source.fock() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[338]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+source.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[338]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<p>For a description of what these parameters mean, please see the appropriate section of <a class="reference external" href="sources.ipynb">Sources</a>.</p>
+<section id="Default-parameters">
+<h2>Default parameters<a class="headerlink" href="#Default-parameters" title="Link to this heading"></a></h2>
+<p>A component must be instantiated with a set of default parameters, and these can be accessed by the ‘default_parameters’ property. However, all catalogue components have a set of reasonable default parameters hard-coded so that they function without needing to specify every parameter.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[339]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[339]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>One or more default parameters can be overwritten when creating the object via a factory method. This can be done using the ‘parameters’ keyword.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[340]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1, parameters={&#39;efficiency&#39;: 0.8})
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[340]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 0.8}
+</pre></div></div>
+</div>
+<p>A component’s default parameters can also be updated after instantiation using the ‘update_default_parameters’ method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[341]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.update_default_parameters(parameters={&#39;delay&#39;: 0.5})
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[341]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.5,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 0.8}
+</pre></div></div>
+</div>
+</section>
+<section id="Modifying-parameters">
+<h2>Modifying parameters<a class="headerlink" href="#Modifying-parameters" title="Link to this heading"></a></h2>
+<p>When properties of the component are simulated, the default parameters will be used automatically. For example, if we want to compute the photon statistics of our source we can use the photon_statistics() method without further specifying any parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[342]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.20000
+1       | 0.80000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>However, in many cases, we would like to quickly check how the property changes when modifying one or more parameters. This can be done using the ‘parameters’ keyword for simulations methods, such as the photon_statistics() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[343]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(parameters={&#39;efficiency&#39;: 0.5}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+</section>
+<section id="Namespace">
+<h2>Namespace<a class="headerlink" href="#Namespace" title="Link to this heading"></a></h2>
+<p>Often we have multiple subcomponents composed to make a larger component, and these subcomponents may share parameter names. This can lead to unexpected parameter clashes, where a parameter is modified unintentionally. Suppose we want to add loss to our source.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[344]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1) // Circuit.loss()
+</pre></div>
+</div>
+</div>
+<p>If we now look at the parameters, we can see it is the same as before. In addition, the photon statistics give the result without loss because the loss component has a default transmission efficiency of 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[345]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>print(source.parameters)
+source.photon_statistics().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+Number  | Probability
+0       | 0.00000
+1       | 1.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>However, if we now simulate the photon statistics for ‘efficiency’ set to 0.5 we get something unexpected.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[346]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(parameters={&#39;efficiency&#39;: 0.5}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.75000
+1       | 0.25000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>The probability of getting a single photon is half of what we expect. This is because modifying the ‘efficiency’ parameter will modify the efficiency of both the source <em>and</em> the loss component. One solution might be to make sure all components have unique parameter names, but this ‘bug’ of modifying multiple parameters simultaneously is actually an extremely convenient feature. For example, we may want to modify all the widths of pulses in the same pulse sequence, or modify all the resonances
+of a group of sources relative to a local oscillator. Thus, the more elegant solution is to ensure that components with clashing parameters are given a unique name. This can be done when instantiating a component using the ‘name’ keyword. This creates a hierarchy of parameter namespaces that can be manipulated easily to target individual parameters or multiple parameters simultaneously.</p>
+<p>In the case above, we are adding a loss component to a Fock source component. This means that the loss component is contained in the source’s namespace along with the Fock source’s parameters. If we give that loss component a name, we can now target the efficiency of just that subcomponent of the source.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[347]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1) // Circuit.loss(name=&#39;transmission&#39;)
+</pre></div>
+</div>
+</div>
+<p>Now, we can see that the parameter lists two different efficiencies, one for each named component. The ‘transmission’ component now has a parameter ‘efficiency’ delimited by ‘/’.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[348]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[348]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;,
+ &#39;delay&#39;,
+ &#39;dephasing&#39;,
+ &#39;efficiency&#39;,
+ &#39;resonance&#39;,
+ &#39;transmission/efficiency&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[349]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(parameters={&#39;transmission/efficiency&#39;: 0.5}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>However, we retain the ability to modify all efficiency parameters simultaneously.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[350]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(parameters={&#39;efficiency&#39;: 0.5}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.75000
+1       | 0.25000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+</section>
+<section id="Advanced-Features">
+<h2>Advanced Features<a class="headerlink" href="#Advanced-Features" title="Link to this heading"></a></h2>
+<p>There are some advanced features that can be used to modify parameters. To demonstrate these features, we will use the Pulse class, see <a class="reference internal" href="pulses.html"><span class="doc">Pulses</span></a> for more details on how to use the Pulse class.</p>
+<section id="Wildcard-symbol">
+<h3>Wildcard symbol<a class="headerlink" href="#Wildcard-symbol" title="Link to this heading"></a></h3>
+<p>To help target particular subspaces, one can use the wildcard symbol ‘*’ to represent any namespace. For example, let’s make a pulse sequence that contains two subsequences.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[351]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+subsequence_1 = Pulse(name=&#39;excitation&#39;)
+subsequence_2 = Pulse(name=&#39;control&#39;)
+
+sequence.add(subsequence_1)
+sequence.add(subsequence_2)
+
+subsequence_1.add(Pulse.gaussian(parameters={&#39;delay&#39;: 0}), name=&#39;pulse 1&#39;)
+subsequence_1.add(Pulse.gaussian(parameters={&#39;delay&#39;: 2}), name=&#39;pulse 2&#39;)
+subsequence_2.add(Pulse.gaussian(parameters={&#39;delay&#39;: 1}), name=&#39;pulse 1&#39;)
+</pre></div>
+</div>
+</div>
+<p>This sequence contains 3 Gaussian pulses organized into ‘excitation’ and ‘control’ subsequences. In the ‘excitation’ subsequence, we have two pulses ‘pulse 1’ and ‘pulse 2’. In the ‘control’ subsequence we have just one pulse ‘pulse 1’. Listing the parameters, we can see that already the number of parameters is significant.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[352]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>print(sequence.parameters)
+sequence.plot().show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;control/pulse 1/area&#39;, &#39;control/pulse 1/delay&#39;, &#39;control/pulse 1/detuning&#39;, &#39;control/pulse 1/phase&#39;, &#39;control/pulse 1/width&#39;, &#39;control/pulse 1/window&#39;, &#39;excitation/pulse 1/area&#39;, &#39;excitation/pulse 1/delay&#39;, &#39;excitation/pulse 1/detuning&#39;, &#39;excitation/pulse 1/phase&#39;, &#39;excitation/pulse 1/width&#39;, &#39;excitation/pulse 1/window&#39;, &#39;excitation/pulse 2/area&#39;, &#39;excitation/pulse 2/delay&#39;, &#39;excitation/pulse 2/detuning&#39;, &#39;excitation/pulse 2/phase&#39;, &#39;excitation/pulse 2/width&#39;, &#39;excitation/pulse 2/window&#39;]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_37_1.png" src="../_images/notebooks_parameters_37_1.png" />
+</div>
+</div>
+<p>Suppose we want to modify the ‘width’ of all pulses in the ‘excitation’ subsequence. To do this, we can use the wildcard ‘*’ symbol in place of either ‘pulse 1’ or ‘pulse 2’.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[353]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence.plot(parameters={&#39;excitation/*/width&#39;: 0.2}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_39_0.png" src="../_images/notebooks_parameters_39_0.png" />
+</div>
+</div>
+</section>
+<section id="Renaming">
+<h3>Renaming<a class="headerlink" href="#Renaming" title="Link to this heading"></a></h3>
+<p>For convenience, sometimes it is useful to customise the names of catalogue components.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[354]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+source.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[354]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[355]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.rename_parameter(&#39;efficiency&#39;, &#39;collection&#39;)
+source.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[355]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;collection&#39;, &#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<p>What this really does is give the component a rule to take any parameter named ‘collection’ and modify it to ‘efficiency’ before passing it to any functions or subcomponents. Unfortunately, this means it cannot be used to avoid parameter clashes. Instead, it is always recommended to use better namespace organization to fix paramaeter clashes.</p>
+</section>
+<section id="Parameter-functions">
+<h3>Parameter functions<a class="headerlink" href="#Parameter-functions" title="Link to this heading"></a></h3>
+<p>Often we can have that some parameters depend on other parameters, or we wish to modify parameters automatically to perform unit conversions. This can be accomplished by creating parameter functions. There are two main types of parameter functions, a default parameter function and an overwrite parameter function. A parameter function is simply a function that takes a dictionary of parameters and returns a new dictionary, perhaps with some custom modifications to the keys and values.</p>
+<section id="Default-parameter-function">
+<h4>Default parameter function<a class="headerlink" href="#Default-parameter-function" title="Link to this heading"></a></h4>
+<p>The default parameter function will take incoming parameters and set the default value of another parameter. That means, if the value of the output parameter is set when simulating the component, it will be overwritten.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[356]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse = Pulse() // Pulse.gaussian()
+pulse.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[356]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;width&#39;: 0.1,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;delay&#39;: 0,
+ &#39;detuning&#39;: 0,
+ &#39;phase&#39;: 0,
+ &#39;window&#39;: 6}
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[357]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse.create_default_parameter_function(lambda args: {&#39;width&#39;: args[&#39;delay&#39;]/10},
+                                        parameters={&#39;delay&#39;: 0})
+</pre></div>
+</div>
+</div>
+<p>With this parameter function, we have tied the ‘width’ parameter by default to the ‘delay’ parameter. Since the ‘delay’ is set to 0 by default, we can see that it the default ‘width’ also 0.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[358]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>print(pulse.default_parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;width&#39;: 0.0, &#39;area&#39;: 3.141592653589793, &#39;delay&#39;: 0, &#39;detuning&#39;: 0, &#39;phase&#39;: 0, &#39;window&#39;: 6}
+</pre></div></div>
+</div>
+<p>If we now update the value of ‘delay’, we will also update the value of ‘width’.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[359]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse.plot(parameters={&#39;delay&#39;: 1})
+pulse.plot(parameters={&#39;delay&#39;: 3})
+pulse.plot(parameters={&#39;delay&#39;: 5}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_54_0.png" src="../_images/notebooks_parameters_54_0.png" />
+</div>
+</div>
+<p>However, because we created a default parameter function, we can always overwrite the ‘width’ manually.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[360]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse.plot(parameters={&#39;delay&#39;: 1, &#39;width&#39;: 0.1})
+pulse.plot(parameters={&#39;delay&#39;: 3, &#39;width&#39;: 0.1})
+pulse.plot(parameters={&#39;delay&#39;: 5, &#39;width&#39;: 0.1}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_56_0.png" src="../_images/notebooks_parameters_56_0.png" />
+</div>
+</div>
+</section>
+<section id="Overwrite-parameter-function">
+<h4>Overwrite parameter function<a class="headerlink" href="#Overwrite-parameter-function" title="Link to this heading"></a></h4>
+<p>The overwrite parameter function is used to take incoming parameters and overwrite the dictionary with new parameters computed by the function. That means, if the value of the output parameter cannot be modified and must always be influenced through its arguments.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[361]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse = Pulse() // Pulse.gaussian()
+pulse.create_overwrite_parameter_function(lambda args: {&#39;width&#39;: args[&#39;delay&#39;]/10},
+                                          parameters={&#39;delay&#39;: 0})
+print(pulse.default_parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;width&#39;: 0.0, &#39;area&#39;: 3.141592653589793, &#39;delay&#39;: 0, &#39;detuning&#39;: 0, &#39;phase&#39;: 0, &#39;window&#39;: 6}
+</pre></div></div>
+</div>
+<p>We can see that the initial behaviour is the same as for the default parameter function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[362]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse.plot(parameters={&#39;delay&#39;: 1})
+pulse.plot(parameters={&#39;delay&#39;: 3})
+pulse.plot(parameters={&#39;delay&#39;: 5}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_61_0.png" src="../_images/notebooks_parameters_61_0.png" />
+</div>
+</div>
+<p>But now we cannot overwrite the value computed by the overwrite parameter function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[363]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse.plot(parameters={&#39;delay&#39;: 1, &#39;width&#39;: 0.1})
+pulse.plot(parameters={&#39;delay&#39;: 3, &#39;width&#39;: 0.1})
+pulse.plot(parameters={&#39;delay&#39;: 5, &#39;width&#39;: 0.1}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_parameters_63_0.png" src="../_images/notebooks_parameters_63_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="components.html" class="btn btn-neutral float-left" title="Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pulses.html" class="btn btn-neutral float-right" title="Pulses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

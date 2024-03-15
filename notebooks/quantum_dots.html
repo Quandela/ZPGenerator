@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Dots &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cavity QED" href="cavity_QED.html" />
+    <link rel="prev" title="Pulsed Sources" href="pulsed_sources.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quantum Dots</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Exciton">Exciton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Biexciton">Biexciton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Trion">Trion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quantum Dots</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/quantum_dots.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Quantum-Dots">
+<h1>Quantum Dots<a class="headerlink" href="#Quantum-Dots" title="Link to this heading"></a></h1>
+<p>One of the main benefits of performing simulations from the perspective of the source rather than from the perspective of the light is that we have full control over modelling the physics of a realistic device. Most importantly, this allows for simulating many realistic imperfections, estimating device limitations, and optimising experimental parameters. It also provides an excellent tool for learning about how the device operates and for performing virtual experiments to compare with real data
+or design new protocols. In this example, we will explore three different source types based quantum dots: the exciton, the biexciton, and the trion.</p>
+<section id="Exciton">
+<h2>Exciton<a class="headerlink" href="#Exciton" title="Link to this heading"></a></h2>
+<p>When a neutral (empty) quantum dot in its ground state <span class="math notranslate nohighlight">\(|g\rangle\)</span> is excited by a quick laser pulse, an electron-hole pair is formed. This bound pair effectively behaves as a single particle, called an exciton (denoted by X), and it becomes trapped in a three-dimensional potential well until it recombines to emit a single photon. For a perfectly symmetric quantum dot, the orbitals available to the exciton are degenerate in energy. Thus, for many experiments, it is sufficient to model the
+quantum dot as a two-level emitter. However, if there is a slight distortion of the potential well, due to a physical distortion of the quantum dot or simply an asymmetric strain in the lattice, the degeneracy is lifted and the exciton will occupy one of two quantum dot states split by a small fine structure splitting <span class="math notranslate nohighlight">\(\Delta_\text{fss}\)</span>. This fine structure splitting can play a crucial role in the properties of the emitted photons, especially when the emission is subsequently filtered in
+polarisation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>ZPGenerator provides a catalogue exciton source with all the necessary physics already defined, accessible via the exciton() class method the Source factory class. For more details on the model underlying the exciton() source type, please see <a class="reference internal" href="sources_catalogue.html"><span class="doc">Sources</span></a>. For now, let’s take a look at some interesting features that distinguish this source model from a basic two-level emitter.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.exciton(pulse=Pulse.dirac())
+</pre></div>
+</div>
+</div>
+<p>We can first inspect the states available for us to manipulate, and check that the default initial state is the ground state. As discussed above, we have three different levels, one ground state and two orthogonal excited states.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.initial_state == source.states[&#39;|g&gt;&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Similar to the two-level emitter, we are able to control things like the excitation pulse area, pulse delay, and pulse width in addition to the decay rate and the dephasing rate of our emitter. However, we now have additional options to modify</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0,
+ &#39;fss&#39;: 0,
+ &#39;decay&#39;: 1.0,
+ &#39;theta_c&#39;: 0,
+ &#39;phi_c&#39;: 0,
+ &#39;dephasing&#39;: 0,
+ &#39;dephasing_fss&#39;: 0,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;phase&#39;: 0,
+ &#39;delay&#39;: 0,
+ &#39;theta&#39;: 0,
+ &#39;phi&#39;: 0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>We can change the excitation pulse linear polarisation angle ‘theta’ and phase ‘phi’. We can also control the fine structure splitting ‘fss’ or add a specific dephasing ‘dephasing_fss’ of superposition states of the two excited states. Finally, we can modify the linear polarisation collection angle ‘theta_c’ and polarisation phase ‘phi_c’. This is equivalent to putting a waveplate in the collection path.</p>
+<p>Unlike the two-level source model, the exciton has two orthogonal emission modes, one arising from the recombination of the <span class="math notranslate nohighlight">\(|x\rangle\)</span> exciton state and another from the <span class="math notranslate nohighlight">\(|y\rangle\)</span> state. So, when we want standard figures of merit describing our source, we must choose to analyse one output mode or the other using the ‘port’ keyword.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(port=0).display()
+source.photon_statistics(port=1).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.00000
+1       | 1.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+Warning: no light detected in mode 1, g2 1 cannot be defined.
+Number  | Probability
+0       | 1.00000
+1       | 0.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>When using a dirac pulse, one mode of the exciton source behaves like a perfect two-level source while the other mode produces no light at all. The initial state is the ground state, and the excitation pulse polarization defaults to H to target only the <span class="math notranslate nohighlight">\(|x\rangle\)</span> excited state. As a result, we see that mode 0 (H) is in a perfect single photon state. On the other hand, we can see that there is a warning when computing <span class="math notranslate nohighlight">\(g^{(2)}\)</span> for mode 1 (V) because it cannot normalise by the
+average photon number <span class="math notranslate nohighlight">\(\mu = 0\)</span> for that mode. We can modify the excitation polarization using the ‘theta’ parameter to excite the <span class="math notranslate nohighlight">\(|y\rangle\)</span> state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.update_default_parameters(parameters={&#39;theta&#39;: np.pi/2})
+source.photon_statistics(port=0).display()
+source.photon_statistics(port=1).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Warning: no light detected in mode 0, g2 0 cannot be defined.
+Number  | Probability
+0       | 1.00000
+1       | 0.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+Number  | Probability
+0       | 0.00000
+1       | 1.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>If we rotate our excitation polarisation by <span class="math notranslate nohighlight">\(\pi/2\)</span>, we now target just the <span class="math notranslate nohighlight">\(|y\rangle\)</span> excited state, which switches the statistics from mode 0 to mode 1. Applying a diagonal D = H + V excitation polarization of <span class="math notranslate nohighlight">\(\theta = \pi/4\)</span> gives a 50:50 split of emission into modes 0 and modes 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.update_default_parameters(parameters={&#39;theta&#39;: np.pi/4})
+source.photon_statistics(port=0).display()
+source.photon_statistics(port=1).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>In this case, we are exciting a superposition of <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span>, which is then collapsed by the polarization measurement. Of course, we cannot actually prove the coherence between <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span> from these measurements alone: we could have just as well had a classical mixture of <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span>. To see a manifestation of this coherence, we can perform a little experiment. Let’s add a fine-structure splitting so that, if
+the exciton states are in a superposition, there will be a natural phase evolution. This means that states like <span class="math notranslate nohighlight">\(|+\rangle = (|x\rangle + |y\rangle)/\sqrt{2}\)</span> to <span class="math notranslate nohighlight">\(|-\rangle = (|x\rangle - |y\rangle)/\sqrt{2}\)</span> over time. Then, if we collect polarised light via mode 1 that is orthogonal to the excitation pulse polarisation, we should see a coherent beating in the lifetime.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.plot_lifetime(port = 0, parameters={&#39;theta&#39;: 0, &#39;theta_c&#39;: -np.pi/4, &#39;fss&#39;: 4},
+                     end=6, label=&#39;excite H, collect A&#39;)
+
+source.plot_lifetime(port=0, parameters={&#39;theta&#39;: np.pi/4, &#39;theta_c&#39;: -np.pi/4, &#39;fss&#39;: 4},
+                     end=6, label=&#39;excite D, collect A&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_18_0.png" src="../_images/notebooks_quantum_dots_18_0.png" />
+</div>
+</div>
+<p>As expected, for collection along a polarisation not aligned with the exciton axes, we can see a characteristic beating due to the fine structure splitting if we excite a superposition of exciton states. This phenomenon has been extensively exploited to filter the excitation laser in polarisation while still collecting single photons from the device. This allows for resonant excitation of the exciton, but will filter away roughly half of the single photons. For more discussion on how the fine
+structure impacts the source quality, see [<a class="reference external" href="https://pubs.acs.org/doi/abs/10.1021/acsphotonics.9b01805">H. Ollivier et al., ACS Photonics 2020, 7, 4, 1050–1059</a>].</p>
+<p>One very interesting consequence of this beating is related to the fact that it delays the emission of single photons. Or, in other words, filters only photons that were emitted late with respect to the excitation pulse. This can be seen in the above plot where the initial rise time of the photon is shifted significantly to the right. Since noise causing <span class="math notranslate nohighlight">\(g^{(2)}\)</span> arises due to re-excitation of the exciton early in the lifetime, this polarisation filtering also removes most of the noisy
+photons. As a result, <span class="math notranslate nohighlight">\(g^{(2)}\)</span> can have a substantial dependence on the polarisation configuration. To explore this phenomenon, let’s switch from using the default perfect pulses to using a default Gaussian pulse shape that produces a small amount of multi-photon emission. Then, we can simply sweep over different excitation polarisation angles and append the value of <span class="math notranslate nohighlight">\(g^{(2)}\)</span> predicted by the Source.g2() source class method.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.exciton(pulse=Pulse.gaussian(), parameters={&#39;fss&#39;: 4})
+
+theta_set = np.linspace(0, 1, 40)
+g2_data = [[source.g2(port=0, parameters={&#39;theta_c&#39;: theta_c, &#39;theta&#39;: theta * np.pi}) for theta in theta_set]
+           for theta_c in [0, -np.pi/4]]
+</pre></div>
+</div>
+</div>
+<p>Once we have the data, then we can plot!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.plot(theta_set, g2_data[0], label=&quot;Collect H&quot;)
+plt.plot(theta_set, g2_data[1], label=&quot;Collect A&quot;)
+plt.xlabel(&quot;Excitation linear polarisation angle, $\\theta$ ($\pi$)&quot;)
+plt.ylabel(&quot;$g^{(2)}$&quot;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_22_0.png" src="../_images/notebooks_quantum_dots_22_0.png" />
+</div>
+</div>
+<p>In the above plot, we can explicitly see that the excitation polarisation plays a big role in determining the multi-photon emission probability. In particular, by choosing to collect only the anti-diagonal A polarisation corresponding to <span class="math notranslate nohighlight">\(\theta_\text{c} = -\pi/4\)</span>, the <span class="math notranslate nohighlight">\(g^{(2)}\)</span> can be significantly suppressed when exciting in the diagonal D polarisation corresponding to <span class="math notranslate nohighlight">\(\theta = \pi/4\)</span>. This is precisely due to the fact that the emission is delayed by the fine structure
+splitting.</p>
+<p>For now, the value of fine structure splitting is more-or-less fixed when fabricating the device, but there are ways to tune it to optimise the source characteristics [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.129.057401">H. Ollivier et al., Phys. Rev. Lett. 129, 057401 (2022)</a>]. Let’s take a look at how the source quality changes as a function of the magnitude of fine structure splitting.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>fss_set = np.linspace(-1, 1.9, 100)  # log scale choices of FSS
+mu_data0 = []
+g2_data0 = []
+for i in [1, -1]:
+    source.update_default_parameters(parameters={&#39;theta&#39;: np.pi/4, &#39;theta_c&#39;: i * np.pi/4})
+    mu_data = []
+    g2_data = []
+    for fss in fss_set:
+        pn = source.photon_statistics(port=0, truncation=2, parameters={&#39;fss&#39;: 10**fss})
+        mu_data.append(pn.mu())
+        g2_data.append(1 - pn.g2())
+    mu_data0.append(mu_data)
+    g2_data0.append(g2_data)
+</pre></div>
+</div>
+</div>
+<p>Let’s plot it to see the result!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 4))
+plt.plot(fss_set, mu_data0[0], label=&quot;$\mu$: parallel&quot;, color=&#39;b&#39;, linestyle=&#39;solid&#39;)
+plt.plot(fss_set, mu_data0[1], label=&quot;$\mu$: orthogonal&quot;, color=&#39;b&#39;, linestyle=&#39;dashed&#39;)
+plt.plot(fss_set, g2_data0[0], label=&quot;$1 - g^{(2)}$: parallel&quot;, color=&#39;r&#39;, linestyle=&#39;solid&#39;)
+plt.plot(fss_set, g2_data0[1], label=&quot;$1 - g^{(2)}$: orthogonal&quot;, color=&#39;r&#39;, linestyle=&#39;dashed&#39;)
+plt.xlabel(&quot;Fine structure splitting, $log_{10}\\Delta_{fss}$ ($1/T_1$)&quot;)
+plt.ylabel(&quot;Figure of Merit&quot;)
+plt.legend()
+plt.ylim([0, 1.1])
+plt.xlim([-1, 2])
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_26_0.png" src="../_images/notebooks_quantum_dots_26_0.png" />
+</div>
+</div>
+<p>In the above plot, we can see the average photon number <span class="math notranslate nohighlight">\(\mu\)</span> (in blue) and a lower bound on the single-photon purity <span class="math notranslate nohighlight">\(1 - g^{(2)}\)</span> (in red) as a function of fine structure splitting (in log scale) for two different cases: (1) excitation and collection in the diagonal D polarisation (the parallel configuration, solid curves), (2) excitation in the D polarisation and collection in the anti-diagonal A polarisation (the orthogonal configuration, dashed curves). When the FSS is much
+smaller than the emitter linewidth, we only see light when collecting parallel to the excitation polarisation because there is not enough time for the FSS phase rotation to occur before spontaneous emission. As we increase the FSS, this phase rotation becomes faster, decreasing the period of the beating to be on the order of the spontaneous emission time. At the point where it is fast compared to the lifetime, we see both parallel and orthogonal collection configurations have roughly equal
+average photon numbers. In other words, the FSS phase rotation is so fast that it no longer plays a significant role. However, if we continue to increase the FSS, eventually we separate <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span> so far apart that they are no longer resonant with the excitation pulse, which is tuned to be half-way between the two states. Thus, both parallel and orthogonal collection efficiencies decrease dramatically along with the single-photon purity.</p>
+</section>
+<section id="Biexciton">
+<h2>Biexciton<a class="headerlink" href="#Biexciton" title="Link to this heading"></a></h2>
+<p>Another interesting quantum dot state is the biexciton state. This state occurs when a neutral quantum dot captures two excitons. In that case, the two excitons occupy both the <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span> states, which behaves like a single biexciton particle, usually denoted XX. Here, we will denote the biexciton quantum state as <span class="math notranslate nohighlight">\(|b\rangle\)</span>. Similar to adding electrons to orbitals of an atom, the energy required to create a second exciton captured by the quantum dot is not
+necessarily the same as the energy required to create the first exciton captured by the quantum dot. This is due to a binding energy, i.e. the energy due to the attractive or repulsive force between two exciton particles. In essence, this means that the transition frequency from biexciton state to the exciton state is not the same as the transition frequency from the exciton state to the ground state.</p>
+<p>One very interesting consequence of the binding energy is that the biexciton system does not behave like an ideal three-level ladder system. On the one hand, we are able to target just the exciton state without populating the biexciton state, provided that the spectral shape of our pulse is narrow enough. On the other hand, if we detune our excitation pulse such that it matches exactly half the energy required to excite the quantum dot ground state <span class="math notranslate nohighlight">\(|g\rangle\)</span> to the biexciton state
+<span class="math notranslate nohighlight">\(|b\rangle\)</span>, it is possible to cause the quantum dot to directly absorb two photons, bypassing the intermediate exciton state and populating just the biexciton state. This is known as two-photon excitation (TPE).</p>
+<p>Let’s explore the features of the biexciton system using ZPGenerator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>The biexciton catalogue source gives us access to new parameters related to the four-level biexciton system. For more details on the model underlying the biexciton() source type, please see <a class="reference external" href="sources.ipynb">Sources</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>Source.biexciton().default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0,
+ &#39;fss&#39;: 0,
+ &#39;binding&#39;: 100,
+ &#39;decay&#39;: 1.0,
+ &#39;theta_c&#39;: 0,
+ &#39;phi_c&#39;: 0,
+ &#39;decay_b&#39;: 2,
+ &#39;theta_bc&#39;: 0,
+ &#39;phi_bc&#39;: 0,
+ &#39;dephasing&#39;: 0,
+ &#39;dephasing_fss&#39;: 0,
+ &#39;width&#39;: 0.1,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;detuning&#39;: 0,
+ &#39;phase&#39;: 0,
+ &#39;delay&#39;: 0,
+ &#39;theta&#39;: 0,
+ &#39;phi&#39;: 0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>In addition to the parameters added by the exciton, we also now have biexciton parameters like the binding energy ‘binding’, and the biexction-to-exciton transition polarisation (via ‘theta_bc’ and ‘phi_bc’) and rate ‘decay_b’. The binding energy is the additional energy supplied due to the attractive nature of two excitons, thus reducing the amount of energy required to go from the exciton to the biexciton state.</p>
+<p>The biexciton source is peculiar because it does not behave in a realistic way when using dirac pulses. This is because we now have multiple transitions at different resonant frequencies, and a dirac pulse in time will excite all frequencies equally and simultaneously. This can cause unexpected behaviour if we are not aware of it. So, let’s switch right away to a more realistic Gaussian pulse shape.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.biexciton(pulse=Pulse.gaussian(parameters={&#39;width&#39;: 0.1}))
+</pre></div>
+</div>
+</div>
+<p>Note that the default exciton ‘resonance’ is 0 with respect to the global reference. We can see this reflected in the average photon number collected in mode 0, which is nearly 1 while the other transitions emit roughly zero light.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>for i in range(4):
+    print(source.mu(i, parameters={&#39;binding&#39;: 100}))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.028360012982632
+0.00064960756611665
+0.0006496017403545551
+0.0006496075654505162
+</pre></div></div>
+</div>
+<p>When the collection angles and phases ‘theta_c’, ‘theta_bc’, ‘phi_b’, and ‘phi_bc’ are all zero, the modes represent the transitions 0: <span class="math notranslate nohighlight">\(|x\rangle\rightarrow|g\rangle\)</span>, 1: <span class="math notranslate nohighlight">\(|y\rangle\rightarrow|g\rangle\)</span>, 2: <span class="math notranslate nohighlight">\(|b\rangle\rightarrow|x\rangle\)</span>, and 3: <span class="math notranslate nohighlight">\(|b\rangle\rightarrow|y\rangle\)</span> corresponding to polarisations H (X), V (X), H (XX), and V (XX).</p>
+<p>Let’s see if we can accomplish TPE by sweeping our laser detuning and seeing how the brightness of mode 0 responds. This technique of sweeping the excitation frequency and monitoring the intensity of the response is known as photoluminescence excitation (PLE). Commonly, this is done for multiple sweeps while increasing the excitation power to get a detailed picture of the system.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>detunings = np.linspace(-80, 40, 40)  # sweep from -80 to +40 in units of exciton linewidth
+areas = np.linspace(1, 10, 40)  # pulse area going from pi-pulse up to a 10pi pulse
+mu_set = [[source.mu(0, parameters={&#39;detuning&#39;: x, &#39;area&#39;: np.pi * y}) for x in detunings] for y in areas]
+</pre></div>
+</div>
+</div>
+<p>Once our data is generated, we can plot the map:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+plt.pcolormesh(detunings, areas, mu_set, shading=&#39;gouraud&#39;)
+plt.colorbar(ax=ax)
+plt.xlabel(&quot;Laser detuning ($1/T_1$)&quot;)
+plt.ylabel(&quot;Pulse area ($\pi$)&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_40_0.png" src="../_images/notebooks_quantum_dots_40_0.png" />
+</div>
+</div>
+<p>Notice that we can see the usual Rabi oscillations when our laser is resonant with the exciton transition. However, by red-detuning to half the binding energy ‘detuning’ = -50, we notice that a second resonance appears when we increase the pulse area. This is TPE.</p>
+<p>In the above case, we are only looking at one exciton transition. When the laser is resonant, we are fully populating the <span class="math notranslate nohighlight">\(|x\rangle\)</span> state and hence <span class="math notranslate nohighlight">\(\mu\simeq 1\)</span>. But, through the TPE resonance, we are occupying <span class="math notranslate nohighlight">\(|b\rangle\)</span>, which then decays 50:50 to both <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span>. Hence, we only see up to <span class="math notranslate nohighlight">\(\mu\simeq 0.5\)</span> because the other half of the emission is polarised orthogonally to our collection polarisation.</p>
+<p>Now that we have located the TPE at roughly ‘detuning’ = -50 and ‘area’ = <span class="math notranslate nohighlight">\(4\pi\)</span>, we can take a look at some properties of the biexciton source. First, let’s plot the lifetime:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.biexciton(pulse=Pulse.gaussian(parameters={&#39;width&#39;: 0.1, &#39;detuning&#39;: -50, &#39;area&#39;: 4 * np.pi}))
+for i in range(4):
+    source.plot_lifetime(i, end=5)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_42_0.png" src="../_images/notebooks_quantum_dots_42_0.png" />
+</div>
+</div>
+<p>From this lifetime, we can see that the TPE brings the QD into the biexciton state quite quickly, which then relaxes down to the exciton state. Both the modes 2 and 3 are producing light (the red curve overlaps the green curve). As the exciton becomes populated by the decaying biexciton state, it too begins to produce light in modes 0 and 1. Interestingly, these are not identical, and the reason is that the excitation pulse is polarized along the mode 0 (H) polarization. This means that the
+<span class="math notranslate nohighlight">\(|x\rangle\)</span> exciton state is populated by the excitation pulse directly, leading to a small initial emission around <span class="math notranslate nohighlight">\(t=0\)</span>.</p>
+<p>This cascade of biexciton to exciton has been historically very promising for generating polarization-entangled Bell pairs. This is because a photon emitted into mode 3 will imply a second photon emitted into mode 1 (both with V polarization). Likewise, a photon emitted into mode 2 will imply a second photon emitted into mode 0 (both with H polarization). Let’s take a look at these correlations using the probs() method of the Processor class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>qpu = Processor() // Source.biexciton(pulse=Pulse.gaussian(parameters={&#39;width&#39;: 0.1}))
+qpu.add([0, 1, 2, 3], Detector.threshold())  # adds a threshold detector to monitor modes 0, 1, 2, 3
+
+qpu.probs(parameters={&#39;detuning&#39;: -50, &#39;area&#39;: 4*np.pi}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0 0 0 | 0.00333
+0 0 1 0 | 0.01760
+0 1 0 1 | 0.48503
+0 1 1 1 | 0.01128
+1 0 0 0 | 0.00987
+1 0 1 0 | 0.46364
+1 1 0 1 | 0.00726
+1 1 1 1 | 0.00199
+
+</pre></div></div>
+</div>
+<p>Recall the modes are ordered by default such that 1010 represents the detection of an H-polarised photon from the X to ground transition and an H-polarised photon from the XX to X transition. Similarly, 0101 represents the detection of a V-polarised photon from the X to ground transition and a V-polarised photon from the XX to X transiton. In other words, these statistics show that the photonic state we are producing may be of the form <span class="math notranslate nohighlight">\((|HH\rangle + |VV\rangle)/\sqrt{2}\)</span>, which is a
+polarisation encoded-Bell state. However, to be sure we have <span class="math notranslate nohighlight">\((|HH\rangle + |VV\rangle)/\sqrt{2}\)</span> and not a classical mixture <span class="math notranslate nohighlight">\((|HH\rangle\langle HH| + |VV\rangle\langle VV|)/2\)</span>, we must check to see if these correlations remain regardless of the polarisation basis.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>qpu.probs(parameters={&#39;detuning&#39;: -50, &#39;area&#39;: 4*np.pi,
+                      &#39;theta_c&#39;: np.pi/4, &#39;phi_c&#39;: np.pi/2,  # let&#39;s rotate our X collection polarisation to R = H + V
+                      &#39;theta_bc&#39;: np.pi/4, &#39;phi_bc&#39;: np.pi/2}  # same for the XX collection
+          ).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0 0 0 | 0.00333
+0 0 0 1 | 0.00871
+0 0 1 0 | 0.00871
+0 0 1 1 | 0.00017
+0 1 0 0 | 0.00448
+0 1 0 1 | 0.04665
+0 1 1 0 | 0.42781
+0 1 1 1 | 0.00567
+1 0 0 0 | 0.00448
+1 0 0 1 | 0.42781
+1 0 1 0 | 0.04665
+1 0 1 1 | 0.00567
+1 1 0 0 | 0.00091
+1 1 0 1 | 0.00364
+1 1 1 0 | 0.00364
+1 1 1 1 | 0.00165
+
+</pre></div></div>
+</div>
+<p>After rotating the collection polarisation, we indeed see that we still have correlations, but now it is anti-correlated 0110 = LR and 1001 = RL! This is exactly expected when applying the change of basis to the HH+VV Bell state.</p>
+<p>One big issue facing the experimental implementation of determinstic Bell state generation is the fine structure splitting. Recall from the previous section that the exciton state can have a small splitting between <span class="math notranslate nohighlight">\(|x\rangle\)</span> and <span class="math notranslate nohighlight">\(|y\rangle\)</span>. If this splitting is too large, then the frequency of the H and V polarisations will no longer be identical and this gives “which path” information about the biexction cascade, degrading the polarisation correlations. To see this in action,
+let’s look at the four correlations 1010, 0110, 1001, and 0101 as a function of the fine structure splitting.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>qpu.update_default_parameters(parameters={&#39;detuning&#39;: -50, &#39;area&#39;: 4*np.pi,
+                           &#39;theta_c&#39;: np.pi/4, &#39;phi_c&#39;: np.pi/2,  # let&#39;s rotate our collection polarisation to R
+                           &#39;theta_bc&#39;: np.pi/4, &#39;phi_bc&#39;: np.pi/2})
+
+fss_set = np.linspace(-5, 5, 100)
+correlation_set = [[], [], [], []]
+labels = [[(1,0,1,0), &#39;RR&#39;, &#39;solid&#39;], [(0,1,1,0), &#39;LR&#39;, &#39;solid&#39;], [(1,0,0,1), &#39;RL&#39;, &#39;dashed&#39;], [(0,1,0,1), &#39;LL&#39;, &#39;dashed&#39;]]
+for fss in fss_set:
+    pn = qpu.probs(parameters={&#39;fss&#39;: fss})
+    for i in range(0, 4):
+        correlation_set[i].append(pn[labels[i][0]])
+</pre></div>
+</div>
+</div>
+<p>Plotting this, we see:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>for i in range(0, 4):
+    plt.plot(fss_set, correlation_set[i], label=labels[i][1], linestyle=labels[i][2])
+plt.xlabel(&quot;Fine structure splitting ($1/T_1$)&quot;)
+plt.ylabel(&quot;Probability&quot;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_51_0.png" src="../_images/notebooks_quantum_dots_51_0.png" />
+</div>
+</div>
+<p>The correlations in the circular-polarisation basis only exist when the fine structure splitting is small. Interestingly, we can also see that the shape is not symmetric about zero, which is because the excitation pulse is H-polarised and so changing the FSS effectively also changes the detuning between the exciton <span class="math notranslate nohighlight">\(|x\rangle\)</span> state and the laser.</p>
+<p>As a final demonstration with the biexciton source, we will look into the infamous ‘crux’ of using a biexciton cascade to produce entangled pairs. In this paper [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.125.233605">E. Schöll, Phys. Rev. Lett. 125, 233605 2020</a>], the authors detail how it is extremely difficult to obtain highly-indistinguishable photons from a biexciton cascade. This is due to the time jitter. In other words, if the XX photon is emitted early, then the X
+photon will also likely be emitted early. Similarly, if the XX photon is emitted late, then the X photon will also likely be emitted late. This correlation in time between the XX and X photons restricts the indistinguishability of two photons subsequently emitted from XX or two photons subsequently emitted from X.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.biexciton(pulse=Pulse.gaussian(parameters={&#39;width&#39;: 0.1, &#39;detuning&#39;: -50, &#39;area&#39;: 4 * np.pi}))
+for i in range(4):
+    source.display_hom(i)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Figure of Merit                | Value
+First order number coherence   | 0.0206
+Second order number coherence  | 0.0008
+Hong-Ou-Mandel visibility      | 0.6438
+Mean wavepacket overlap        | 0.7225
+
+Figure of Merit                | Value
+First order number coherence   | 0.0000
+Second order number coherence  | 0.0000
+Hong-Ou-Mandel visibility      | 0.7804
+Mean wavepacket overlap        | 0.7891
+
+Figure of Merit                | Value
+First order number coherence   | 0.0259
+Second order number coherence  | 0.0021
+Hong-Ou-Mandel visibility      | 0.5625
+Mean wavepacket overlap        | 0.6592
+
+Figure of Merit                | Value
+First order number coherence   | 0.0000
+Second order number coherence  | 0.0000
+Hong-Ou-Mandel visibility      | 0.7676
+Mean wavepacket overlap        | 0.7764
+
+</pre></div></div>
+</div>
+<p>Looking above, we can clearly see that the mean wavepacket overlaps of photons from all 4 transitions are quite limited compared to what we would expect from resonant excitation. In the ‘crux’ paper, they discuss how the only regime where this effect is eliminated is when the XX to X transition is much faster than the X to ground transition. Let’s explore that by looking at the average mean wavepacket overlap of the 4 transitions as a function of the biexciton decay parameter ‘decay_b’. For
+this, let’s turn off the excitation pulse and artificially prepare our quantum dot in the biexciton state to be sure that our laser pulse parameters are not influencing the phenomenon we are replicating.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.biexciton(pulse=Pulse.dirac(parameters={&#39;area&#39;: 0}), gate=[0, 20])
+source.initial_state = source.states[&#39;|b&gt;&#39;]
+
+M_set = []
+decays = np.linspace(-1.5, 1.5, 20)  # decay rate of the biexciton state in logscale
+for decay in decays:
+    for i in range(4):
+        source.hom(i, parameters={&#39;decay_b&#39;: 10**-decay})
+    M_set.append(sum(source.quality[str(i)][&#39;M&#39;] for i in range(0, 4))/4)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.plot(decays, M_set)
+plt.xlabel(&quot;Biexciton decay rate, $log_{10}(T_{XX}/T_{X})$&quot;)
+plt.ylabel(&quot;Average M&quot;)
+plt.xlim([-2, 2])
+plt.ylim([0, 1])
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_56_0.png" src="../_images/notebooks_quantum_dots_56_0.png" />
+</div>
+</div>
+<p>In the above plot, we indeed see a qualitative replication of the result published in figure 3 panel c of the ‘crux’ paper. The mean wavepacket overlap is only large when the lifetime of the biexciton state <span class="math notranslate nohighlight">\(T_{XX}\)</span> is very short compared to the lifetime of the exciton state <span class="math notranslate nohighlight">\(T_{X}\)</span>.</p>
+</section>
+<section id="Trion">
+<h2>Trion<a class="headerlink" href="#Trion" title="Link to this heading"></a></h2>
+<p>Because ZPGenerator is a source-physics simulator, we have direct access to properties of the source. This becomes critical when simulating experiments where the quantum dynamics of the source play an important role, such as a spin-photonic device. One quantum system that allows for implementing interesting spin-photonic protocols is the charged quantum dot system. When the quantum dot captures a single particle (an electron or hole), it has a spin doublet ground state (spin up and spin down).
+Optical excitation of this quantum dot state produces an exciton (electron-hole pair) so that there is also a spin doublet excited state (spin up + exciton and spin down + exciton) called a trion state. Thus, a trion system refers to a four-level system. Let’s explore how to simulate properties of a source constructed from a trion system.</p>
+<p>Without getting too deep into the physics, we can initialise the catalogue quantum dot trion source using the trion() method of the Source factory. In this case, there are two choices for the ‘charge’ keyword: (1) a ‘negative’ trion or (2) a ‘positive’ trion. The differences are subtle, but can play an important role in the photonic errors produced by the source. In the example given here, both the negative and positive trions will behave identically, and so we choose to use the ‘negative’ trion
+without loss of generality.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+
+source = Source.trion(charge=&#39;negative&#39;)
+</pre></div>
+</div>
+</div>
+<p>We can inspect this object to see what properties it has. For example, we can look at the possible system states stored as a dictionary of <a class="reference external" href="https://qutip.org/">QuTiP</a> quantum objects (<a class="reference external" href="https://qutip.org/docs/latest/apidoc/classes.html">Qobj</a>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.states
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{(&#39;|spin_up&gt;&#39;,): Quantum object: dims = [[2, 2], [1, 1]], shape = (4, 1), type = ket
+Qobj data =
+[[1.]
+ [0.]
+ [0.]
+ [0.]], (&#39;|spin_down&gt;&#39;,): Quantum object: dims = [[2, 2], [1, 1]], shape = (4, 1), type = ket
+Qobj data =
+[[0.]
+ [1.]
+ [0.]
+ [0.]], (&#39;|trion_up&gt;&#39;,): Quantum object: dims = [[2, 2], [1, 1]], shape = (4, 1), type = ket
+Qobj data =
+[[0.]
+ [0.]
+ [1.]
+ [0.]], (&#39;|trion_down&gt;&#39;,): Quantum object: dims = [[2, 2], [1, 1]], shape = (4, 1), type = ket
+Qobj data =
+[[0.]
+ [0.]
+ [0.]
+ [1.]]}
+</pre></div></div>
+</div>
+<p>This makes manipulating source states simple via the operations defined by QuTiP. For example, we can define our qubit states for quantum information processing. Then, we can make custom states:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>st0 = source.states[&#39;|spin_up&gt;&#39;]  # computational state |0&gt;
+st1 = source.states[&#39;|spin_down&gt;&#39;]  # computational state |1&gt;
+
+st_plus = (st0 + st1)/np.sqrt(2)  # computational state |+&gt; = (|0&gt; + |1&gt;)/sqrt(2)
+
+print(st_plus)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Quantum object: dims = [[2, 2], [1, 1]], shape = (4, 1), type = ket
+Qobj data =
+[[0.70710678]
+ [0.70710678]
+ [0.        ]
+ [0.        ]]
+</pre></div></div>
+</div>
+<p>By default, the pre-built trion source is initialised in a fully mixed ground spin doublet, which is usually the case in the lab.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>print(source.initial_state)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = True
+Qobj data =
+[[0.5 0.  0.  0. ]
+ [0.  0.5 0.  0. ]
+ [0.  0.  0.  0. ]
+ [0.  0.  0.  0. ]]
+</pre></div></div>
+</div>
+<p>To modify the initial state, we can simply set the property source.initial_state to our desired initial state. For now, let’s continue with the default settings.</p>
+<p>Let’s now also look at the source parameters we can modify.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0,
+ &#39;Bx&#39;: 0,
+ &#39;By&#39;: 0,
+ &#39;Bz&#39;: 0,
+ &#39;g_spin&#39;: 2,
+ &#39;g_trion&#39;: 2,
+ &#39;Bx_OH&#39;: 0,
+ &#39;By_OH&#39;: 0,
+ &#39;Bz_OH&#39;: 0,
+ &#39;decay&#39;: 1.0,
+ &#39;theta_c&#39;: 0.7853981633974483,
+ &#39;phi_c&#39;: -1.5707963267948966,
+ &#39;dephasing&#39;: 0,
+ &#39;dephasing_spin&#39;: 0,
+ &#39;dephasing_trion&#39;: 0,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;phase&#39;: 0,
+ &#39;delay&#39;: 0,
+ &#39;theta&#39;: 0.7853981633974483,
+ &#39;phi&#39;: -1.5707963267948966,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>To measure the spin coherence time of the charged quantum dot that is initially in a fully mixed state, it is possible to perform a pump-probe experiment in the presence of a transverse static magnetic field, where we excite the quantum dot with two linearly-polarised laser pulses in quick succession. The first linearly-polarised laser pulse excites spin up and spin down states of the quantum dot to the trion up and trion down states, respectively. Then, the emission is monitored in the RL
+polarisation basis. If an R-polarised photon is detected after the first pulse, the quantum dot is projected onto the spin up state. Due to the transverse magnetic field, this state is no longer an eigenstate and so, from the moment the photon is detected, the spin will begin to precess around the magnetic field direction. After some delay time <span class="math notranslate nohighlight">\(\tau\)</span>, a second ‘probe’ pulse is applied that again excites both the spin up and spin down states of the quantum dot. By monitoring the emission
+after the probe pulse, again in the RL basis, and looking at its correlation with the polarisation detected in the first time bin, we can gain information about the quality of the spin precession.</p>
+<p>Let’s first prepare our pump-probe pulse sequence. To do this, we initialise a sequence using the Pulse class, then add two ideal pulses: one named ‘pump’ and another named’ probe. Giving the pulses a unique name will allow us to independently tune their parameters. Since we want to excite both R and L transitions using a linearly-polarized pulse, we must increase the pulse area to <span class="math notranslate nohighlight">\(\sqrt{2}\pi\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+sequence.add(Pulse.dirac(parameters={&#39;delay&#39;: 0, &#39;area&#39;: np.pi * np.sqrt(2)}, name=&#39;pump&#39;))
+sequence.add(Pulse.dirac(parameters={&#39;delay&#39;: 0, &#39;area&#39;: np.pi * np.sqrt(2)}, name=&#39;probe&#39;))
+</pre></div>
+</div>
+</div>
+<p>Next, let’s make a negatively-charged trion source with a default small static magnetic field of <span class="math notranslate nohighlight">\(B_x = \pi/10\)</span> and a spin dephasing rate of <span class="math notranslate nohighlight">\(0.1\)</span>. In addition, the default transition excited by the pulse is the R-polarized transition. To modify theis, we can set the ‘phi’ and ‘theta’ angles of the trion to zero so that the pulses are exciting the H-polarized transition instead.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.trion(charge=&#39;negative&#39;, pulse=sequence, gate=[0, float(&#39;inf&#39;)],
+                      parameters={&#39;Bx&#39;: 0.1 * np.pi, &#39;dephasing_spin&#39;: 0.1, &#39;theta&#39;: 0, &#39;phi&#39;: 0})
+</pre></div>
+</div>
+</div>
+<p>Note that all parameters are assumed to be unitless. A dephasing rate of <span class="math notranslate nohighlight">\(0.1\)</span> in this case implies that it is <span class="math notranslate nohighlight">\(1/10\)</span> the value of the spontaneous emission rate (<span class="math notranslate nohighlight">\(1/T_1\)</span>). Similarly, setting <span class="math notranslate nohighlight">\(B_x\)</span> to <span class="math notranslate nohighlight">\(\pi/10\)</span> with the default g-factor of 2 implies that the spin will perform a full precession (<span class="math notranslate nohighlight">\(2\pi\)</span>) every <span class="math notranslate nohighlight">\(10\)</span> source lifetimes (<span class="math notranslate nohighlight">\(T_1\)</span>). Altering the g-factor away from its default value of 2 will change how long it takes for the spin to precess for
+a given value of <span class="math notranslate nohighlight">\(B_x\)</span>. For more physically-realistic values, a proper unit conversion should be done that includes the Bohr magneton and Plank’s constant. In the future, unit conversions will be integrated and handled by a sub-package.</p>
+<p>Once we have made our source, we need to define the detectors monitoring for emission following the pump and probe pulses. Since we don’t care so much about multi-photon emission, we can use threshold detectors. The first detector, monitoring bin 0 following the pump pulse, will be active from time <span class="math notranslate nohighlight">\(t=0\)</span> until the probe pulse arrives. Recall that we named our probe pulse ‘probe’ and so the delay parameter corresponding to this pulse is ‘probe/delay’. We can define a parameterised detector
+by adding the desired parameter string to the gate interval. We must also specify a default value for this parameter.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>detector_bin0 = DetectorGate(1, gate=[0, &#39;bin_threshold&#39;], parameters={&#39;bin_threshold&#39;: 0})
+</pre></div>
+</div>
+</div>
+<p>The second detector, monitoring bin 1 following the probe pulse, will be active from the time the probe pulse arrives ‘probe/delay’ until our source stops producing light.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>detector_bin1 = DetectorGate(1, gate=[&#39;bin_threshold&#39;, float(&#39;inf&#39;)], parameters={&#39;bin_threshold&#39;: 0})
+</pre></div>
+</div>
+</div>
+<p>Finally, we combine the source and detectors together in a two-mode Processor. When we add our source to port 0, it will automatically occupy port 0 with the R-polarised emission and port 1 with the L-polarised emission. So, if we wish to detect R-polarised light in the first time bin, we add our first detector (bin 0) to mode 0. For the second time bin, let’s assign our detector to monitor both R and L polarisation. This will allow us to look at both RR and RL coincidences.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>qpu = Processor() // source
+qpu.add(0, detector_bin0, bin_name=&#39;Early R&#39;)  # time bin 0, R polarisation
+qpu.add(0, detector_bin1, bin_name=&#39;Late R&#39;)  # time bin 1, R polarisation
+qpu.add(1, detector_bin1, bin_name=&#39;Late L&#39;)  # time bin 1, L polarisation
+
+qpu.final_time = 150
+delays = np.linspace(0, 120, 240)  # let&#39;s get quite a few points
+coinc_set_RR = []
+coinc_set_RL = []
+</pre></div>
+</div>
+</div>
+<p>Once we have generated the data, we can plot it to see the result!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>for delay in delays:
+    pn = qpu.probs(parameters={&#39;probe/delay&#39;: delay, &#39;bin_threshold&#39;: delay})
+    coinc_set_RR.append(pn[1, 1, 0])  # ordering follows time then mode so 110 = RR
+    coinc_set_RL.append(pn[1, 0, 1])  # 101 = RL
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 4))
+plt.plot(delays, coinc_set_RL, label=&quot;$RL$&quot;, color=&#39;red&#39;)
+plt.plot(delays, coinc_set_RR, label=&quot;$RR$&quot;, color=&#39;blue&#39;, linestyle=&#39;dashed&#39;)
+plt.xlabel(&quot;Probe delay, $\\tau$ ($T_1$)&quot;)
+plt.ylabel(&quot;Coincidence count probability, $C(\\tau)$&quot;)
+plt.ylim([0, 0.5])
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_quantum_dots_81_0.png" src="../_images/notebooks_quantum_dots_81_0.png" />
+</div>
+</div>
+<p>As anticipated, we can clearly see the impact of the spin precession on the time-polarisation correlation probabilities. Notably, the RL and RR probabilities oscillate in opposition and have an amplitude that decays exponentially due to spin dephasing. However, when the probe delay is small there is an interesting deviation from this pattern. It makes sense that RL goes to zero because, if R was detected after the first pulse, the second pulse should cause another R to be emitted (the spin had
+no time to precess in between two fast pulses). However, looking at RL we see that it also goes to zero! This is because we are looking at probabilities as a proportion of all possible outcomes of our detectors. When the delay is small, the most probable outcome is ‘00’ because after the first pulse excites the quantum dot, the second pulse immediately returns it to the ground state, effectively performing a <span class="math notranslate nohighlight">\(2\pi\)</span> pulse.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pulsed_sources.html" class="btn btn-neutral float-left" title="Pulsed Sources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cavity_QED.html" class="btn btn-neutral float-right" title="Cavity QED" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

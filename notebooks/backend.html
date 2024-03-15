@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sources" href="sources_catalogue.html" />
+    <link rel="prev" title="Processors" href="processors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#The-common-approach">The common approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Solution">Solution</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Backend</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/backend.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Backend">
+<h1>Backend<a class="headerlink" href="#Backend" title="Link to this heading"></a></h1>
+<p>ZPGenerator was developed to circumvent a problem that arises when computing integrated detection probabilities for pulses of light, such as required to simulate the Hong-Ou-Mandel visibility of a quantum emitter, or source. The common approach (see below) results in an exponential scaling with the total number of photons detected by all photon-number resolving detectors, or by the number of threshold detectors, in the system. Moreover, since many time steps are often required to simulate
+accurate source dynamics (at least 100), the coefficient for this exponential scaling often prohibits the simulation of experiments involving more than two or three detectors. Such an approach cannot be effectively applied to larger photonic devices such as Quandela’s Ascella QPU, which has 12 detectors.</p>
+<section id="The-common-approach">
+<h2>The common approach<a class="headerlink" href="#The-common-approach" title="Link to this heading"></a></h2>
+<p>The common approach to the time-dynamic photon-counting problem is to first compute a multi-time correlation function of the emitted field amplitude using the <em>Quantum Regression Theorem</em> (QRT) [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.69.032305">A. Kiraz, M. Atatüre, and A. Imamoğlu</a>] along with an input-output relation [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.31.3761">C. W. Gardiner and M. J. Collett</a>] to build a source-field operator correspondence. The
+correlation function approach holds in the lossy regime where field amplitudes can effectively be used to estimate detection probabilities. However, as efficiency improves, multi-photon components will survive to the detector, and the detector will no longer respond linearly to the signal intensity. Thus, it becomes necessary to explicitly evaluate detection probabilities, which can be done following a time-independent perturbation of the source dynamics by detector-induced jumps [<a class="reference external" href="https://books.google.fr/books?hl=en&amp;lr=&amp;id=uor_CAAAQBAJ&amp;oi=fnd&amp;pg=PR1&amp;dq=open+systems+approach+carmichael&amp;ots=O1fuOp1e0T&amp;sig=90OrETtiChu91YRkK31SRZhDx1Q&amp;redir_esc=y#v=onepage&amp;q=open%20systems%20approach%20carmichael&amp;f=false">H.
+Carmichael</a>]. In either case, for pulsed experiments where detection probabilities (clicks) are generally not time-resolved, the temporal degrees of freedom that are necessary to describe the quantum behaviour of the light must be eventually traced out. Since each
+detector present in the experiment integrates over the arrival time of the pulse it is monitoring, this leads to an exponential scaling in the number of detectors or the number of photons detected by a single number-resolving detector.</p>
+</section>
+<section id="Solution">
+<h2>Solution<a class="headerlink" href="#Solution" title="Link to this heading"></a></h2>
+<p>The name ZPGenerator represents the exploitation of a mathematical object called a Zero-Photon Generator (ZPG), which composes everything needed to solve a photo-counting experiment. The ZPG is analogous to the Hamiltonian of a closed quantum system and is closely related to the Lindbladian of an open-quantum system. The method is inspired by the quantum trajectories formalism, where source emission events and other interactions with the environment are treated stochastically. However, a key
+difference is that the ZPG is not solved using Monte Carlo methods, and fundamentally cannot simulate pure-state trajectories. Instead, a ZPG simulates something that can be referred to as a ‘quantum corridor’, which is a mixed-state trajectory or a collection of pure-state trajectories of the source state that evolve in time following a common property. In this case, the common property is the null result of our photo-counting experiment (i.e. every detector fails to detect at least one
+photon). Similar to quantum trajectories, the quantum corridor is not a normalized state. Rather, the trace of the quantum corridor gives the probability that the state passed through that corridor. Thus, the ZPG can be used to simulate the null result probability by integrating over a single temporal degree of freedom.</p>
+<p>At first, it may seem like simulating only the null result is not enough to obtain all possible outcomes. However, the second key ingredient is that the ZPG, and hence the null probability, depends explicitly on the independent efficiencies of all the detectors. By choosing to evaluate the ZPG for a large enough set of unique detector efficiency configurations, it is possible to fully reconstruct the photon-number resolved detection probabilities [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.70.055801">A. R. Rossi, S. Olivares, and M. G. A.
+Paris</a>].</p>
+<p>How the ZPG is evaluated and how the reconstruct is accomplished can vary depending on the application. Interestingly, the solution to the ZPG produces a generating function G that is the Z-transform of the detection probability distribution P. The simple expression Z(P)=G thus summarizes the equation solved by ZPGenerator, giving a second meaning to its name. The result of all this is that ZPGenerator scales polynomially in the number of outcomes for a constant source Hilbert space. A detailed
+explanation of this method is available in the paper [<a class="reference external" href="https://link.aps.org/doi/10.1103/PhysRevA.109.023713">S. C. Wein, Phys. Rev. A 109, 023713 (2024)</a>].</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="processors.html" class="btn btn-neutral float-left" title="Processors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sources_catalogue.html" class="btn btn-neutral float-right" title="Sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

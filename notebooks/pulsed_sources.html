@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulsed Sources &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quantum Dots" href="quantum_dots.html" />
+    <link rel="prev" title="Photonic Circuits" href="photonic_circuits.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pulsed Sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Fock-states">Fock states</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Physical-models">Physical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Excitation-pulses">Excitation pulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Custom-shapes">Custom shapes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pulsed Sources</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/pulsed_sources.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Pulsed-Sources">
+<h1>Pulsed Sources<a class="headerlink" href="#Pulsed-Sources" title="Link to this heading"></a></h1>
+<p>ZPGenerator is a source-focused simulator that is primarily designed to study realistic states of light produced by a physical source model. In <a class="reference internal" href="photonic_circuits.html"><span class="doc">Photonic Circuits</span></a> tutorial, we explored the Processor class and how to simulate photonic circuits using a few catalogue source types. However, one can imagine that, once a source is no longer perfect, it can be “not perfect” in <em>many</em> different ways. Subtle differences in these photonic imperfections can have quite a big
+impact on how errors accumulate and impact a quantum information processing task. In addition, often a physical implementation of a source cannot be ideal even in principle. Thus, a key goal is to optimise the source parameters to accomplish a particular task most effectively. For these reasons, the second main functionality provided by ZPGenerator is the characterisation of pulsed sources of quantum light.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<section id="Fock-states">
+<h2>Fock states<a class="headerlink" href="#Fock-states" title="Link to this heading"></a></h2>
+<p>A SourceComponent object, such as those created using the Source class, have built-in methods that can be useful to characterise source behaviour. Let’s first dig deeper into the Fock state source used in the previous section. The first thing we can check are the photon number probabilities of the source using the photon_statistics() method. This method produces a PhotonNumberDistribution object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+pn = source.photon_statistics()
+pn.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.00000
+1       | 1.00000
+2       | 0.00000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<p>With this distribution, we now have access to methds that compute other characteristics, such as the average photon number <span class="math notranslate nohighlight">\(\mu\)</span>, the probability of emitting at least one photon <span class="math notranslate nohighlight">\(\beta\)</span>, and the integrated intensity correlation <span class="math notranslate nohighlight">\(g^{(2)}\)</span>. This can be done using the mu(), beta(), and g2() methods.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print({&#39;mu&#39;: pn.mu(), &#39;beta&#39;: pn.beta(), &#39;g2&#39;: pn.g2()})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;mu&#39;: 1.0, &#39;beta&#39;: 1.0, &#39;g2&#39;: 0.0}
+</pre></div></div>
+</div>
+<p>Or, we can use display_figures() to automatically compute them and display them.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pn.display_figures()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Figure of Merit       | Value
+Brightness            | 1.0000
+Average photon number | 1.0000
+Intensity correlation | 0.0000
+
+</pre></div></div>
+</div>
+<p>As expected, our source of perfect <span class="math notranslate nohighlight">\(|1\rangle\)</span> states produces an average photon number <span class="math notranslate nohighlight">\(\mu\)</span> of <span class="math notranslate nohighlight">\(1\)</span>, a probability of emitting at least one photon <span class="math notranslate nohighlight">\(\beta\)</span> of <span class="math notranslate nohighlight">\(1\)</span>, and an integrated intensity correlation <span class="math notranslate nohighlight">\(g^{(2)}\)</span> of <span class="math notranslate nohighlight">\(0\)</span>. This is due to the fact that the photon number distribution is <span class="math notranslate nohighlight">\(p_1=1\)</span>.</p>
+<p>We can also evaluate basic figures of merit that cannot be obtained from the photon number distribution by performing Hong-Ou-Mandel interference of the wavepacket with itself using the hom() method. We <em>could</em> manually build the interferometer as in the previous section, but since this is such a common circuit to simulate, it is integrated into the Processor class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source.hom()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;c1&#39;: 0.0, &#39;c2&#39;: 0.0, &#39;vhom&#39;: 1.0000006344860717, &#39;M&#39;: 1.000002776951858}
+</pre></div></div>
+</div>
+<p>Like for the other figures of merit, we can compute and display them using the display_hom() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source.display_hom()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Figure of Merit                | Value
+First order number coherence   | 0.0000
+Second order number coherence  | 0.0000
+Hong-Ou-Mandel visibility      | 1.0000
+Mean wavepacket overlap        | 1.0000
+
+</pre></div></div>
+</div>
+<p>Applying the vhom() method computes additional important source figures of merit: the Hong-Ou-Mandel visibility <span class="math notranslate nohighlight">\(V_\text{HOM}\)</span>, the mean wavepacket overlap <span class="math notranslate nohighlight">\(M\)</span>, the first-order number coherence <span class="math notranslate nohighlight">\(c^{(1)}\)</span>, and the second-order number coherence <span class="math notranslate nohighlight">\(c^{(2)}\)</span>. As expected, we find <span class="math notranslate nohighlight">\(V_\text{HOM}=M=1\)</span> and <span class="math notranslate nohighlight">\(c^{(1)}=c^{(2)}=0\)</span>, characteristic of a single-photon Fock state.</p>
+<p>Another important characteristic of a pulsed source of light is its temporal profile: how the wavepacket intensity evolves in time. In the context of deterministic sources of quantum light, this is often referred to as the “lifetime” of the wavepacket because it reflects the decay dynamics of the source excited state population quantified by the lifetime timescale <span class="math notranslate nohighlight">\(T_1\)</span>. In fact, all parameters in ZPG are, by default, in units of this decay timescale <span class="math notranslate nohighlight">\(T_1\)</span>. The Source class provides
+the lifetime() method to simulate the temporal profile.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># we can use the &#39;start&#39; and &#39;end&#39; keywords to specify the window of time to look at (in units of T1)
+lifetime = source.lifetime(start=-1, end=6)
+plt.plot(lifetime.times, lifetime.population)
+plt.xlabel(&#39;Time, t ($T_1$)&#39;)
+plt.ylabel(&#39;Intensity&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_15_0.png" src="../_images/notebooks_pulsed_sources_15_0.png" />
+</div>
+</div>
+<p>From the above plot, we can see that the Fock state source actually produces photons with an exponentially decaying temporal shape. This is because it is the simplest shape to simulate using the ZPG backend, which is also very close to the profile of the emission from a quickly-excited atom or quantum dot. This differs substantially from how Perceval models a Fock state <span class="math notranslate nohighlight">\(|1\rangle\)</span> source as an abstract complex vector. In ZPGenerator, the single photon is a physical object evolving in time
+with quantum properties dictated by its source. This allows the framework to capture various subtle characteristics of light produced by many different physical source models.</p>
+</section>
+<section id="Physical-models">
+<h2>Physical models<a class="headerlink" href="#Physical-models" title="Link to this heading"></a></h2>
+<p>In reality, the excitation of the source can never be perfectly instantaneous. This limitation is the primary reason for incidental multi-photon emission when attempting to generate single photons. To dig deeper into the physics, we can take a look at a more realistic pre-built source model: the two-level() source. This source is a two-level system driven by a dirac laser pulse by default so that it behaves like a perfect single-photon source. Using the Pulse() class, we can set a new pulse
+shape for our two-level source. Let’s use a square pulse with a width of <span class="math notranslate nohighlight">\(1/2\)</span> the source lifetime, and then take a look at the lifetime, and plot the control pulse alongside for comparison.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pulse = Pulse.square(parameters={&#39;width&#39;: 0.5})
+source = Source.two_level(pulse=pulse)
+lifetime = source.lifetime(start = -1, end = 6)
+plt.plot(lifetime.times, lifetime.population, label = &#39;Lifetime&#39;)
+
+# 1/20 for visual comparison
+pulse = [abs(pulse.evaluate(t)) / 20 for t in lifetime.times]
+plt.plot(lifetime.times, pulse, label = &#39;Pulse&#39;)
+
+plt.xlabel(&#39;Time, t ($T_1$)&#39;)
+plt.ylabel(&#39;Intensity (arb)&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_19_0.png" src="../_images/notebooks_pulsed_sources_19_0.png" />
+</div>
+</div>
+<p>Let’s also take a look at all figures of merit by using the display_quality() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source.display_quality()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.00560
+1       | 0.94076
+2       | 0.05319
+3       | 0.00044
+4       | 0.00000
+
+Figure of Merit       | Value
+Brightness            | 0.9944
+Average photon number | 1.0485
+Intensity correlation | 0.0992
+
+Figure of Merit                | Value
+First order number coherence   | 0.0784
+Second order number coherence  | 0.0023
+Hong-Ou-Mandel visibility      | 0.8108
+Mean wavepacket overlap        | 0.9096
+
+</pre></div></div>
+</div>
+<p>We can now clearly see how the imperfect excitation pulse affects both the shape of our photon, and its key figures of merit. Most importantly, the finite pulse width causes a significant two-photon emission probability of <span class="math notranslate nohighlight">\(p_2=0.05\)</span>, which for <span class="math notranslate nohighlight">\(\mu\)</span> near <span class="math notranslate nohighlight">\(1\)</span> gives us <span class="math notranslate nohighlight">\(g^{(2)} = 0.1\)</span>. This non-unity single photon purity drastically reduces the Hong-Ou-Mandel visibility down to <span class="math notranslate nohighlight">\(V_\text{HOM} = 0.8\)</span>. Note that here, there is no pure dephasing at all! The reduction in
+visibility is only due to multi-photon emission.</p>
+<p>Using the methods available in the Processor class to analyze sources, it is straightforward to compute how figures of merit depend on control parameters, such as the pulse power (pulse area) of the excitation pulse. For this, we can take advantage of the fact that all evaluated figures of merit are automatically stored in the ‘quality’ property of the processor. However, since a processor may have more than one output mode, the processor ‘quality’ is a dictionary that stores the figures of
+merit for each output mode. Since we have a source with a single output mode, we must ask for mode ‘0’. In addition, since we will update this dictionary with every new parameter, we must copy the result to avoid mutating the dicationary from previous evaluations.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def quality(area: float = np.pi): # Make a function to generate the figures of merit for a given pulse area
+    source.hom(parameters={&#39;area&#39;: area},
+               pseudo_limit=0.01,
+               update_mu = True, update_g2 = True)  # we can ask hom() to also compute mu and g2 (saves some time)
+    return source.quality[&#39;0&#39;].copy()  # we return a copy of the dictionary of current stored figures of merit of mode &#39;0&#39; from quality
+
+areas = np.linspace(0.1, 3, 70)  # make a list of pulse areas to evaluate
+quality_set = [quality(area * np.pi) for area in areas]  # evaluate the source quality
+
+foms = [&#39;mu&#39;, &#39;g2&#39;, &#39;c1&#39;, &#39;c2&#39;, &#39;M&#39;]  # Now, let&#39;s plot the figures of merit!
+for fom in foms:
+    plt.plot(areas, [q[fom] for q in quality_set], label = fom)
+plt.xlabel(&#39;Pulse area ($\pi$)&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.legend(loc = &#39;upper left&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_23_0.png" src="../_images/notebooks_pulsed_sources_23_0.png" />
+</div>
+</div>
+<p>In this plot, we can see a plethora of interesting physical results produced with just a few lines of code. The average photon number undergoes a Rabi oscillation that is dampened by the emission of photons [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.87.133603">T. H. Stievater et al., Phys. Rev. Lett. 87, 133603 (2001)</a>]. Near the first peak of the Rabi oscillation, we are driving with a pulse area of <span class="math notranslate nohighlight">\(\pi\)</span>, usually referred to as a ‘<span class="math notranslate nohighlight">\(\pi\)</span>-pulse’. This is the point
+that produces light close to an ideal single photon. In essence, this is the point where the pulse performs a ‘bit flip’ gate on the two-level system. In the case above, our pulse is quite slow, so we see a lot of degradation of the source quality.</p>
+<p>We can also see the well-known spike in <span class="math notranslate nohighlight">\(g^{(2)}\)</span> at <span class="math notranslate nohighlight">\(2\pi\)</span> [<a class="reference external" href="https://www.nature.com/articles/nphys4052">K. A. Fischer et al., Nature Physics 13, 649–654 (2017)</a>], and the increase in <span class="math notranslate nohighlight">\(c^{(1)}\)</span> as the pulse area approaches zero [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.131.260401">I. Maillette de Buy Wenniger et al., Phys. Rev. Lett. 131, 260401 (2023)</a>]. Additionally, we can see that <span class="math notranslate nohighlight">\(c^{(2)}\)</span> follows <span class="math notranslate nohighlight">\(g^{(2)}\)</span> and shows a spike at
+<span class="math notranslate nohighlight">\(2\pi\)</span> similar to results in this work [<a class="reference external" href="https://www.nature.com/articles/s41566-022-00979-z">S. C. Wein, Nature Photonics 16, 374–379 (2022)</a>], while the mean wavepacket overlap <span class="math notranslate nohighlight">\(M\)</span> is decreased due to the increase in <span class="math notranslate nohighlight">\(g^{(2)}\)</span>. This relationship between <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(g^{(2)}\)</span> can be quite complicated, and was the subject of this paper [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.126.063602">H. Ollivier et al., Phys. Rev. Lett. 126, 063602 (2021)</a>].</p>
+</section>
+<section id="Excitation-pulses">
+<h2>Excitation pulses<a class="headerlink" href="#Excitation-pulses" title="Link to this heading"></a></h2>
+<p>Often times, a realistic laser pulse is modelled by a Gaussian function rather than a square function. We can build our two-level source using a different pulse shape if we wish. This is again accomplished using the Pulse class.</p>
+<p>To quickly visualize what is happening, we can use the plot() method of the Pulse class along with the plot_lifetime() method of the Source class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pulse = Pulse.gaussian({&#39;width&#39;: 0.2, &#39;window&#39;: 6})
+source = Source.two_level(pulse=pulse)
+
+source.plot_lifetime(start = -1, end = 6, label=&#39;Lifetime&#39;)
+pulse.plot(scale=1/20).show()  # We can scale down the pulse for better visualisation
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_27_0.png" src="../_images/notebooks_pulsed_sources_27_0.png" />
+</div>
+</div>
+<p>ZPGenerator is designed to simulate sources of light that may rely on complicated pulse sequences. Building these pulse sequences can be done in an intuitive way using the Pulse class. We can simply initialise a Pulse object and then use the add() method to append new pulse objects to it. We can also add different kinds of pulses to the same sequence. Once we are done, we create a source that uses that pulse sequence.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+sequence.add(Pulse.gaussian({&#39;delay&#39;: 0}))
+sequence.add(Pulse.square({&#39;delay&#39;: 1.1, &#39;width&#39;: 0.7, &#39;area&#39;: 2*np.pi}))
+sequence.add(Pulse.dirac({&#39;delay&#39;: 2, &#39;area&#39;: np.pi/2}))
+
+source = Source.two_level(pulse=sequence)
+source.plot_lifetime(start = -1, end = 6, label=&#39;Lifetime&#39;)
+sequence.plot(scale=1/25).show()  # notice that dirac pulses are not plotted!
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_29_0.png" src="../_images/notebooks_pulsed_sources_29_0.png" />
+</div>
+</div>
+</section>
+<section id="Custom-shapes">
+<h2>Custom shapes<a class="headerlink" href="#Custom-shapes" title="Link to this heading"></a></h2>
+<p>In addition to the built-in Dirac, Gaussian, and square pulses, the Pulse class has the custom() class method to automate the construction of custom parameterised pulses. For example, we can make a quadratic pulse by giving it a function that takes two arguments t: float and args: dict. The interval for the pulse is specified using a list of two values or a function of args: dict that returns a list of two values. Finally, we must also specify any default parameters for the shape and gate,
+otherwise the initialisation will fail.</p>
+<p>To demonstrate, let’s make a quadratic pulse function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse = Pulse.custom(shape=lambda t, args: args[&#39;area&#39;] * (1 - (t - args[&#39;delay&#39;])**2),
+                        gate=lambda args: [args[&#39;delay&#39;] - 1, args[&#39;delay&#39;] + 1],
+                        parameters={&#39;area&#39;: np.pi, &#39;delay&#39;: 0})
+my_pulse.plot(parameters={&#39;delay&#39;: 1}, start=-1, end=3).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_32_0.png" src="../_images/notebooks_pulsed_sources_32_0.png" />
+</div>
+</div>
+<p>We can check to see that the shape has not been normalised correctly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse.area(parameters={&#39;area&#39;: 1})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.3333333333333333
+</pre></div></div>
+</div>
+<p>Either we can ensure that the function we input is normalised, or we can use some options to automatically normalise the shape to a specified default value before building the pulse. Since we are scaling the function by the parameter ‘area’, we simply provide the default value for ‘area’ as the required norm.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse = Pulse.custom(shape=lambda t, args: args[&#39;area&#39;] * (1 - (t - args[&#39;delay&#39;])**2),
+                        gate=lambda args: [args[&#39;delay&#39;] - 1, args[&#39;delay&#39;] + 1],
+                        parameters={&#39;area&#39;: np.pi, &#39;delay&#39;: 0},
+                        auto_normalise=True,
+                        norm=np.pi,
+                        name=&#39;Quadratic pulse&#39;)
+my_pulse.area({&#39;area&#39;: 1}) == 1
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse.plot(start=-10, end=10)
+Pulse.square(name=&#39;Square pulse&#39;).plot(parameters={&#39;width&#39;: 1, &#39;delay&#39;: -5})
+Pulse.gaussian(name=&#39;Gaussian pulse&#39;).plot(parameters={&#39;width&#39;: 1, &#39;delay&#39;: 5}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_37_0.png" src="../_images/notebooks_pulsed_sources_37_0.png" />
+</div>
+</div>
+<p>Once we have defined our custom pulse, we can create our source and look at the lifetime and figures of merit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = Source.two_level(pulse=my_pulse)
+source.display_quality()
+source.plot_lifetime(end = 10, label=&#39;Lifetime&#39;)
+my_pulse.plot(scale=1/10).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.04115
+1       | 0.84480
+2       | 0.11136
+3       | 0.00267
+4       | 0.00002
+
+Figure of Merit       | Value
+Brightness            | 0.9588
+Average photon number | 1.0756
+Intensity correlation | 0.2066
+
+Figure of Merit                | Value
+First order number coherence   | 0.2602
+Second order number coherence  | 0.0261
+Hong-Ou-Mandel visibility      | 0.6446
+Mean wavepacket overlap        | 0.8514
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_39_1.png" src="../_images/notebooks_pulsed_sources_39_1.png" />
+</div>
+</div>
+<p>Looks like the quadratic pulse gives some bad multi-photon emission! To mitigate this, we can narrow the pulse by adding a ‘width’ parameter to our custom pulse. In this case, we have to be careful to normalise by the width parameter so that the integrated area remains constant as a function of the width.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse = Pulse.custom(shape=lambda t, args: args[&#39;area&#39;] / args[&#39;width&#39;] *
+                                              (1 - (t / args[&#39;width&#39;] - args[&#39;delay&#39;])**2),
+                        gate=lambda args: [args[&#39;delay&#39;] - args[&#39;width&#39;], args[&#39;delay&#39;] + args[&#39;width&#39;]],
+                        parameters={&#39;area&#39;: np.pi, &#39;delay&#39;: 0, &#39;width&#39;: 1},
+                        auto_normalise=True,
+                        norm=np.pi,
+                        name=&#39;pulse&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_pulse.update_default_parameters(parameters={&#39;width&#39;: 0.2})
+source = Source.two_level(pulse=my_pulse)
+source.display_quality()
+source.plot_lifetime(end = 5, label=&#39;Lifetime&#39;)
+my_pulse.plot(scale=1/25).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.00220
+1       | 0.96501
+2       | 0.03262
+3       | 0.00017
+4       | 0.00000
+
+Figure of Merit       | Value
+Brightness            | 0.9978
+Average photon number | 1.0308
+Intensity correlation | 0.0624
+
+Figure of Merit                | Value
+First order number coherence   | 0.0434
+Second order number coherence  | 0.0007
+Hong-Ou-Mandel visibility      | 0.8792
+Mean wavepacket overlap        | 0.9416
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulsed_sources_42_1.png" src="../_images/notebooks_pulsed_sources_42_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="photonic_circuits.html" class="btn btn-neutral float-left" title="Photonic Circuits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quantum_dots.html" class="btn btn-neutral float-right" title="Quantum Dots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

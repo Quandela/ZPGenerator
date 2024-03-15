@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wigner Functions &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Entanglement Generation" href="entanglement_generation.html" />
+    <link rel="prev" title="Fibonacci States" href="fibonacci_states.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Wigner Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Parity-detector">Parity detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Shaped-lasers">Shaped lasers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Unbalanced-homodyne">Unbalanced homodyne</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Wigner-method">Wigner method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Imperfections">Imperfections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3D-plotting">3D plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Wigner Functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/wigner_functions.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Wigner-Functions">
+<h1>Wigner Functions<a class="headerlink" href="#Wigner-Functions" title="Link to this heading"></a></h1>
+<p>Although the ZPG method is based on time-integrated photon-counting probabilities, it is also capable of simulating the time-integrated Wigner function <span class="math notranslate nohighlight">\(W(x,p)\)</span> of a photonic state. The algorithm is based on the principle demonstrated in this paper [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.60.674">K. Banaszek et al., Phys. Rev. A 60, 674 (1999)</a>] that the Wigner function at the origin of phase space <span class="math notranslate nohighlight">\(W(0,0)\)</span> is equal to the parity summation over all photon number
+probabilities: <span class="math">\begin{equation}
+W(0,0) = \frac{1}{\pi}\sum_n(-1)^np_n.
+\end{equation}</span> Naively, we could imagine computing this by using photon_statistics() and summing over the result similar to how they implemented this in the paper. However, there is a remarkable similarity between this parity summation and the loss formula to determine the vacuum probability: <span class="math">\begin{equation}
+p_0(\eta)=\sum_{n}(1-\eta)^np_n
+\end{equation}</span> By choosing to use an unphysically high detection efficiency of <span class="math notranslate nohighlight">\(\eta=2\)</span> while simulating the vacuum probability, we can obtain the Wigner function at the origin <span class="math notranslate nohighlight">\(p_0(\eta=2)=\pi W(0,0)\)</span> by computing just a single probability instead of all <span class="math notranslate nohighlight">\(p_n\)</span> necessary for the parity summation to converge. This can provide a remarkable speed improvement for the direct simulation of time-integrated Wigner functions. Let’s exploit this idea using ZPGenerator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<section id="Parity-detector">
+<h2>Parity detector<a class="headerlink" href="#Parity-detector" title="Link to this heading"></a></h2>
+<p>By default, there are post-processing steps in the backend that prevent such a direct exploitation of the ZPG method by the user. However, we can specifically ask for this unphysical behaviour by using a special parity detector when building a processor. This detector indicates that we wish to use an unphysical <span class="math notranslate nohighlight">\(\eta=2\)</span> to get a parity summation at the detector. See <a class="reference internal" href="detectors_catalogue.html"><span class="doc">Detectors</span></a> for more detail on this detector type.</p>
+<p>Let’s test this using an ideal single-photon source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p = Processor()
+p.add(0, Source.fock(1))
+p.add(0, Detector.parity())
+pn = p.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Expectation
+p       | -1.00000
+
+</pre></div></div>
+</div>
+<p>As expected for a single photon, we obtain the parity (‘p’) expectation value of <span class="math notranslate nohighlight">\(-1\)</span> at the origin of phase space, corresponding to the Wigner function value of <span class="math notranslate nohighlight">\(-1/\pi\)</span>, as expected. We can try again for other Fock states to convince ourselves it is working.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>for i in range(1, 6):
+    p = Processor() // Source.fock(i) // Detector.parity()
+    print(&quot;{n}: {p:.4}&quot;.format(n=i, p=p.probs()[&#39;p&#39;]))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1: -1.0
+2: 1.0
+3: -1.0
+4: 1.0
+5: -1.0
+</pre></div></div>
+</div>
+<p>Here, we can see the alternating pattern from the parity summation formula.</p>
+</section>
+<section id="Shaped-lasers">
+<h2>Shaped lasers<a class="headerlink" href="#Shaped-lasers" title="Link to this heading"></a></h2>
+<p>Of course, it is not very interesting to simulate the Wigner function just at the origin. To compute the Wigner function at any point in phase space with complex amplitude <span class="math notranslate nohighlight">\(\alpha\)</span>, we need to displace our light in phase space using a local oscillator (a laser pulse) before measuring <span class="math notranslate nohighlight">\(W(0,0)\)</span> using the parity detector. This is the same approach as used to measure the Wigner function in [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.60.674">K. Banaszek et al., Phys. Rev. A 60, 674
+(1999)</a>].</p>
+<p>As simple as it sounds, displacing the light emitted by the source requires interfering its emission with the laser pulse at a beam splitter, and this beam splitter will cause photon loss for our signal and hence alter the measured Wigner function, just like it would if we performed this experiment in the lab. To get around this, we can use a beam splitter with a very high transmission and a laser pulse with many more photons than the signal. This way, the loss is minimized and yet the
+displacement is nearly perfect. However, simulating the exact quantum dynamics of a laser cavity with many photons would require many energy levels, which would in turn slow the simulation down immensely. Luckily, because a laser is in a classical coherent state, we need only simulate the quantum fluctuations induced on the laser cavity when measuring the displaced signal. In essence, we can get around simulating the full quantum dynamics of the laser cavity by it moving into a displaced frame
+defined by the time-evolution of the laser cavity would experience if we were not measuring the quantum signal.</p>
+<p>Fortunately, ZPGenerator has this exact `displaced local oscillator’ component as a catalogue source called shaped_laser(). See <a class="reference internal" href="sources_catalogue.html"><span class="doc">Sources</span></a> for more detail about this source type. For now, let’s make it and compute its photon statistics for an amplitude of <span class="math notranslate nohighlight">\(\alpha=5\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>laser = Source.shaped_laser(shape=Pulse.gaussian(), parameters={&#39;amplitude&#39;: 5})
+laser.plot_lifetime(label=&#39;Coherent state&#39;).show()
+laser.photon_statistics(truncation=50).plot(label=&#39;Coherent state&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_11_0.png" src="../_images/notebooks_wigner_functions_11_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_11_1.png" src="../_images/notebooks_wigner_functions_11_1.png" />
+</div>
+</div>
+<p>We can see that we are still able to simulate the time-integrated photon statistics of a coherent pulse up to <span class="math notranslate nohighlight">\(n=50\)</span> without actually simulating the full time dynamics of a 50-level laser cavity system. By default, the “quantum” part of the oscillator() source is truncated at just 2 energy levels, which can capture critical single-photon fluctuations of the local oscillator during homodyne measurement, while the “classical” part takes care of the coherent statistics that performs the
+displacement.</p>
+<p>Note that, unlike other catalogue source types that take a pulse keyword, the oscillator takes the shape keyword. The difference being that the keyword ‘pulse’ is reserved for the excitation pulse of a quantum source, which then dictates the ‘shape’ of the emitted light. In the case of the oscillator, the shape keyword directly determines the temporal shape of the light emitted by the laser. This comes in handy if we want to shape our laser to interfere with the emission from another source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)  # make the source we want to characterise
+lifetime = source.lifetime()
+
+# make the shaped laser pulse to perform homodyne tomography
+laser = Source.shaped_laser(shape=lifetime, parameters={&#39;amplitude&#39;: 5})
+laser.plot_lifetime(start=-1, end=6, parameters={&#39;amplitude&#39;: 1}).show()
+laser.photon_statistics(truncation=50).plot(label=&#39;Coherent state&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_13_0.png" src="../_images/notebooks_wigner_functions_13_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_13_1.png" src="../_images/notebooks_wigner_functions_13_1.png" />
+</div>
+</div>
+<p>Now we can see that the classica pulse has an exponentially-decaying temporal profile, yet it retains the Gaussian-distributed photon statistics of a coherent state.</p>
+</section>
+<section id="Unbalanced-homodyne">
+<h2>Unbalanced homodyne<a class="headerlink" href="#Unbalanced-homodyne" title="Link to this heading"></a></h2>
+<p>Let’s take a look at doing homodyne tomography now. Since we have constructed our source and shaped our laser, we interfere the emission from these sources at a highly-transmissive beam splitter with a parity detector at the output.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span># build our unbalanced homodyne setup
+R = 0.001  # beam splitter with reflectivity of 0.1%
+theta_BS = np.arcsin(np.sqrt(R))  # turn that into a beam splitter angle
+p = Processor()
+p.add(0, source)
+p.add(1, laser)
+p.add(0, Circuit.bs(theta_BS))
+p.add(0, Detector.parity())
+
+# simulate the wigner function while tuning the local oscillator amplitude from -100 to 100
+wigner = []
+alphas = np.linspace(-100, 100, 100)
+for alpha in alphas:
+    wigner.append(p.probs(parameters={&#39;amplitude&#39;: alpha})[&#39;p&#39;])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.plot(alphas, wigner)
+plt.xlabel(&#39;Laser pulse amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Parity summation&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_18_0.png" src="../_images/notebooks_wigner_functions_18_0.png" />
+</div>
+</div>
+<p>We can see that the shape looks correct for a single photon, but that the x- and y-axis scales are way off! To fix the y-axis, we must multiply the parity summation by <span class="math notranslate nohighlight">\(1/\pi\)</span>. The x-axis scale is off because the amount of laser that actually interferes with our source emission is limited by the high transmissivity of the beam splitter. Thus, we must correct for it by scaling the x-axis accordingly by the factor <span class="math notranslate nohighlight">\(\sqrt{2 R/(1-R)}\)</span>. With this correction, let’s now compare our
+numerical simulation of unbalanced homodyne detection with the analytic solution:</p>
+<div class="math notranslate nohighlight">
+\[W_{|1\rangle}(\alpha) = \frac{2|\alpha|^2 - 1}{\pi} e^{-|\alpha|^2}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>scaled_alpha = [a * np.sqrt(2*R/(1-R)) for a in alphas]
+plt.plot(scaled_alpha, [w/np.pi for w in wigner], label=&#39;ZPG&#39;)
+plt.plot(scaled_alpha, [np.exp(-a**2) * (2*a**2 - 1)/np.pi for a in scaled_alpha], label=&#39;Analytic&#39;, ls=&#39;dashed&#39;)
+plt.legend()
+plt.xlabel(&#39;Effective laser amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Wigner function, $W(\\alpha)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_20_0.png" src="../_images/notebooks_wigner_functions_20_0.png" />
+</div>
+</div>
+<section id="Wigner-method">
+<h3>Wigner method<a class="headerlink" href="#Wigner-method" title="Link to this heading"></a></h3>
+<p>Since the above procedure for characterising a source is the same for any source, it is bundled together as a characterisation method of the SourceComponent class called wigner(). Let’s take this opportunity to check what <span class="math notranslate nohighlight">\(|2\rangle\)</span> looks like:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(2)  # make our source we want to characterise
+
+# simulate the wigner function while tuning the local oscillator amplitude from -100 to 100
+alphas = np.linspace(-4, 4, 100)
+wigner = source.wigner(alpha=alphas, pseudo_limit=0.001)
+
+plt.plot(wigner.alphas, wigner.points, label=&#39;ZPG&#39;)
+plt.plot(alphas, [np.exp(-a**2) * (1 - 4*a**2 + 2*a**4)/np.pi for a in alphas], label=&#39;Analytic&#39;, ls=&#39;dashed&#39;)
+plt.legend()
+plt.xlabel(&#39;Effective laser amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Wigner function, $W(\\alpha)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_23_0.png" src="../_images/notebooks_wigner_functions_23_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Imperfections">
+<h2>Imperfections<a class="headerlink" href="#Imperfections" title="Link to this heading"></a></h2>
+<p>Now that we have verified that the numerical approach matches the analytic solution, we can look at what happens to our Wigner function when we use an imperfect single-photon source. Now that we have imperfections, the result may not be symmetric. Let’s look along both the X and P axes of the Wigner function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.two_level(pulse=Pulse.gaussian({&#39;width&#39;: 0.1, &#39;dephasing&#39;: 0.1, &#39;detuning&#39;: 0.1}), efficiency=0.9)
+source.photon_statistics().display()
+
+alphas = np.linspace(-4, 4, 100)
+wignerX = source.wigner(alpha=alphas)
+wignerP = source.wigner(alpha=[1.j * a for a in alphas])
+
+plt.plot(wignerX.alphas, wignerX.points, label=&#39;Imperfect X&#39;)
+plt.plot(wignerX.alphas, wignerP.points, label=&#39;Imperfect P&#39;)
+plt.plot(alphas, [np.exp(-a**2) * (2*a**2 - 1)/np.pi for a in alphas], label=&#39;Perfect&#39;, ls=&#39;dashed&#39;)
+plt.legend()
+plt.xlabel(&#39;LO amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Wigner function, $W(\\alpha)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.09943
+1       | 0.87399
+2       | 0.02645
+3       | 0.00014
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_26_1.png" src="../_images/notebooks_wigner_functions_26_1.png" />
+</div>
+</div>
+<p>With this approach, it is also straightforward to simulate the Wigner function of light produced by multi-pulse sequences. To demonstrate, let’s look at the time-integrated Wigner function of the photon-number encoded Bell state <span class="math notranslate nohighlight">\(|\psi_2\rangle = (|00\rangle + |11\rangle)/\sqrt{2}\)</span> in back-to-back time bins produced by the <span class="math notranslate nohighlight">\(N=2\)</span> Fibonacci pulse sequence (see the <a class="reference internal" href="fibonacci_states.html"><span class="doc">Fibonacci States</span></a> tutorial). In this case, the pulse of light is in a superposition of vacuum
+and two photons that arrive back-to-back, rather than two photons in a perfect Fock state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+sequence.add(Pulse.dirac({&#39;delay&#39;: 0}))
+sequence.add(Pulse.dirac({&#39;delay&#39;: np.log(2)}))
+
+source = Source.two_level(pulse=sequence)
+source.photon_statistics().display()
+
+alphas = np.linspace(-4, 4, 100)
+wignerX = source.wigner(alpha=alphas)
+wignerP = source.wigner(alpha=[1.j * a for a in alphas])
+
+plt.plot(wignerX.alphas, wignerX.points, label=&#39;X&#39;)
+plt.plot(wignerX.alphas, wignerP.points, label=&#39;P&#39;)
+plt.legend()
+plt.xlabel(&#39;LO amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Wigner function, $W(\\alpha)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50000
+1       | 0.00000
+2       | 0.50000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_28_1.png" src="../_images/notebooks_wigner_functions_28_1.png" />
+</div>
+</div>
+<p>Let’s compare that to the state <span class="math notranslate nohighlight">\((|0\rangle + |2\rangle)/\sqrt{2}\)</span> by manually setting the initial state of a fock(2) source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(2)
+source.initial_state = (source.states[&#39;|0&gt;&#39;] +  source.states[&#39;|2&gt;&#39;])/np.sqrt(2)
+source.photon_statistics().display()
+
+alphas = np.linspace(-4, 4, 100)
+wignerX = source.wigner(alpha=alphas)
+wignerP = source.wigner(alpha=[1.j * a for a in alphas])
+
+plt.plot(wignerX.alphas, wignerX.points, label=&#39;X&#39;)
+plt.plot(wignerX.alphas, wignerP.points, label=&#39;P&#39;)
+plt.legend()
+plt.xlabel(&#39;LO amplitude, $\\alpha$&#39;)
+plt.ylabel(&#39;Wigner function, $W(\\alpha)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50000
+1       | 0.00000
+2       | 0.50000
+3       | 0.00000
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_30_1.png" src="../_images/notebooks_wigner_functions_30_1.png" />
+</div>
+</div>
+<p>As we can see, the two cases both have <span class="math notranslate nohighlight">\(p_0=1/2\)</span> and <span class="math notranslate nohighlight">\(p_2=1/2\)</span> but their Wigner functions are not identical! This is because the correlations in the arrival time of the photons for the Bell state necessarily restricts a certain amount of coherence with the laser pulse.</p>
+</section>
+<section id="3D-plotting">
+<h2>3D plotting<a class="headerlink" href="#3D-plotting" title="Link to this heading"></a></h2>
+<p>Of course, we can also generate some 3D plots of the Wigner function in phase space if we are willing to wait some minutes. It’s important to recognize that this is a fully general and direct numerical simulation of a time-integrated Wigner function produced by a pulsed quantum emitter. There are faster ways to simulate a Wigner function for continuous wave systems (those that are not pulsed) and also for states that can be easily written in terms of a single pulse mode, such as a perfect single
+photon. However, the ZPG method can broadly capture physical phenomena and imperfections that those more specialised approaches cannot.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+sequence.add(Pulse.gaussian({&#39;delay&#39;: 0, &#39;width&#39;: 0.03, &#39;area&#39;: np.pi}))  # let&#39;s see what happens if we apply pi
+sequence.add(Pulse.gaussian({&#39;delay&#39;: np.log(2), &#39;width&#39;: 0.04, &#39;area&#39;: np.pi/2}))  # then pi/2 with a slightly different width
+
+source = Source.two_level(pulse=sequence, parameters={&#39;dephasing&#39;: 0.1, &#39;detuning&#39;: 0.2}, efficiency=0.95)
+mag = np.linspace(0.1, 4, 30)
+phase = np.linspace(0, 2*np.pi, 30)
+wigner = source.wigner(alpha=[m * np.exp(1.j * p) for m in mag for p in phase])
+wigner = [[wigner.points[j + i * len(phase)] for i in range(0, len(mag))] for j in range(0, len(phase))]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>fig = plt.figure(figsize=plt.figaspect(0.5)*1.5)
+ax = fig.add_subplot(projection=&#39;3d&#39;)
+
+R, P = np.meshgrid(mag, phase)
+X, Y = R*np.cos(P), R*np.sin(P)
+Z = np.array(wigner)
+surf = ax.plot_surface(X, Y, Z, cmap=&#39;plasma&#39;, alpha=0.8)
+
+ax.set_zlim(-0.15, 0.2)
+ax.set_xlabel(&#39;$x$&#39;)
+ax.set_ylabel(&#39;$p$&#39;)
+cbar = fig.colorbar(surf, shrink=0.5, aspect=10)
+cbar.ax.set_title(&#39;$W(x, y)$&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_wigner_functions_35_0.png" src="../_images/notebooks_wigner_functions_35_0.png" />
+</div>
+</div>
+<p>The result looks like a mixture between a single photon and a superposition between vacuum and a single photon. Although, we would find that it is not exactly this!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fibonacci_states.html" class="btn btn-neutral float-left" title="Fibonacci States" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="entanglement_generation.html" class="btn btn-neutral float-right" title="Entanglement Generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

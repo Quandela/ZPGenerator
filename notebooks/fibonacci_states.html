@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fibonacci States &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Wigner Functions" href="wigner_functions.html" />
+    <link rel="prev" title="Cavity QED" href="cavity_QED.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fibonacci States</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Theory-background">Theory background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Fibonacci-pulse-sequence">Fibonacci pulse sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Fibonacci-source">Fibonacci source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Interference">Interference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Imperfections">Imperfections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fibonacci States</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/fibonacci_states.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Fibonacci-States">
+<h1>Fibonacci States<a class="headerlink" href="#Fibonacci-States" title="Link to this heading"></a></h1>
+<p>ZPGenerator is designed to simulate sources of light that require complicated pulse sequences to produce the photonic state. To demonstrate this capability, this example explores constructing and simulating a source of entangled photonic Fibonacci states that were first proposed and demonstrated in a Quandela research paper [<a class="reference external" href="https://www.nature.com/articles/s41566-022-00979-z">S. C. Wein et al., Nature Photonics 16, 374–379 (2022)</a>].</p>
+<section id="Theory-background">
+<h2>Theory background<a class="headerlink" href="#Theory-background" title="Link to this heading"></a></h2>
+<p>Two-level atoms, or artificial atoms such as quantum dots, have been widely studied as a source of single photons. To deterministically generate entangled states of light, usually we must turn to sources of light based on multi-level systems, such as charged exciton containing the trion state (see the <a class="reference internal" href="quantum_dots.html"><span class="doc">Quantum Dots</span></a> and <a class="reference internal" href="entanglement_generation.html"><span class="doc">Entanglement Generation</span></a> tutorials). Surprisingly, a two-level system composed of a ground state <span class="math notranslate nohighlight">\(|g\rangle\)</span> and
+an excited state <span class="math notranslate nohighlight">\(|e\rangle\)</span> <em>can</em> be used to deterministically generate entangled states of light encoded in the photon-number basis. This relies on the fact that the interaction between a two-level system and the electromagnetic field is essentially an entangling gate that preserves quantum coherence [<a class="reference external" href="https://www.nature.com/articles/s41566-019-0506-3">J. C. Loredo et al., Nature Photonics 13, 803–808 (2019)</a>].</p>
+<p>The basic idea is to apply a sequence of well-timed excitation pulses to re-excite the atom before it has had time to fully decay. These excitation pulses play the role of single-qubit bit-flip gates on an ancillary qubit (the source) that is used to entangled the electromagnetic field. The photonic qubits are then the occupation of time bin modes defined between each subsequent pulse.</p>
+<p>As an example, the state of the source after a single <span class="math notranslate nohighlight">\(\pi\)</span> pulse is <span class="math notranslate nohighlight">\(|e\rangle\)</span>. After a delay exactly equal to the atomic half-life <span class="math notranslate nohighlight">\(\tau = T_1\ln(2)\)</span> where <span class="math notranslate nohighlight">\(T_1\)</span> is the source lifetime, the atom may or may not have emitted a photon. Since the light-matter interaction is coherent, the total source-field system enters into an entangled state <span class="math notranslate nohighlight">\(|\Psi\rangle = (|e\rangle|0\rangle + |g\rangle|1\rangle)/\sqrt{2}\)</span>. If, at this moment, we apply a second <span class="math notranslate nohighlight">\(\pi\)</span> pulse,
+the state of the source is flipped and the total light-matter state becomes <span class="math notranslate nohighlight">\(|\Psi\rangle = (|g\rangle|0\rangle + |e\rangle|1\rangle)/\sqrt{2}\)</span>. Now, if we let the atom finish decaying to the ground state, we are left with the separable state <span class="math notranslate nohighlight">\(|\Psi\rangle = |g\rangle|\psi\rangle\)</span> where the state of the light is a maximally entangled Bell state <span class="math notranslate nohighlight">\(|\psi\rangle = (|00\rangle + |11\rangle)/\sqrt{2}\)</span>.</p>
+<p>This idea can be extended to <span class="math notranslate nohighlight">\(N\)</span> <span class="math notranslate nohighlight">\(\pi\)</span> pulses where each subsequent pulse adds a qubit to the state of light. It turns out that the delay between each pulse that maximises the entanglement in the state of light are determined by the Fibonacci sequence: <span class="math">\begin{equation}
+\tau_i = T_1\ln\left(\frac{F_{N+2-i}}{F_{N-i}}\right)
+\end{equation}</span> where <span class="math notranslate nohighlight">\(F_i = F_{i-1}+F_{i-2}\)</span>, <span class="math notranslate nohighlight">\(F_{0} = 0\)</span>, and <span class="math notranslate nohighlight">\(F_{1}=1\)</span>. Applying a pulse sequence based on this pattern will produce a sequence of entangled states that are expressed as an equally-weighted superposition of <span class="math notranslate nohighlight">\(F_N\)</span> basis states:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    |\psi_0\rangle &amp;= |0\rangle\\
+    |\psi_1\rangle &amp;= |1\rangle\\
+    |\psi_2\rangle &amp;= \left(|00\rangle+|11\rangle\right)/\sqrt{2}\\
+    |\psi_3\rangle &amp;= \left(|001\rangle+|100\rangle+|111\rangle\right)/\sqrt{3}\\
+    |\psi_4\rangle &amp;= \left(|0000\rangle+|0011\rangle+|1001\rangle+|1100\rangle+|1111\rangle\right)/\sqrt{5}\\
+    &amp;\vdots
+\end{aligned}\end{split}\]</div>
+<p>We can also notice that <span class="math notranslate nohighlight">\(|\psi_N\rangle\)</span> is a superposition state of photon number states with the same parity as <span class="math notranslate nohighlight">\(N\)</span>. Either <span class="math notranslate nohighlight">\(N\)</span> is odd and <span class="math notranslate nohighlight">\(|\psi_N\rangle\)</span> is a superposition of odd-numbers of photons or <span class="math notranslate nohighlight">\(N\)</span> is even and <span class="math notranslate nohighlight">\(|\psi_N\rangle\)</span> is a superposition of even-numbers of photons. Furthermore, the number of states composing <span class="math notranslate nohighlight">\(|\psi_N\rangle\)</span> with the same total number of photons will follow Pascal’s triangle:</p>
+<div><p><img alt="2a3ee427ebe94143a100fa9f12ba815c" class="no-scaled-link" src="../_images/pascals_triangle.png" style="width: 500px;" /></p>
+</div></section>
+<section id="Fibonacci-pulse-sequence">
+<h2>Fibonacci pulse sequence<a class="headerlink" href="#Fibonacci-pulse-sequence" title="Link to this heading"></a></h2>
+<p>To test our theory and replicate some experimental results, we can define a Fibonacci pulse sequence and simulate photon statistics using ZPGenerator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+from functools import reduce
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>First, we define a function to generate the Fibonacci sequence. In this case, we can take the answer to <a class="reference external" href="https://stackoverflow.com/questions/4935957/fibonacci-numbers-with-an-one-liner-in-python-3">this Stack Overflow question</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci(n: int) -&gt; int:
+    return reduce(lambda x, n: [x[1], x[0] + x[1]], range(n), [0, 1])[0]
+</pre></div>
+</div>
+</div>
+<p>Second, we can make a function that generates a list of delay times <span class="math notranslate nohighlight">\(\tau_i\)</span> defined in the previous section.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci_delays(N: int) -&gt; list:
+    delays = [0.]  # initialise the list of pulse delay times starting with the initial time of 0.
+
+    # Loop through each pulse and add up the delay, append to the list
+    for i in range(1, N):
+        delay = np.log(fibonacci(N - i + 2) / fibonacci(N - i))  # tau_i in units of T1
+        delays.append(delays[-1] + delay)
+
+    return delays
+</pre></div>
+</div>
+</div>
+<p>Third, we can use the Pulse class to define a function that builds a sequence of <span class="math notranslate nohighlight">\(N\)</span> <span class="math notranslate nohighlight">\(\pi\)</span> pulses separated by the delay <span class="math notranslate nohighlight">\(\tau_i\)</span> defined in the previous section.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci_sequence(N: int,  # the number of pulses
+                       shape: str = &#39;dirac&#39;,  # dirac, gaussian, or square.
+                       width: float = 0.1  # the pulse width (irrelevant for dirac) in units of T1.
+                      ) -&gt; Pulse:
+    sequence = Pulse()  # initialise the pulse object
+
+    delays = fibonacci_delays(N)  # generate the list of pulse times
+
+    for i in range(0, N):  # loop over each pulse and add it to our sequence
+
+        # define the new pulse we want to add
+        pulse_shape = Pulse.square if shape == &#39;square&#39; else Pulse.gaussian if shape == &#39;gaussian&#39; else Pulse.dirac
+        pulse = pulse_shape({&#39;delay&#39;: delays[i], &#39;area&#39;: np.pi, &#39;width&#39;: width}, name=&#39;pulse &#39; + str(i))
+
+        sequence.add(pulse)  # we add the pulse to our sequence
+
+    return sequence
+</pre></div>
+</div>
+</div>
+<p>To get a quick idea of what our pulse sequence looks like, we can use the plot() method. Note that, by default, evaluating a pulse shape will ignore any Dirac pulses.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sequence = fibonacci_sequence(4, shape = &#39;gaussian&#39;, width=0.1)  # define our sequence
+sequence.plot().show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_14_0.png" src="../_images/notebooks_fibonacci_states_14_0.png" />
+</div>
+</div>
+<p>Note that we can always change the pulse parameters afterward making analysis easy!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sequence.plot(parameters={&#39;width&#39;: 0.1}, label=&#39;width = 0.1&#39;)
+sequence.plot(parameters={&#39;width&#39;: 0.2}, label=&#39;width = 0.2&#39;)
+sequence.plot(parameters={&#39;width&#39;: 0.3}, label=&#39;width = 0.3&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_16_0.png" src="../_images/notebooks_fibonacci_states_16_0.png" />
+</div>
+</div>
+<p>Since we named each pulse in the sequence, we can also modify the pulse parameters individually.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sequence.plot(parameters={&#39;pulse 0/width&#39;: 0.10, &#39;pulse/area 0&#39;: np.pi/2,
+                          &#39;pulse 1/width&#39;: 0.12,
+                          &#39;pulse 2/width&#39;: 0.09,
+                          &#39;pulse 3/width&#39;: 0.14}).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_18_0.png" src="../_images/notebooks_fibonacci_states_18_0.png" />
+</div>
+</div>
+</section>
+<section id="Fibonacci-source">
+<h2>Fibonacci source<a class="headerlink" href="#Fibonacci-source" title="Link to this heading"></a></h2>
+<p>Now that we have our pulse sequence, we must build our source by applying the sequence to generate photons.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = Source.two_level(pulse=sequence)
+</pre></div>
+</div>
+</div>
+<p>Once we defined our source, we can simulate various figures of merit. One of the first things to look at is the source “lifetime”, which is the instantaneous probability that the two-level system is in its excited state. This quantity is proportional to the shape of the emitted photonic wavepacket. For visualisation, let’s use a Gaussian pulse shape.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Evaluate the source lifetime between t = -1 and t = 8 for 600 points.
+source.plot_lifetime(start = -1, end = 8, resolution = 600)
+sequence.plot(scale=1/50).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_23_0.png" src="../_images/notebooks_fibonacci_states_23_0.png" />
+</div>
+</div>
+<p>Now that we have verified our source emission intensity looks consistent with our applied pulse sequence, let’s look at the photon statistics. To make things simpler, let’s make a function that returns a Fibonacci source.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci_source(N: int,  # the number of pulses
+                     shape: str = &#39;dirac&#39;,  # dirac, gaussian, or square.
+                     width: float = 0.1,  # the pulse width (irrelevant for dirac) in units of T1.
+                     efficiency: float = 1.  # the efficiency of collecting a photon from the source.
+                     ) -&gt; Source:
+    return Source.two_level(pulse=fibonacci_sequence(N, shape, width), efficiency=efficiency)
+</pre></div>
+</div>
+</div>
+<p>Let’s continue on by first analysing the ideal case where we use Dirac <span class="math notranslate nohighlight">\(\pi\)</span> pulses to compare to our theory. Using the photon_statistics() method, we can automatically and efficiently compute the total integrated photon statistics produced over the entire wavepacket lifetime.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = fibonacci_source(4, shape=&#39;dirac&#39;)
+pn = source.photon_statistics()
+pn.display_figures()
+pn.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Figure of Merit       | Value
+Brightness            | 0.8000
+Average photon number | 2.0000
+Intensity correlation | 0.9000
+
+Number  | Probability
+0       | 0.20000
+1       | 0.00000
+2       | 0.60000
+3       | 0.00000
+4       | 0.20000
+5       | 0.00000
+6       | 0.00000
+
+</pre></div></div>
+</div>
+<p>We can see that the average number of photons (mu <span class="math notranslate nohighlight">\(=\mu\)</span> ) produced by our source per excitation pulse sequence is <span class="math notranslate nohighlight">\(2\)</span>. The source brightness (beta <span class="math notranslate nohighlight">\(=\beta\)</span>), which is the probability of producing at least one photon per excitation pulse sequence, is <span class="math notranslate nohighlight">\(0.8\)</span>. The integrated intensity correlation (g2 <span class="math notranslate nohighlight">\(= g^{(2)}\)</span>), which characterises the amount of multi-photon emission, is <span class="math notranslate nohighlight">\(0.9\)</span>. These figures of merit seem to be almost classical in nature, but in fact the photon
+number probabilities show very clearly that the photonic state produced by our source is not at all a coherent state. As predicted in the Theory background section, we see non-zero probabilities only for even numbers of photons, which is the same parity as the number of pulses that we applied. Furthermore, we can see that <span class="math notranslate nohighlight">\(1/5\)</span> of the time we measure no photons, <span class="math notranslate nohighlight">\(3/5\)</span> of the time we measure two photons and the remaining <span class="math notranslate nohighlight">\(1/5\)</span> of the time we measure four photons. This 1, 3, 1
+pattern follows the shallow diagonal of Pascale’s triangle shown in the Theory background section for <span class="math notranslate nohighlight">\(|\psi_4\rangle\)</span>.</p>
+<p>To demonstrate how fast ZPGenerator is for computing integrated photon number probabilities, let’s take a quick look at the photon distribution of the <span class="math notranslate nohighlight">\(|\psi_{40}\rangle\)</span> and <span class="math notranslate nohighlight">\(|\psi_{41}\rangle\)</span> Fibonacci states. Note that, these highly-entangled photonic states live in a total Hilbert space of up to <span class="math notranslate nohighlight">\(2^{41}=2.2\)</span> trillion in size. However, since we are only obtaining the integrated (averaged) photon number statistics of the state, the simulation can be performed in polynomial
+time using the ZPG method.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = fibonacci_source(40, shape=&#39;dirac&#39;)
+psi40 = source.photon_statistics(truncation=40)
+
+source = fibonacci_source(41, shape=&#39;dirac&#39;)
+psi41 = source.photon_statistics(truncation=41)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>psi40.plot(label=&#39;|$\psi_{40}$&gt;&#39;, color=&#39;b&#39;)
+psi41.plot(label=&#39;|$\psi_{41}$&gt;&#39;, color=&#39;r&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_30_0.png" src="../_images/notebooks_fibonacci_states_30_0.png" />
+</div>
+</div>
+<p>In the above plot, we can see clearly that for <span class="math notranslate nohighlight">\(N=40\)</span>, only even-<span class="math notranslate nohighlight">\(n\)</span> probabilities are nonzero. Likewise for <span class="math notranslate nohighlight">\(N=41\)</span>, only odd-<span class="math notranslate nohighlight">\(n\)</span> probabilities are nonzero. Interestingly, the shape of the distribution when neglecting the parity, follows a Gaussian distribution.</p>
+<p>To be sure that we are generating states with individual qubits occupying the time bin modes, and not just a single mode with an interesting photon-number distribution, we must resolve the possible Fock states contributing to the total Fibonacci state. For <span class="math notranslate nohighlight">\(|\psi_4\rangle\)</span>, this means we must resolve the three states: <span class="math notranslate nohighlight">\(|0011\rangle\)</span>, <span class="math notranslate nohighlight">\(|1001\rangle\)</span>, and <span class="math notranslate nohighlight">\(|1100\rangle\)</span> that contribute to the two-photon subspace. To do this, we can measure time-bin correlations.</p>
+<h2 align="center"><ol class="arabic simple" start="4">
+<li><p>Time Bin Correlations</p></li>
+</ol>
+</h2><p>Once we have designed our source, we can monitor its emission into different time bins using the Processor class to add detectors explicitly. In this case, we have a very simple Processor composed of a single mode collecting emission from our Fibonacci source, an identity linear-optical circuit, but a more complex set of time bin detectors counting photons in defined time bins. Since we already built our source in the previous sections, let’s build a detector that partitions time following the
+same time bin thresholds that we used to define the pulse sequence. This kind of time-bin partitioned detector can easily be created using the partition() class method of Detector. See <a class="reference external" href="detectors.ipynb">Detectors</a> for more information about this catalogue detector type.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci_detector(pulse_number: int):
+    return Detector.partition(thresholds=fibonacci_delays(pulse_number), name=&#39;fibo&#39;)
+</pre></div>
+</div>
+</div>
+<p>Now, let’s add it to a processor following the Fibonacci source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pulse_number = 4
+p = Processor() // fibonacci_source(pulse_number) // fibonacci_detector(pulse_number)
+p.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+        _____________
+|0&gt;----|  Component  |----D~ [fibo bin 0, fibo bin 1, fibo bin 2, fibo bin 3]
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾
+</pre></div></div>
+</div>
+<p>Using the display() method, we can see that our processor is composed of a single source with emission collected into a single mode, and monitored by a single detector. However, there are 4 detection bins associated with the detector. Note that we can always check how many measurement bins the processor contains by looking at the ‘bins’ property.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p.bins
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4
+</pre></div></div>
+</div>
+<p>Let’s take a look at the probabilities for detecting photons across these four time bins.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pn = p.probs()
+pn.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0 0 0 | 0.20000
+0 0 1 1 | 0.20000
+1 0 0 1 | 0.20000
+1 1 0 0 | 0.20000
+1 1 1 1 | 0.20000
+
+</pre></div></div>
+</div>
+<p>As predicted in the Theory background section, we can now resolve all five possible outcomes of our Fibonacci source, and they each occur with <span class="math notranslate nohighlight">\(1/5\)</span> probability! As a general rule, the outcome labels of Processor give the photon number listed chronologically from left to right for each detection time bin. Luckily, we assigned a name to our time partition detector, which labels each bin chronologically, so we can always double-check the ordering by looking at the ‘bin_labels’ property of
+the processor.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p.bin_labels
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;fibo bin 0&#39;, &#39;fibo bin 1&#39;, &#39;fibo bin 2&#39;, &#39;fibo bin 3&#39;]
+</pre></div></div>
+</div>
+</section>
+<section id="Interference">
+<h2>Interference<a class="headerlink" href="#Interference" title="Link to this heading"></a></h2>
+<p>Now that we have confirmed our source produces the correct photon statistics, we should also ensure that we have coherence between Fock states. To do this, we can follow the method used in [<a class="reference external" href="https://www.nature.com/articles/s41566-022-00979-z">S. C. Wein et al., Nature Photonics 16, 374–379 (2022)</a>] to characterise the <span class="math notranslate nohighlight">\(N=2\)</span> Bell state using Hong-Ou-Mandel interference and measuring the second-order number coherence (<span class="math notranslate nohighlight">\(c^{(2)}\)</span>) between <span class="math notranslate nohighlight">\(|00\rangle\)</span> and <span class="math notranslate nohighlight">\(|11\rangle\)</span>.
+Using ZPGenerator, we can make quick estimates of figures of merit obtained from Hong-Ou-Mandel interference using the hom() method of the Processor class. Since we only want to view these figures of merit, let’s use the display_hom() method, which computes hom() and then displays the results.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p = Processor() // fibonacci_source(2)
+p.display_hom(pseudo_limit=0.005)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Figure of Merit                | Value
+First order number coherence   | 0.0013
+Second order number coherence  | 0.5076
+Hong-Ou-Mandel visibility      | -0.5176
+Mean wavepacket overlap        | 0.4850
+
+</pre></div></div>
+</div>
+<p>The hom() method applies a pseudo-lossy regime algorithm using threshold detectors and so, although it is fast to evaluate, it can be quite sensitive to the ‘pseudo_limit’ efficiency regime parameter. For an appropriate choice of pseudo_limit, we can see that ZPGenerator predicts very close to the ideal values expected from the ideal Bell state in [<a class="reference external" href="https://www.nature.com/articles/s41566-022-00979-z">S. C. Wein et al., Nature Photonics 16, 374–379 (2022)</a>]. That is, we get
+<span class="math notranslate nohighlight">\(c^{(2)}\simeq 1/2\)</span>, <span class="math notranslate nohighlight">\(c^{(1)}\simeq 0\)</span>, and <span class="math notranslate nohighlight">\(V_\text{HOM}= M - g^{(2)} \simeq -1/2\)</span> implying <span class="math notranslate nohighlight">\(M\simeq 1/2\)</span>. To do better than this quick estimation algorithm, we can manually build a Hong-Ou-Mandel processor and do our own virtual experiment using photon-number resolving detectors.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fibonacci_hom(phase: float = 0, shape: str = &#39;dirac&#39;, width: float = 0.1, efficiency: float = 1.) -&gt; Processor:
+    p = Processor()  # initialise a processor with two modes
+
+    p.add([0, 1], fibonacci_source(2, shape, width, efficiency))  # add an N=2 Fibonacci source to modes 0 and 1
+    p.add(0, Circuit.ps(phase))  # add a phase shifter on mode 0 to tune the relate phases of the interfering photonic states
+    p.add(0, Circuit.bs())  # add the beam splitter to perform Hong-Ou-Mandel interference
+    p.add(0, Detector.pnr(4), bin_name=&#39;output 0&#39;)  # Add number resolving detectors monitoring output modes with maximum resolution of 4
+    p.add(1, Detector.pnr(4), bin_name=&#39;output 1&#39;)
+
+    return p
+</pre></div>
+</div>
+</div>
+<p>Now that we have built our Hong-Ou-Mandel processor, we can take a look at the probabilities from interference when there is no relative phase between our input states. Note that, in this case, our detectors are not time bin arrays, so we will look at the time-integrated properties of our state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p = fibonacci_hom(0)
+p.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0     | 0.25000
+4 0     | 0.06250
+1 1     | 0.50000
+2 2     | 0.12500
+0 4     | 0.06250
+
+</pre></div></div>
+</div>
+<p>The outcomes of a Processor are automatically arranged in chronological order based on the initial time of each detection time bin. If two bins share the same initial time, as in this case, they will be arranged according to the order that the detectors were added to the processor. Since we named our arrays based on the output port they were added to, we can double-check the ordering by looking at the bin_labels properties of our Processor.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&#39;Bin labels: &#39;, p.bin_labels)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Bin labels:  [&#39;output 0&#39;, &#39;output 1&#39;]
+</pre></div></div>
+</div>
+<p>To get a better estimate of the second-order coherence <span class="math notranslate nohighlight">\(c^{(2)}\)</span>, we can look at how the two-photon coincidence (1, 1) depends on the relative phase of the input states. Note that this type of exact numerical simulation would usually take an extremely long time to compute, because it requires simulating conditional time evolution of source states in the tensor product space of two source Hilbert spaces, evaluating <span class="math notranslate nohighlight">\(4^2 = 16\)</span> possible detection outcomes for two detectors each
+resolving up to 4 photons, and then again for multiple different measurement configurations of our linear-optical circuit. Standard time-integration techniques would require recursive integration over multi-time correlation functions up to 8 dimensions in time. Using the ZPG method, however, we bypass this high-dimensional integration such that the simulation takes only a handful of seconds.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>phases = np.linspace(0, np.pi, 25)  # define some phases
+probs = [fibonacci_hom(phi).probs() for phi in phases]  # evaluate the HOM probabilities for each phase
+
+# Let&#39;s extract coincidence probabilities only
+coinc_labels = [(1, 1), (1, 2), (2, 1), (2, 2)]
+coinc = [[pr[c] for c in coinc_labels] for pr in probs]
+
+# Plot each coincidence event
+for i, c in enumerate(coinc_labels):
+    plt.plot(phases, list(zip(*coinc))[i], label=&#39;Pr(&#39; + &#39;&#39;.join([str(n) for n in c]) + &#39;)&#39;)
+
+plt.xlabel(&#39;Relative phase, $\phi$&#39;)
+plt.ylabel(&#39;Coincidence probability&#39;)
+plt.legend(loc=&#39;upper center&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_54_0.png" src="../_images/notebooks_fibonacci_states_54_0.png" />
+</div>
+</div>
+<p>As expected, we can see a clear fringe in the two-photon (1, 1) coincidence events due to interference between the vacuum of one input state and the two-photon state of the other, indicating coherence. On the other hand, the four-photon outcomes shows no such fringe, which is expected because there is only one possible input state combination giving rise to that outcome for a <span class="math notranslate nohighlight">\(|\psi_2\rangle\)</span> state. Also, we can see that we never observe odd photon number coincidence events because our
+source is producing an even Fibonacci state!</p>
+<p>The value of <span class="math notranslate nohighlight">\(c^{(2)}\)</span> can now be directly determined by taking the difference in the coincidence intensity at the minimum and maximum of the fringe, and then normalising by the squared average photon number of our source: <span class="math notranslate nohighlight">\(c^{(2)} = \frac{1}{\mu^2}\sum_{n,m}nm|Pr_{\phi=0}(nm) - Pr_{\phi=\pi/2}(nm)|\)</span>. Using either <span class="math notranslate nohighlight">\(\mu=1\)</span> from before or <span class="math notranslate nohighlight">\(\mu=\frac{1}{2}\sum_{n,m}(n+m)Pr(nm)\)</span>, we can confirm <span class="math notranslate nohighlight">\(c^{(2)}=\frac{1}{2}\)</span> which, along with verifying that our source is indeed
+producing a photon-number Bell state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def c2(shape: str = &#39;dirac&#39;, width: float = 0.1, efficiency: float = 1., args: dict = None) -&gt; float:
+    # Simulate HOM for max and min of the fringe
+    probs0 = fibonacci_hom(0, shape, width, efficiency).probs(args)
+    probs1 = fibonacci_hom(np.pi/2, shape, width, efficiency).probs(args)
+
+    # Estimate mu from half the average photon number of both ouputs
+    mu = sum((int(k[0]) + int(k[1]))*pr for k, pr in probs0.items())/2
+
+    # Compute c2
+    return sum(int(k[0])*int(k[1])*abs(probs0[k] - probs1[k]) for k in probs0.keys())/mu**2
+
+print(c2())
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.5000022420571637
+</pre></div></div>
+</div>
+</section>
+<section id="Imperfections">
+<h2>Imperfections<a class="headerlink" href="#Imperfections" title="Link to this heading"></a></h2>
+<p>In reality, we are not able to apply perfect Dirac pulses to our emitter and our setup may not have perfect collection or detection efficiency. ZPGenerator is designed to take many physical imperfections into account in a natural way. To study imperfections, we can make a function that simulates the classical Bhattacharyya coefficient. This coefficient is an upper bound on the quantum state fidelity.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def bhatt_fidelity(N: int,  # the number of pulses
+                   shape: str = &#39;dirac&#39;,  # dirac, gaussian, or square.
+                   width: float = 0.1,  # the pulse width (irrelevant for dirac) in units of T1.
+                   efficiency: float = 1.  # the end-to-end efficiency
+                  ):
+
+    # First, we simulate the ideal case as before
+    p = Processor() // fibonacci_source(N) // fibonacci_detector(N)
+    ideal_probs = p.probs()
+
+    # next, we simulate the imperfect case
+    p = Processor() // fibonacci_source(N, shape=shape, width=width, efficiency=efficiency) // fibonacci_detector(N)
+    probs = p.probs()
+
+    # we estimate an upper bound on the quantum state fidelity using squared classical Bhattacharyya coefficient
+    bhatt = 0
+    for k, v in ideal_probs.items():
+        bhatt += np.sqrt(v * probs[k]) if k in probs.keys() else 0
+
+    return bhatt ** 2
+</pre></div>
+</div>
+</div>
+<p>Using this function, we can increase the Gaussian pulse width and see how the fidelity bound decreases.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pulse_widths = np.linspace(0.001, 0.501, 20)
+
+fidelity_set = [bhatt_fidelity(4, shape=&#39;gaussian&#39;, width=width) for width in pulse_widths]
+
+plt.plot(pulse_widths, fidelity_set)
+plt.xlabel(&quot;Gaussian pulse standard deviation ($T_1$)&quot;)
+plt.ylabel(&quot;Bhattacharyya coefficient&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_61_0.png" src="../_images/notebooks_fibonacci_states_61_0.png" />
+</div>
+</div>
+<p>Similarly, we can see how inefficiency decreases the fidelity bound even using perfect pulses.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>efficiency_set = np.linspace(0, 1, 20)
+
+fidelity_set = [bhatt_fidelity(4, shape=&#39;dirac&#39;, efficiency=efficiency) for efficiency in efficiency_set]
+
+plt.plot(efficiency_set, fidelity_set)
+plt.xlabel(&quot;Efficiency, $\eta$&quot;)
+plt.ylabel(&quot;Bhattacharyya coefficient&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_fibonacci_states_63_0.png" src="../_images/notebooks_fibonacci_states_63_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cavity_QED.html" class="btn btn-neutral float-left" title="Cavity QED" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wigner_functions.html" class="btn btn-neutral float-right" title="Wigner Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

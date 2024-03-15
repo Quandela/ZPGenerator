@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entanglement Generation &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The RUS Gate" href="RUS_gate.html" />
+    <link rel="prev" title="Wigner Functions" href="wigner_functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Entanglement Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Photon-number-encoding">Photon-number encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Time-bin-encoding">Time-bin encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Polarization-encoding">Polarization encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Comparison">Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Entanglement Generation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/entanglement_generation.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Entanglement-Generation">
+<h1>Entanglement Generation<a class="headerlink" href="#Entanglement-Generation" title="Link to this heading"></a></h1>
+<p>A useful feature of ZPGenerator is that it can also provide the state of the source conditioned on time-integrated detection outcomes, in addition to raw detection probability. This is allows the package to be used to study protocols that encode quantum information in the state of the source. In this tutorial, we will explore the conditional states feature in order to estimate the quality of photon-mediated entanglement generation between spin qubits situated in spatially-separated emitters.
+Following the structure of [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.102.033701">S. C. Wein et al., Phys. Rev. A 102, 033701 (2020)</a>], we will delve into three different protocols each based on a different encoding in the pulse of light: (1) photon-number encoding, (2) time-bin encoding, (3) and polarization encoding. To demonstrate these protocols, we will use the Source.trion() source type, which is introduced in the third section of the <a class="reference internal" href="quantum_dots.html"><span class="doc">Quantum Dots</span></a>
+tutorial.</p>
+<section id="Photon-number-encoding">
+<h2>Photon-number encoding<a class="headerlink" href="#Photon-number-encoding" title="Link to this heading"></a></h2>
+<p>This scheme for generating entanglement between remote spin qubits relies on first entangling the spin degree of freedom with the number of emitted photons (either 0 or 1). In other words, the goal is to produce a state of the form <span class="math notranslate nohighlight">\(|\psi\rangle = (|\downarrow\rangle |0\rangle + |\uparrow\rangle |1\rangle)/\sqrt{2}\)</span> from each of two different emitters. The pulse of light is then sent through a beam splitter that is monitored by photon-number resolving detectors. If exactly one detector
+detects exactly one photon, then the which-path information of the incoming photon is erased and the two spin qubits are projected onto a maximally entangled Bell state. Let’s set up this experiment using ZPGenerator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import qutip  as qt
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>First thing to do is create our trion quantum dot source. By default, the trion initial state is a maximally mixed state between the spin up anda spin down states. To produce entanglement, we can initialize our trion into a superposition state. A more realistic simulation might explicitly simulate this state preparation step, as was shown in the <a class="reference internal" href="quantum_dots.html"><span class="doc">Quantum Dots</span></a> tutorial.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>trion = Source.trion()
+trion.initial_state = (trion.states[&#39;|spin_up&gt;&#39;] + trion.states[&#39;|spin_down&gt;&#39;]) / np.sqrt(2)
+</pre></div>
+</div>
+</div>
+<p>To produce the entangled state, we can drive our source with a <span class="math notranslate nohighlight">\(\pi\)</span> pulse to excite the <span class="math notranslate nohighlight">\(|\uparrow\rangle\)</span> state so that it produces an R-polarized photon. To ensure this behaviour, we can update the default parameters of the source so that the excitation and collection angles are both circularly polarized.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>trion.update_default_parameters({&#39;theta&#39;: np.pi/4, &#39;phi&#39;: -np.pi/2, # excitation polarization: right circular polarized.
+                                 &#39;theta_c&#39;: np.pi/4, &#39;phi_c&#39;: -np.pi/2, # collect polarization: right mode 0 (left for mode 1)
+                                 &#39;area&#39;: np.pi})  # pulse area of pi to bring the spin up state fully to the trion state
+</pre></div>
+</div>
+</div>
+<p>Now that we have created our source, we can build our optical setup using the Processor class. Recall that the trion source has two emission modes: a right-polarized emission and a left-polarized emission by default. So, we can add our trion source to modes 0 and 2 of our processor, so that the polarization assignment will be: 0 - Right, 1 - Left, 2 - Right, 3 - Left.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p = Processor() // ([0, 2], trion)
+</pre></div>
+</div>
+</div>
+<p>We can check to ensure that our excitation and collection parameters are correct by seeing if modes 0 and 2 each show a probability of 1/2 to emit a photon while modes 1 and 3 are empty.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>for m in range(4):
+    print(&#39;Mode &#39; + str(m))
+    p.photon_statistics(port=m, truncation=2).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Mode 0
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+
+Mode 1
+Warning: no light detected in mode 1, g2 1 cannot be defined.
+Number  | Probability
+0       | 1.00000
+1       | 0.00000
+2       | 0.00000
+
+Mode 2
+Number  | Probability
+0       | 0.50000
+1       | 0.50000
+2       | 0.00000
+
+Mode 3
+Warning: no light detected in mode 3, g2 3 cannot be defined.
+Number  | Probability
+0       | 1.00000
+1       | 0.00000
+2       | 0.00000
+
+</pre></div></div>
+</div>
+<p>To generate entanglement between the two emitters, we must pass the emission from modes 0 and 2 through each input of a balanced beamsplitter. To do this, we can permute the modes so that modes 0 and 2 are beside each other, then add our beamsplitter. Let’s also add a beam splitter on the orthogonal polarization mode and permute the modes back, so that the entire component can represent a single beam splitter serving as an entangling circuit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[97]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>entangling_circuit = Circuit.perm([0, 2, 1, 3]) // (0, Circuit.bs()) // (2, Circuit.bs()) // Circuit.perm([0, 2, 1, 3])
+detectors = ([0, 2], Detector.pnr(2))
+p = p // entangling_circuit // detectors
+</pre></div>
+</div>
+</div>
+<p>Now that we have defined our optical setup, we can simulate all the conditional states of the processor using the conditional_states() method of the Processor class. This produces a dictionary of Qobj density operators that represent the unnormalized state of the two trion sources conditioned on the photo-detection pattern represented by the dictionary key of a tuple of integers. Please see the <a class="reference external" href="https://qutip.org/docs/latest/">QuTiP Documentation</a> for more information about Qobj objects.</p>
+<p>Notice that, since the final time is by default much longer than the system emission timescale, all the conditional states have negligible population in the source excited state. Since we care only about the spin qubit in the ground state, we can take a partial trace of our states to eliminate the excited state manifolds. This can be done using QuTiP’s ptrace function, or we can simply specify the desired subspaces when simulating the conditional states using the ‘select’ keyword, which simply
+applies the ptrace function before returning the results. In this case, note that the first index of the trion source labels the <span class="math notranslate nohighlight">\(|g\rangle\)</span>, <span class="math notranslate nohighlight">\(|e\rangle\)</span> states while the second index of the trion source is the spin qubit. Adding the two sources to the processor concatenates these spaces, so that the desired subspace is the second and fourth indices (labeled 1 and 3). After tracing out the excited states, we can then ask for the state associated with the detection outcome (1, 0),
+where we observed exactly one photon at the first detector and zero photons at the second. If everything goes well, this should be an entangled state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>states = p.conditional_states(select=[1, 3])
+states[1, 0].tidyup(1e-6)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = True $ \\ \left(\begin{matrix}0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.125 &amp; -0.125j &amp; 0.0\\0.0 &amp; 0.125j &amp; 0.125 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+<p>Indeed, we can see that we have an entangled state. However, the density operator is not normalized because the probability of outcome (1, 0) is not unity. We can simply re-normalize this operator by its trace and then use QuTiP’s concurrence function to check how entangled it is.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>qt.concurrence(states[1, 0] / states[1, 0].tr())
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.9999999925450656
+</pre></div></div>
+</div>
+<p>As we can see, the entanglement concurrence of the spin qubit state is unity within precision of the simulation (default 6 digits), given that the outcome (1, 0) was observed. However, note that the efficiency of our setup defaults to 100%, meaning that no photons are lost. Having a protocol that is robust against loss is extremely important since it is extremely difficult to eliminate loss entirely. Let’s create a new optical setup that has some loss in between the sources and the entangling
+circuit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[100]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p_num = Processor() // ([0, 2], trion) // Circuit.loss(modes=4, name=&#39;transmission&#39;) // entangling_circuit // detectors
+
+transmission_list = np.linspace(0.01, 1, 20)
+state_list = [p_num.conditional_states(parameters={&#39;transmission/efficiency&#39;: eff}, select=[1, 3]) for eff in transmission_list]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[101]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>efficiency_list = [abs(2 * states[1, 0].tr()) for states in state_list]  # multiply by 2 for both successful outcomes (assuming symmetry)
+concurrence_list = [qt.concurrence(states[1, 0] / states[1, 0].tr()) for states in state_list]
+plt.plot(transmission_list, efficiency_list, label=&#39;Efficiency&#39;)
+plt.plot(transmission_list, concurrence_list, label=&#39;Concurrence&#39;)
+plt.xlabel(&#39;Transmission efficiency&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_entanglement_generation_22_0.png" src="../_images/notebooks_entanglement_generation_22_0.png" />
+</div>
+</div>
+<p>From this plot, we can see that the entanglement concurrence of the resulting state rapidly degrades with a decreasing transmission efficiency, along with the total efficiency of the protocol. The reason why this happens is that if both trion emitters produce a photon (i.e. end up in the <span class="math notranslate nohighlight">\(|\uparrow\rangle|\uparrow\rangle\)</span> state), a single lost photon can result in a (1, 0) outcome and cause infidelity. To compensate for this problem, the solution is to reduce the probability the trions
+produce photons by biasing the initial state to be in the <span class="math notranslate nohighlight">\(|\downarrow\rangle\)</span> state. That is, we make the initial state <span class="math notranslate nohighlight">\(|\psi\rangle = \sin(\vartheta)|\uparrow\rangle + \cos(\vartheta)|\downarrow\rangle\)</span> where <span class="math notranslate nohighlight">\(\vartheta\)</span> is close to 0 when transmission efficiency is small.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[102]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>angles = np.linspace(0.01, 0.5, 20)
+state_list = []
+trion_num = trion  # since we will modify this object and overwrite it later, let&#39;s rename it
+for theta in angles:
+    trion_num.initial_state = np.sin(theta * np.pi) * trion.states[&#39;|spin_up&gt;&#39;] + np.cos(theta * np.pi) * trion.states[&#39;|spin_down&gt;&#39;]
+    state_list.append(p_num.conditional_states(parameters={&#39;transmission/efficiency&#39;: 0.5}, select=[1, 3]))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[103]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>efficiency_list = [abs(2 * states[0, 1].tr()) for states in state_list]
+concurrence_list = [qt.concurrence(states[0, 1]/states[0, 1].tr()) for states in state_list]
+plt.plot(angles, efficiency_list, label=&#39;Efficiency&#39;)
+plt.plot(angles, concurrence_list, label=&#39;Concurrence&#39;)
+plt.xlabel(&#39;Superposition angle, $\\vartheta$ ($\pi$)&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.ylim([0, 1.01])
+plt.xlim([0, 0.5])
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_entanglement_generation_25_0.png" src="../_images/notebooks_entanglement_generation_25_0.png" />
+</div>
+</div>
+<p>Now we can see that, by reducing the probability of producing light, we can sacrifice efficiency to arbitrarily bring the concurrence near unity in this idealized scenario. Although it may seem counterintuitive, it turns out that this encoding can provide a significant efficiency advantage over the other two encodings despite having to sacrifice emission probability to achieve high fidelity entanglement [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.102.033701">S. C. Wein et al., Phys. Rev. A 102, 033701
+(2020)</a>, <a class="reference external" href="https://iopscience.iop.org/article/10.1088/1367-2630/acb004/meta">S. L. N. Hermans et al., New J. Phys. 25, 013011 (2023)</a>].</p>
+</section>
+<section id="Time-bin-encoding">
+<h2>Time-bin encoding<a class="headerlink" href="#Time-bin-encoding" title="Link to this heading"></a></h2>
+<p>As we saw in the previous example, the photon-number encoding is sensitive to loss. In addition, it is a method that is sensitive to phase instability in the photon routing. One approach to combat these downsides was proposed by S. D. Barrett and P. Kok in 2005 [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.71.060310">S. D. Barrett and P. Kok, Phys. Rev. A 71, 060310(R) (2005)</a>]. This method uses the emission time bin to encode the quantum information rather than the number of
+emitted photons, and it was famously implemented in the first demonstration of a loop-hole free Bell inequality violation [<a class="reference external" href="https://www.nature.com/articles/nature15759">B. Hensen et al., Nature 526, 682-686 (2015)</a>].</p>
+<p>The time-bin encoding follows very similarly to the photon-number encoding. However, instead of ending the protocol after the detection of a single photon, the spin state of both sources are flipped and then the photon-number protocol is repeated a second time. If a single photon is detected both before and after the spin flip, this implies that no photons were lost and the spin states are projected onto a maximally entangled state regardless of losses. In addition, the flip-and-repeat approach
+creates a symmetry so that exactly one photon must have travelled from each source, which naturally eliminates any phase instability.</p>
+<p>To demonstrate this scheme, we will use the same trion source as in the previous section. However, this time we will give a more complicated pulse sequence that will attempt two photon-number encoding protocols separated by a spin flip. This will require us to modify our source to add a control on the spin qubit. To make things easier, we can also use the operators available from the TrionEmitter object contained in the trion source.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[104]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span># make a sequence of two dirac pulses with different names so that we can modify their parameters independently
+excitation_sequence = Pulse(name=&#39;excitation&#39;)
+excitation_sequence.add(Pulse.dirac(parameters={&#39;delay&#39;: 0}, name=&#39;first&#39;))
+excitation_sequence.add(Pulse.dirac(parameters={&#39;delay&#39;: 20}, name=&#39;second&#39;))
+
+# create the catalogue trion source component using the excitation sequence
+trion = Source.trion(pulse=excitation_sequence)
+
+# we can extract the emitter object contained in the source component to modify it
+emitter = trion.elements[&#39;_TrionEmitter&#39;]
+
+# using the Control class method &#39;drive&#39;, we create a new control object to drive a specified transition of the emitter using a dirac pulse
+spin_control = Control.drive(pulse=Pulse.dirac(parameters={&#39;delay&#39;: 18}, name=&#39;spin control&#39;),
+                             transition=emitter.states[&#39;|spin_down&gt;&#39;] * emitter.states[&#39;|spin_up&gt;&#39;].dag())
+emitter.add(spin_control)
+
+# as before, we initialize the trion into a superposition state, and specify the default excitation parameters
+trion.initial_state = (trion.states[&#39;|spin_up&gt;&#39;] + trion.states[&#39;|spin_down&gt;&#39;]) / np.sqrt(2)
+trion.update_default_parameters({&#39;theta&#39;: np.pi/4, &#39;phi&#39;: -np.pi/2, &#39;theta_c&#39;: np.pi/4, &#39;phi_c&#39;: -np.pi/2})
+</pre></div>
+</div>
+</div>
+<p>Now that we have our source, we can build our processor as we did in the previous section. Before doing that, we must construct the detector needed to monitor two time bins of the same spatial mode. This can be done using the partition class method of the Detector class. Please see <a class="reference external" href="detectors.ipynb">Detectors</a> for more information about this detector type. Since we expect at most two photons overall using this pulse sequence, we can specify a photon number resolution of 2. To help distinguish
+the photon indices, we can also make an argument to name the detector.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[105]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>time_bin_detector = lambda name: Detector.partition([&#39;excitation/first/delay&#39;, &#39;excitation/second/delay&#39;], # first bin goes from the first pulse to the second, the second bin goes from the second pulse to infinity
+                                                    parameters={&#39;excitation/first/delay&#39;: 0, &#39;excitation/second/delay&#39;: 20},  # default parameters to match previous defaults
+                                                    resolution=2,
+                                                    name=name)
+</pre></div>
+</div>
+</div>
+<p>To make sure our source and detectors are configured correctly, we can ensure that we get 1/2 probability of seeing a photon in the first time bin and 1/2 probability of seeing a photon in the second time bin.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p = Processor() // trion // time_bin_detector(&#39;detector&#39;)
+print(p.bin_labels)
+p.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;detector bin 0&#39;, &#39;detector bin 1&#39;]
+Pattern | Probability
+1 0     | 0.50000
+0 1     | 0.50000
+
+</pre></div></div>
+</div>
+<p>Now that we have verified that our source and detectors are operating correctly, we can build the entanglement setup. To distinguish time bins in each spatial mode, we can name the detectors ‘left’ and ‘right’ that are monitoring modes 0 and 1, respectively.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[107]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p = Processor() // ([0, 2], trion) // entangling_circuit // (0, time_bin_detector(&#39;left&#39;)) // (2, time_bin_detector(&#39;right&#39;))
+print(p.bin_labels)
+p.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;left bin 0&#39;, &#39;left bin 1&#39;, &#39;right bin 0&#39;, &#39;right bin 1&#39;]
+Pattern | Probability
+2 0 0 0 | 0.12500
+1 1 0 0 | 0.12500
+0 2 0 0 | 0.12500
+0 1 1 0 | 0.12500
+0 0 2 0 | 0.12500
+1 0 0 1 | 0.12500
+0 0 1 1 | 0.12500
+0 0 0 2 | 0.12500
+
+</pre></div></div>
+</div>
+<p>We can now see all the detection outcomes expected of the scheme in the ideal case. Notice that we always observe exactly two photons, and importantly it is the two-photon outcomes that now herald the successful projection of the spins onto an entangled state. This means that loss or number-resolving limitations cannot cause errors. Notice also that we never observe outcomes like (1, 0, 1, 0,) and (0, 1, 0, 1), since these are eliminated due to perfect Hong-Ou-Mandel interference between photons
+from the two sources. Once we start adding imperfections, like decoherence, these cases can appear.</p>
+<p>Now that we have verified our outcome probabilities are correct, let’s take a look at the entanglement concurrence of the spin state of the source conditioned on each outcome.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[108]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>states = p.conditional_states(select=[1, 3])
+for pattern, state in states.items():
+    print(pattern, qt.concurrence(state / state.tr()))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0, 0, 0, 2) 0
+(0, 2, 0, 0) 0
+(0, 0, 1, 1) 0.9999882077603706
+(0, 1, 1, 0) 0.9999973704435464
+(0, 0, 2, 0) 0
+(1, 0, 0, 1) 0.9999973775122543
+(1, 1, 0, 0) 0.9999882133082519
+(2, 0, 0, 0) 0
+</pre></div></div>
+</div>
+<p>As expected, if we observe exactly one photon in both the first time bin (in either spatial mode) and exactly one photon in the second time bin (in either spatial mode), we generate a maximally entangled spin state up to the simulation precision. Now, as before, we can test how robust the scheme is to transmission losses.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p_time = Processor() // ([0, 2], trion) // Circuit.loss(modes=4, name=&#39;transmission&#39;) // entangling_circuit // (0, time_bin_detector(&#39;left&#39;)) // (2, time_bin_detector(&#39;right&#39;))
+transmission_list = np.linspace(0.01, 1, 20)
+state_list = [p_time.conditional_states(parameters={&#39;transmission/efficiency&#39;: eff}, select=[1, 3]) for eff in transmission_list]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[110]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>efficiency_list = [abs(4 * states[1, 1, 0, 0].tr()) for states in state_list] # multiply by 4 for all successful outcomes (assuming symmetry)
+concurrence_list = [qt.concurrence(states[1, 1, 0, 0] / states[1, 1, 0, 0].tr()) for states in state_list]
+plt.plot(transmission_list, efficiency_list, label=&#39;Efficiency&#39;)
+plt.plot(transmission_list, concurrence_list, label=&#39;Concurrence&#39;)
+plt.xlabel(&#39;Transmission efficiency&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_entanglement_generation_40_0.png" src="../_images/notebooks_entanglement_generation_40_0.png" />
+</div>
+</div>
+<p>As we can see, the concurrence produced using time-bin encoding is completely robust against losses. However, notably the protocol efficiency degrades much quicker than seen in the photon-number encoding. This is because it relies on the successful transmission of two photons rather than one.</p>
+</section>
+<section id="Polarization-encoding">
+<h2>Polarization encoding<a class="headerlink" href="#Polarization-encoding" title="Link to this heading"></a></h2>
+<p>The final encoding we will explore is the polarization of light. Using the same trion source, we can exploit the fact that there are two orthogonally-polarized transitions that connect the ground-state spin doublet to the excited-state trion doublet. Instead of targeting just the R-polarized transition, we can instead excite both R and L polarized transition by using an H-polarized pulse. Then, if we begin with a spin superposition state
+<span class="math notranslate nohighlight">\(|\psi\rangle = (|\downarrow\rangle + |\uparrow\rangle)/\sqrt{2}\)</span>, after the trion state decays back to the ground state we will be left with the spin-polarization entangled state: <span class="math notranslate nohighlight">\(|\psi\rangle = (|\downarrow\rangle|L\rangle| + |\uparrow\rangle|R\rangle)/\sqrt{2}\)</span>. By interfering two such states on a beam splitter and monitoring the subsequent polarization at the output, we can identify that the case where we detect exactly one R and one L polarized photon will project the emitters
+onto a maximally entangled spin state.</p>
+<p>The setup for this experiment is slightly less complicated than the time-bin encoding since we do not need to add a spin control pulse or create time bin detectors. Instead, we only need to use all 4 modes of our processor and configure the excitation pulse appropriately.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[111]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>trion = Source.trion()
+trion.initial_state = (trion.states[&#39;|spin_up&gt;&#39;] + trion.states[&#39;|spin_down&gt;&#39;]) / np.sqrt(2)
+trion.update_default_parameters({&#39;theta&#39;: 0, &#39;phi&#39;: 0, # excitation polarization: horizontally  polarized.
+                                 &#39;theta_c&#39;: np.pi/4, &#39;phi_c&#39;: -np.pi/2, # collect polarization: right mode 0 (left for mode 1)
+                                 &#39;area&#39;: np.sqrt(2) * np.pi})  # pulse area of sqrt(2)*pi to bring both spin up and spin down state fully to the trion state
+</pre></div>
+</div>
+</div>
+<p>With our source configured, we can construct the setup. This time, we must add a detector for each spatial mode and each polarization for 4 detectors total.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p_pol = Processor() // ([0, 2], trion) // Circuit.loss(modes=4, name=&#39;transmission&#39;) // entangling_circuit // (list(range(4)), Detector.pnr(resolution=2))
+p_pol.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+2 0 0 0 | 0.12500
+0 0 2 0 | 0.12500
+1 1 0 0 | 0.12500
+0 1 1 0 | 0.12500
+0 2 0 0 | 0.12500
+1 0 0 1 | 0.12500
+0 0 1 1 | 0.12500
+0 0 0 2 | 0.12500
+
+</pre></div></div>
+</div>
+<p>Since our source modes are ordered (L, R), and the circuit does not permute them, the outputs of the processor are labelled following (L, R, L, R). We can always label the bins explicitly to be sure, or it is often possible to deduce the right labels by through experimental observation. Similar to the time-bin encoding, we can see that we only observe two-photon outputs, and since we expect to generate entanglement heralded by one of these, this protocol is also robust against loss. Let’s
+confirm that we find entanglement.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>states = p_pol.conditional_states(select=[1, 3])
+for pattern, state in states.items():
+    print(pattern, qt.concurrence(state / state.tr()))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0, 0, 0, 2) 0
+(0, 0, 1, 1) 0.9999993017264965
+(0, 0, 2, 0) 0
+(0, 1, 1, 0) 0.9999954728823505
+(0, 2, 0, 0) 0
+(1, 0, 0, 1) 0.9999925262768165
+(1, 1, 0, 0) 0.9999987846232194
+(2, 0, 0, 0) 0
+</pre></div></div>
+</div>
+<p>As anticipated, we find a maximally entangled spin state when we observe an L and R photon. As with the other two schemes, we can</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[114]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>transmission_list = np.linspace(0.01, 1, 20)
+state_list = [p_pol.conditional_states(parameters={&#39;transmission/efficiency&#39;: eff}, select=[1, 3]) for eff in transmission_list]
+efficiency_list = [abs(4 * states[1, 1, 0, 0].tr()) for states in state_list] # multiply by 4 for all successful outcomes (assuming symmetry)
+concurrence_list = [qt.concurrence(states[1, 1, 0, 0] / states[1, 1, 0, 0].tr()) for states in state_list]
+plt.plot(transmission_list, efficiency_list, label=&#39;Efficiency&#39;)
+plt.plot(transmission_list, concurrence_list, label=&#39;Concurrence&#39;)
+plt.xlabel(&#39;Transmission efficiency&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_entanglement_generation_50_0.png" src="../_images/notebooks_entanglement_generation_50_0.png" />
+</div>
+</div>
+<p>Unsurprisingly, since this protocol is also a two-photon protocol, it has an identical dependence on loss as the time-bin encoding.</p>
+</section>
+<section id="Comparison">
+<h2>Comparison<a class="headerlink" href="#Comparison" title="Link to this heading"></a></h2>
+<p>Now that we have constructed the processors implementing each of the three protocols, and tested their basic features, we are in a good position to compare them. Since we already discussed losses, let’s now take a look at emitter pure dephasing. Since the TrionEmitter class already has this parameter built in, all we need to do is modify it when running our protocol.</p>
+<p>First thing we need to do is reset the initial state of the trion emitters in the photon-number encoding processor because we had modified it before.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>trion_num.initial_state = (trion.states[&#39;|spin_up&gt;&#39;] + trion.states[&#39;|spin_down&gt;&#39;]) / np.sqrt(2)
+</pre></div>
+</div>
+</div>
+<p>Now, let’s find out how the concurrence depends on emitter pure dephasing for each protocol. Let’s also compute the associated single-photon indistinguishability for the same dephasing rate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[116]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>dephasing_rates = np.linspace(0, 1, 10)
+hom_list = []
+concurrence_list_num = []
+concurrence_list_time = []
+concurrence_list_pol = []
+for rate in dephasing_rates:
+    hom_list.append(trion.hom(parameters={&#39;dephasing&#39;: rate})[&#39;M&#39;])
+
+    state = p_num.conditional_states(parameters={&#39;dephasing&#39;: rate}, select=[1, 3])[1, 0]
+    concurrence_list_num.append(qt.concurrence(state / state.tr()))
+
+    state = p_time.conditional_states(parameters={&#39;dephasing&#39;: rate}, select=[1, 3])[1, 1, 0, 0]
+    concurrence_list_time.append(qt.concurrence(state / state.tr()))
+
+    state = p_pol.conditional_states(parameters={&#39;dephasing&#39;: rate}, select=[1, 3])[1, 1, 0, 0]
+    concurrence_list_pol.append(qt.concurrence(state / state.tr()))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[117]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.plot(hom_list, concurrence_list_num, label=&#39;Number encoding&#39;, color=&#39;tab:orange&#39;)
+plt.plot(hom_list, concurrence_list_time, label=&#39;Time-bin encoding&#39;, color=&#39;tab:green&#39;)
+plt.plot(hom_list, concurrence_list_pol, label=&#39;Polarization encoding&#39;, color=&#39;tab:blue&#39;, linestyle=&#39;dashed&#39;)
+plt.xlabel(&#39;Indistinguishability&#39;)
+plt.ylabel(&#39;Entanglement Concurrence&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_entanglement_generation_57_0.png" src="../_images/notebooks_entanglement_generation_57_0.png" />
+</div>
+</div>
+<p>Interestingly, we can clearly see that the time-bin encoding suffers substantially more from emitter pure dephasing than the other two protocols. This is because each source undergoes two excitation-decay cycles. The photon-number encoding only requires a single excitation that produces on average 1/2 of a photon, while the polarization encoding only requires a single excitation that produces on average 1 photon. So, although the number encoding and the polarization encoding use a different
+number of photons in total, it is the number of emitter cycles-not the total number of photons-that determines the susceptibility to emitter dephasing.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wigner_functions.html" class="btn btn-neutral float-left" title="Wigner Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RUS_gate.html" class="btn btn-neutral float-right" title="The RUS Gate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,735 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# Processors"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Although some characterisation methods are available for source objects, such as photon_statistics(), the majority of simulations are accessed using the Processor class. This class is used to build and simulate a photonic setup that combines sources, circuits, and detectors. Let's take a look at some basic features of the Processor class."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 93,
+   "outputs": [],
+   "source": [
+    "from zpgenerator import *\n",
+    "from numpy import log, sqrt"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.036192Z",
+     "start_time": "2024-02-08T22:37:23.792Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "First, we create a processor."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 94,
+   "outputs": [],
+   "source": [
+    "p = Processor()"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.036888Z",
+     "start_time": "2024-02-08T22:37:23.805088Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Then, we can use the add() method to add sources, circuits or detectors. Note that the order in which we add components matters a lot!"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 95,
+   "outputs": [],
+   "source": [
+    "p.add(0, Source.fock(1))\n",
+    "p.add(0, Circuit.bs())\n",
+    "p.add(0, Detector.threshold())\n",
+    "p.add(1, Detector.threshold())"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.085092Z",
+     "start_time": "2024-02-08T22:37:23.817817Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "In this example, we have created a Fock state source producing ideal single photons into mode 0, followed by a beam splitter and two threshold detectors monitoring the output. Notice that the number of modes needed to contain all the components will expand automatically. See [Sources](sources_catalogue.ipynb), [Circuits](circuits_catalogue.ipynb), and [Detectors](detectors_catalogue.ipynb) for more information about catalogue components used in this example."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "The processor has some rudimentary visualisation features to know how many modes it contains and how many modes are being monitored by detectors. We can also use the 'bins' property to see how many measurement bins the processor contains. Note that this can be more than the number of detectors if a detector measures multiple time bins (see the [Fibonacci States](fibonacci_states.ipynb) advanced tutorial). It can also be less than the number of detectors if we bin multiple measurement results together (see the [Photonic Circuits](photonic_circuits.ipynb) tutorial)."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 96,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "        _____________\n",
+      "|0>----|  Component  |----D~\n",
+      "|0>----|             |----D~\n",
+      "        ‾‾‾‾‾‾‾‾‾‾‾‾‾\n",
+      "Number of modes =  2\n",
+      "Measurement bins =  2\n"
+     ]
+    }
+   ],
+   "source": [
+    "p.display()\n",
+    "print('Number of modes = ', p.modes)\n",
+    "print('Measurement bins = ', p.bins)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.085801Z",
+     "start_time": "2024-02-08T22:37:23.840212Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "_Note that, all input modes to a processor will be in the vacuum state. This is because the 'Component' contains the source object that takes a vacuum state and produces a single photon from it via input-output theory._\n",
+    "\n",
+    "A Processor object is not a component. Rather, it contains a single component that may have many subcomponents. To facilitate the manipulation of the main component in a processor, some component methods can be accessed via the processor. For example, some of the parameter methods extend (see [Parameters](parameters.ipynb))."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 97,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "['angle', 'decay', 'delay', 'dephasing', 'efficiency', 'resonance']"
+     },
+     "execution_count": 97,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "p.parameters"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.090501Z",
+     "start_time": "2024-02-08T22:37:23.852059Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 98,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "{'resonance': 0.0,\n 'dephasing': 0.0,\n 'delay': 0.0,\n 'decay': 1.0,\n 'efficiency': 1,\n 'angle': 0.7853981633974483}"
+     },
+     "execution_count": 98,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "p.default_parameters"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.090584Z",
+     "start_time": "2024-02-08T22:37:23.857011Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 99,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "{'resonance': 5,\n 'dephasing': 0.0,\n 'delay': 0.0,\n 'decay': 1.0,\n 'efficiency': 1,\n 'angle': 0.7853981633974483}"
+     },
+     "execution_count": 99,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "p.update_default_parameters({'resonance': 5})\n",
+    "p.default_parameters"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.090642Z",
+     "start_time": "2024-02-08T22:37:23.861650Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Probabilities"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "The main function of a processor is to compute detection probabilities. This is done using the probs() method, which outputs a probability distribution as a CorrelationDistribution object. Unlike the photon_statistics() method, the probs() method can compute correlations between different output modes.\n",
+    "\n",
+    "The distribution has some basic features, such as the ability to display the results in a table."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Pattern | Probability\n",
+      "0 1     | 0.50000\n",
+      "1 0     | 0.50000\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "pn = p.probs()\n",
+    "pn.display()"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.091849Z",
+     "start_time": "2024-02-08T22:37:23.877157Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "We can see that the beam splitter, which by default is balanced 50:50, will cause the photon to randomly choose a detector. Most importantly, we never see the coincidence (1, 1) outcome. This is a key signature, called anti-bunching, that evidences the presence of a single photon.\n",
+    "\n",
+    "Like other simulation methods, such as photon_statistics, the probs() method can take a 'parameters' keyword to modify the component parameters."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Pattern | Probability\n",
+      "0 1     | 0.03947\n",
+      "1 0     | 0.96053\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "p.probs(parameters={'angle': 0.2}).display()"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.092387Z",
+     "start_time": "2024-02-08T22:37:23.908305Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "By reducing the angle of the beam splitter, we allow for more transmission and thus improving the detection probability in one detector but reducing it in the other."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Conditional states"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Since ZPGenerator is a source-physics simulation, we can also get access to the state of the source conditioned on observing photon detection outcomes. This feature is extremely powerful to design hybrid light-matter information processing protocols, or for simulating the measurement of a stationary qubit by monitoring light produced by the quantum system.\n",
+    "\n",
+    "To demonstrate this feature, let's consider what happens when we simulate the system only until the source is half-way decayed (at its half-life)."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 102,
+   "outputs": [],
+   "source": [
+    "source = Source.fock(1)\n",
+    "\n",
+    "p = Processor()\n",
+    "p.add(0, source)\n",
+    "p.add(0, Detector.threshold())"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.092416Z",
+     "start_time": "2024-02-08T22:37:23.932482Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Now that we created our simple setup, we need to modify the final time of the simulation to correspond to the half-life. By default, the Fock state source has a decay rate of 1, so the half-life is at $ln(2)$."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 103,
+   "outputs": [],
+   "source": [
+    "p.final_time = log(2)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.092925Z",
+     "start_time": "2024-02-08T22:37:23.935328Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Before simulating the processor to obtain conditional states, it is a good idea to take a look at what initial state our processor is in."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 104,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket\nQobj data =\n[[0.]\n [1.]]",
+      "text/latex": "Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket $ \\\\ \\left(\\begin{matrix}0.0\\\\1.0\\\\\\end{matrix}\\right)$"
+     },
+     "execution_count": 104,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "p.initial_state"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.093464Z",
+     "start_time": "2024-02-08T22:37:23.946763Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "We can compare this to the states available in the source component."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 105,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "{('|0>',): Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket\nQobj data =\n[[1.]\n [0.]], ('|1>',): Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket\nQobj data =\n[[0.]\n [1.]]}"
+     },
+     "execution_count": 105,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "source.states"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.094049Z",
+     "start_time": "2024-02-08T22:37:23.958072Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Since we are simulating a source of Fock state $|1\\rangle$, we can see that our processor has an initial quantum state corresponding to the $|1\\rangle$ state of a truncated quantum harmonic oscillator system.\n",
+    "\n",
+    "Now, we can simulate the states conditioned on the outcomes of the threshold detector when monitoring the emission from time $t=0$ until time $t=ln(2)$. This is done using the 'conditional_states()' method."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 106,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "{(0,): Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\nQobj data =\n[[0.         0.        ]\n [0.         0.50000046]], (1,): Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\nQobj data =\n[[ 5.00000895e-01  0.00000000e+00]\n [ 0.00000000e+00 -1.35585675e-06]]}"
+     },
+     "execution_count": 106,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "cond_states = p.conditional_states()\n",
+    "cond_states"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.094662Z",
+     "start_time": "2024-02-08T22:37:23.969647Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "The result is a dictionary of [QuTiP](https://qutip.org/) Qobj objects representing density matrices of the source conditioned on photon detection outcomes. We can see that the outcome 0, corresponding to observing no light, has a corresponding density matrix of the source still being in the excited state. However, the outcome 1 corresponds to a density matrix where the source is in its ground state. This is because the end-to-end efficiency of our setup is perfect. Thus, if we see no photon then the source must have not yet produced one, and if we observe a photon it must have already decayed.\n",
+    "\n",
+    "Note that the conditional states are not normalised. This is because their trace corresponds to the probability that the outcome occurs, and their sum will always recover the total density matrix of the processor at the final simulation time.\n",
+    "\n",
+    "Although this example is quite simple, it becomes very useful when considering hybrid-light matter protocols (see the [Entanglement Generation](entanglement_generation.ipynb) advanced tutorial a more relevant physical examples)."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Conditional channels"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Going one step further, we can also use ZPGenerator to access the _channel_ applied to the quantum systems producing light. This can be very useful if light-matter interaction or photon measurements are being used to apply gates to quantum emitters or qubits within quantum emitters. Using the same setup as above, we can use the 'conditional_channels()' method. However, now we must provide a basis to compute the channel."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 107,
+   "outputs": [],
+   "source": [
+    "cond_channels = p.conditional_channels(basis=[source.states['|0>'], source.states['|1>']])"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.095680Z",
+     "start_time": "2024-02-08T22:37:24.000644Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Now that we have simulated the full time dynamics of the conditional channels, we can simply apply it to _any_ initial state in our basis to recover the output without having to re-simulate the source.\n",
+    "\n",
+    "If we start in the ground state, then our processor will leave us in the ground state with unit probability."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 108,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[1. 0.]\n  [0. 0.]],\n Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[0. 0.]\n  [0. 0.]]]"
+     },
+     "execution_count": 108,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "istate = source.states['|0>']\n",
+    "[cond_channels[0](istate), cond_channels[1](istate)]"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.095754Z",
+     "start_time": "2024-02-08T22:37:24.019153Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "If we start in the excited state, we get the same solution as we found in the previous section."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 109,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[0.         0.        ]\n  [0.         0.50000046]],\n Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[ 5.00000895e-01  0.00000000e+00]\n  [ 0.00000000e+00 -1.35585675e-06]]]"
+     },
+     "execution_count": 109,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "istate = source.states['|1>']\n",
+    "[cond_channels[0](istate), cond_channels[1](istate)]"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:37:24.096345Z",
+     "start_time": "2024-02-08T22:37:24.024785Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "Now, we can go further and check arbitrary input state such as a superposition between ground and excited state."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 118,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[0.5        0.35355421]\n  [0.35355421 0.25000023]],\n Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\n Qobj data =\n [[ 2.50000448e-01  0.00000000e+00]\n  [ 0.00000000e+00 -6.77928374e-07]]]"
+     },
+     "execution_count": 118,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "istate = (source.states['|0>'] + source.states['|1>']) / sqrt(2)\n",
+    "[cond_channels[0](istate), cond_channels[1](istate)]"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:41:42.245283Z",
+     "start_time": "2024-02-08T22:41:42.240014Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "In this last case we can see that the state of the source conditioned on the observation of either outcome is actually perfectly pure after renormalising by the outcome probability."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 120,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "{(0,): 1.0000016583186837, (1,): 1.0000054234393396}"
+     },
+     "execution_count": 120,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "purity = lambda ch: (ch *  ch).tr() / (ch.tr() ** 2)\n",
+    "{k: purity(v(istate)) for k, v in cond_channels.items()}"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:41:54.225811Z",
+     "start_time": "2024-02-08T22:41:54.220318Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "However, the total density matrix is not pure at all!"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 122,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "0.875001610733607"
+     },
+     "execution_count": 122,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "purity(sum(v for v in cond_channels.values())(istate))"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-02-08T22:42:30.865045Z",
+     "start_time": "2024-02-08T22:42:30.857628Z"
+    }
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "For a more physically-relevant example of conditional channels, please see the [RUS Gate](RUS_gate.ipynb) advanced tutorial."
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [],
+   "metadata": {
+    "collapsed": false
+   }
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

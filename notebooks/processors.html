@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Processors &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Backend" href="backend.html" />
+    <link rel="prev" title="Pulses" href="pulses.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Processors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Probabilities">Probabilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conditional-states">Conditional states</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conditional-channels">Conditional channels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Processors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/processors.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Processors">
+<h1>Processors<a class="headerlink" href="#Processors" title="Link to this heading"></a></h1>
+<p>Although some characterisation methods are available for source objects, such as photon_statistics(), the majority of simulations are accessed using the Processor class. This class is used to build and simulate a photonic setup that combines sources, circuits, and detectors. Let’s take a look at some basic features of the Processor class.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+from numpy import log, sqrt
+</pre></div>
+</div>
+</div>
+<p>First, we create a processor.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p = Processor()
+</pre></div>
+</div>
+</div>
+<p>Then, we can use the add() method to add sources, circuits or detectors. Note that the order in which we add components matters a lot!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.add(0, Source.fock(1))
+p.add(0, Circuit.bs())
+p.add(0, Detector.threshold())
+p.add(1, Detector.threshold())
+</pre></div>
+</div>
+</div>
+<p>In this example, we have created a Fock state source producing ideal single photons into mode 0, followed by a beam splitter and two threshold detectors monitoring the output. Notice that the number of modes needed to contain all the components will expand automatically. See <a class="reference internal" href="sources_catalogue.html"><span class="doc">Sources</span></a>, <a class="reference internal" href="circuits_catalogue.html"><span class="doc">Circuits</span></a>, and <a class="reference internal" href="detectors_catalogue.html"><span class="doc">Detectors</span></a> for more information about catalogue components used in this example.</p>
+<p>The processor has some rudimentary visualisation features to know how many modes it contains and how many modes are being monitored by detectors. We can also use the ‘bins’ property to see how many measurement bins the processor contains. Note that this can be more than the number of detectors if a detector measures multiple time bins (see the <a class="reference internal" href="fibonacci_states.html"><span class="doc">Fibonacci States</span></a> advanced tutorial). It can also be less than the number of detectors if we bin multiple measurement results
+together (see the <a class="reference internal" href="photonic_circuits.html"><span class="doc">Photonic Circuits</span></a> tutorial).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.display()
+print(&#39;Number of modes = &#39;, p.modes)
+print(&#39;Measurement bins = &#39;, p.bins)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+        _____________
+|0&gt;----|  Component  |----D~
+|0&gt;----|             |----D~
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾
+Number of modes =  2
+Measurement bins =  2
+</pre></div></div>
+</div>
+<p><em>Note that, all input modes to a processor will be in the vacuum state. This is because the ‘Component’ contains the source object that takes a vacuum state and produces a single photon from it via input-output theory.</em></p>
+<p>A Processor object is not a component. Rather, it contains a single component that may have many subcomponents. To facilitate the manipulation of the main component in a processor, some component methods can be accessed via the processor. For example, some of the parameter methods extend (see <a class="reference internal" href="parameters.html"><span class="doc">Parameters</span></a>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[97]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[97]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;angle&#39;, &#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 1,
+ &#39;angle&#39;: 0.7853981633974483}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.update_default_parameters({&#39;resonance&#39;: 5})
+p.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 5,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 1,
+ &#39;angle&#39;: 0.7853981633974483}
+</pre></div></div>
+</div>
+<section id="Probabilities">
+<h2>Probabilities<a class="headerlink" href="#Probabilities" title="Link to this heading"></a></h2>
+<p>The main function of a processor is to compute detection probabilities. This is done using the probs() method, which outputs a probability distribution as a CorrelationDistribution object. Unlike the photon_statistics() method, the probs() method can compute correlations between different output modes.</p>
+<p>The distribution has some basic features, such as the ability to display the results in a table.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[100]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pn = p.probs()
+pn.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 1     | 0.50000
+1 0     | 0.50000
+
+</pre></div></div>
+</div>
+<p>We can see that the beam splitter, which by default is balanced 50:50, will cause the photon to randomly choose a detector. Most importantly, we never see the coincidence (1, 1) outcome. This is a key signature, called anti-bunching, that evidences the presence of a single photon.</p>
+<p>Like other simulation methods, such as photon_statistics, the probs() method can take a ‘parameters’ keyword to modify the component parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[101]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.probs(parameters={&#39;angle&#39;: 0.2}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 1     | 0.03947
+1 0     | 0.96053
+
+</pre></div></div>
+</div>
+<p>By reducing the angle of the beam splitter, we allow for more transmission and thus improving the detection probability in one detector but reducing it in the other.</p>
+</section>
+<section id="Conditional-states">
+<h2>Conditional states<a class="headerlink" href="#Conditional-states" title="Link to this heading"></a></h2>
+<p>Since ZPGenerator is a source-physics simulation, we can also get access to the state of the source conditioned on observing photon detection outcomes. This feature is extremely powerful to design hybrid light-matter information processing protocols, or for simulating the measurement of a stationary qubit by monitoring light produced by the quantum system.</p>
+<p>To demonstrate this feature, let’s consider what happens when we simulate the system only until the source is half-way decayed (at its half-life).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[102]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+
+p = Processor()
+p.add(0, source)
+p.add(0, Detector.threshold())
+</pre></div>
+</div>
+</div>
+<p>Now that we created our simple setup, we need to modify the final time of the simulation to correspond to the half-life. By default, the Fock state source has a decay rate of 1, so the half-life is at <span class="math notranslate nohighlight">\(ln(2)\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[103]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.final_time = log(2)
+</pre></div>
+</div>
+</div>
+<p>Before simulating the processor to obtain conditional states, it is a good idea to take a look at what initial state our processor is in.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[104]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>p.initial_state
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[104]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket $ \\ \left(\begin{matrix}0.0\\1.0\\\end{matrix}\right)$</div></div>
+</div>
+<p>We can compare this to the states available in the source component.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[105]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.states
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[105]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{(&#39;|0&gt;&#39;,): Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[1.]
+ [0.]], (&#39;|1&gt;&#39;,): Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[0.]
+ [1.]]}
+</pre></div></div>
+</div>
+<p>Since we are simulating a source of Fock state <span class="math notranslate nohighlight">\(|1\rangle\)</span>, we can see that our processor has an initial quantum state corresponding to the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state of a truncated quantum harmonic oscillator system.</p>
+<p>Now, we can simulate the states conditioned on the outcomes of the threshold detector when monitoring the emission from time <span class="math notranslate nohighlight">\(t=0\)</span> until time <span class="math notranslate nohighlight">\(t=ln(2)\)</span>. This is done using the ‘conditional_states()’ method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>cond_states = p.conditional_states()
+cond_states
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{(0,): Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+Qobj data =
+[[0.         0.        ]
+ [0.         0.50000046]], (1,): Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+Qobj data =
+[[ 5.00000895e-01  0.00000000e+00]
+ [ 0.00000000e+00 -1.35585675e-06]]}
+</pre></div></div>
+</div>
+<p>The result is a dictionary of <a class="reference external" href="https://qutip.org/">QuTiP</a> Qobj objects representing density matrices of the source conditioned on photon detection outcomes. We can see that the outcome 0, corresponding to observing no light, has a corresponding density matrix of the source still being in the excited state. However, the outcome 1 corresponds to a density matrix where the source is in its ground state. This is because the end-to-end efficiency of our setup is perfect. Thus, if we see no photon
+then the source must have not yet produced one, and if we observe a photon it must have already decayed.</p>
+<p>Note that the conditional states are not normalised. This is because their trace corresponds to the probability that the outcome occurs, and their sum will always recover the total density matrix of the processor at the final simulation time.</p>
+<p>Although this example is quite simple, it becomes very useful when considering hybrid-light matter protocols (see the <a class="reference internal" href="entanglement_generation.html"><span class="doc">Entanglement Generation</span></a> advanced tutorial a more relevant physical examples).</p>
+</section>
+<section id="Conditional-channels">
+<h2>Conditional channels<a class="headerlink" href="#Conditional-channels" title="Link to this heading"></a></h2>
+<p>Going one step further, we can also use ZPGenerator to access the <em>channel</em> applied to the quantum systems producing light. This can be very useful if light-matter interaction or photon measurements are being used to apply gates to quantum emitters or qubits within quantum emitters. Using the same setup as above, we can use the ‘conditional_channels()’ method. However, now we must provide a basis to compute the channel.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[107]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>cond_channels = p.conditional_channels(basis=[source.states[&#39;|0&gt;&#39;], source.states[&#39;|1&gt;&#39;]])
+</pre></div>
+</div>
+</div>
+<p>Now that we have simulated the full time dynamics of the conditional channels, we can simply apply it to <em>any</em> initial state in our basis to recover the output without having to re-simulate the source.</p>
+<p>If we start in the ground state, then our processor will leave us in the ground state with unit probability.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[108]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>istate = source.states[&#39;|0&gt;&#39;]
+[cond_channels[0](istate), cond_channels[1](istate)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[108]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[1. 0.]
+  [0. 0.]],
+ Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[0. 0.]
+  [0. 0.]]]
+</pre></div></div>
+</div>
+<p>If we start in the excited state, we get the same solution as we found in the previous section.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>istate = source.states[&#39;|1&gt;&#39;]
+[cond_channels[0](istate), cond_channels[1](istate)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[0.         0.        ]
+  [0.         0.50000046]],
+ Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[ 5.00000895e-01  0.00000000e+00]
+  [ 0.00000000e+00 -1.35585675e-06]]]
+</pre></div></div>
+</div>
+<p>Now, we can go further and check arbitrary input state such as a superposition between ground and excited state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[118]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>istate = (source.states[&#39;|0&gt;&#39;] + source.states[&#39;|1&gt;&#39;]) / sqrt(2)
+[cond_channels[0](istate), cond_channels[1](istate)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[118]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[0.5        0.35355421]
+  [0.35355421 0.25000023]],
+ Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+ Qobj data =
+ [[ 2.50000448e-01  0.00000000e+00]
+  [ 0.00000000e+00 -6.77928374e-07]]]
+</pre></div></div>
+</div>
+<p>In this last case we can see that the state of the source conditioned on the observation of either outcome is actually perfectly pure after renormalising by the outcome probability.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>purity = lambda ch: (ch *  ch).tr() / (ch.tr() ** 2)
+{k: purity(v(istate)) for k, v in cond_channels.items()}
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{(0,): 1.0000016583186837, (1,): 1.0000054234393396}
+</pre></div></div>
+</div>
+<p>However, the total density matrix is not pure at all!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>purity(sum(v for v in cond_channels.values())(istate))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.875001610733607
+</pre></div></div>
+</div>
+<p>For a more physically-relevant example of conditional channels, please see the <a class="reference internal" href="RUS_gate.html"><span class="doc">RUS Gate</span></a> advanced tutorial.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pulses.html" class="btn btn-neutral float-left" title="Pulses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="backend.html" class="btn btn-neutral float-right" title="Backend" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

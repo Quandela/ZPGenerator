@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The RUS Gate &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Component Construction" href="component_construction.html" />
+    <link rel="prev" title="Entanglement Generation" href="entanglement_generation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The RUS Gate</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Theory-background">Theory background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Entangling-circuit">Entangling circuit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Building-the-processor">Building the processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Local-corrections">Local corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Gate-fidelity">Gate fidelity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Repeat-until-success">Repeat until success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Imperfections">Imperfections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Pure-dephasing">Pure dephasing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Realistic-excitation-pulses">Realistic excitation pulses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Combined-Imperfections">Combined Imperfections</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The RUS Gate</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/RUS_gate.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="The-RUS-Gate">
+<h1>The RUS Gate<a class="headerlink" href="#The-RUS-Gate" title="Link to this heading"></a></h1>
+<p>As we explored in the <a class="reference internal" href="entanglement_generation.html"><span class="doc">Entanglement Generation</span></a> advanced tutorial, a spin-photon interface such as a trion system can allow for the generation of entanglement between remote emitter spin qubits. It turns out that certain kinds of spin-photon interfaces can also allow for photon-mediated gates to be performed between the spin qubits, such as a control-Z rotation (CZ). This is generally much more difficult to accomplish than just entanglement generation because
+the interaction must be correct for any initial state of the spins, not just a predefined one that allows for the systems to become entangled.</p>
+<section id="Theory-background">
+<h2>Theory background<a class="headerlink" href="#Theory-background" title="Link to this heading"></a></h2>
+<p>This notebook explores one such approach that uses the polarization selection rules of the trion emitter along with an entangling circuit to implement a CZ gate. This gate was recently proposed as the main entangling gate in a spin-photon hybrid quantum computing architecture [<a class="reference external" href="https://arxiv.org/abs/2311.05605">G. de Gliniasty et al., arXiv:2311.05605 (2023)</a>]. As with most interactions mediated by detecting photons, this CZ gate is naturally probabilistic. However, in the ideal case where no
+photons are lost, a failure of the gate does not actually destroy the state of the spin qubits. This opens the possibility to repeat until success (RUS), following the ideas proposed in 2005 [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.95.030505">Y. L. Lim et al., Phys. Rev. Lett. 95, 030505 (2005)</a>].</p>
+<p>Instead of introducing the theory outright, a reader is invited to look at these two references. In any case, the necessary principles will be introduced when needed throughout this notebook.</p>
+</section>
+<section id="Entangling-circuit">
+<h2>Entangling circuit<a class="headerlink" href="#Entangling-circuit" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import qutip as qt
+import numpy as np
+import perceval as pcvl
+import perceval.components.unitary_components as comp
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>First, we will use Perceval to construct the linear-optical circuit we need to implement the photonic part of the RUS gate. This circuit is taken directly from Ref. [<a class="reference external" href="https://arxiv.org/abs/2311.05605">G. de Gliniasty et al., arXiv:2311.05605 (2023)</a>].</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c = pcvl.Circuit(4)
+c.add(0, pcvl.BS.H())
+c.add(2, pcvl.BS.H())
+c.add([0, 1, 2, 3], comp.PERM([0, 2, 1, 3]))
+c.add(3, pcvl.PS(-np.pi/2))
+c.add(0, pcvl.BS.H())
+c.add(2, pcvl.BS.H())
+pcvl.pdisplay(c)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_7_0.svg" src="../_images/notebooks_RUS_gate_7_0.svg" /></div>
+</div>
+<p>Using the from_perceval() class method of the Circuit class in ZPGenerator, we can convert the Perceval circuit into a ZPGenerator circuit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c_rus = Circuit.from_perceval(c)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Building-the-processor">
+<h2>Building the processor<a class="headerlink" href="#Building-the-processor" title="Link to this heading"></a></h2>
+<p>Now, let’s create the trion source. Similar to the polarization encoding example in the <a class="reference internal" href="entanglement_generation.html"><span class="doc">Entanglement Generation</span></a> tutorial, we must configure our trion source to be excited by horizontally-polarized light and collected in the R/L polarization basis. Since we are driving both R and L transitions, the effective <span class="math notranslate nohighlight">\(\pi\)</span>-pulse condition will correspond to a pulse area of <span class="math notranslate nohighlight">\(\sqrt{2}\pi\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trion = Source.trion()
+trion.update_default_parameters(parameters={&#39;theta&#39;: 0, &#39;phi&#39;: 0, &#39;theta_c&#39;: np.pi / 4, &#39;phi_c&#39;: -np.pi / 2, &#39;area&#39;: np.sqrt(2) * np.pi})
+</pre></div>
+</div>
+</div>
+<p>Now we can build the Processor with four number-resolving detectors monitoring the output of the RUS circuit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p_rus = Processor() // ([0, 2], trion) // c_rus // (list(range(4)), Detector.pnr(2))
+</pre></div>
+</div>
+</div>
+<p>To simulate the conditional channels associated with this photon-mediated spin gate, we must determine the spin basis of the two-qubit system. We can first take the ground states from the trion source, and then take the tensor product to obtain the list of 4 basis states for the two-source system.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>basis = [trion.states[&#39;|spin_up&gt;&#39;], trion.states[&#39;|spin_down&gt;&#39;]]
+basis = [qt.tensor(b1, b2) for b1 in basis for b2 in basis]  # take tensor products
+</pre></div>
+</div>
+</div>
+<p>Now we are set up to simulate the conditional channels. Similar to the entanglement generation polarization encoding example notebook, we can select just the spin degree of freedom and trace away the atomic degree of freedom. For our two-trion system, the spin degrees correspond to indices 1 and 3.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>channels = p_rus.conditional_channels(basis=basis, select=[1, 3])
+</pre></div>
+</div>
+</div>
+<p>Just like that, we now have all conditional channels that evolve the two-spin space under the action of the RUS gate. For example, we expect the outcome (1, 0, 1, 0) to correspond to a successful CZ gate up to a local rotation. This means that we should be able to apply it to an initially unentangled state and find that it becomes entangled up to a re-normalization.</p>
+<p>Note that conditional_channels returns a dictionary of Qobj objects. To learn how to manipulate these, please see the <a class="reference external" href="https://qutip.org/docs/latest/apidoc/classes.html">QuTiP documentation</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>initial_state = (qt.fock(2, 0) + qt.fock(2, 1)) / np.sqrt(2)  # spin superposition
+initial_state = qt.tensor(initial_state, initial_state)  # initial state of two-qubit system (unentangled)
+final_state = channels[1, 0, 1, 0](initial_state)  # apply the channel to the initial state
+entanglement_efficiency = abs(final_state.tr())  # the probability of the condition is simply the trace of the final state
+print(&#39;Efficiency:&#39;, entanglement_efficiency)
+final_state = final_state / entanglement_efficiency  # To post-select, we normalize the final state
+print(&#39;Concurrence:&#39;, qt.concurrence(final_state))
+final_state.tidyup(1e-5)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Efficiency: 0.12500029027605536
+Concurrence: 0.9999950212841616
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = False $ \\ \left(\begin{matrix}0.250 &amp; -0.250j &amp; 0.250j &amp; -0.250\\0.250j &amp; 0.250 &amp; -0.250 &amp; -0.250j\\-0.250j &amp; -0.250 &amp; 0.250 &amp; 0.250j\\-0.250 &amp; 0.250j &amp; -0.250j &amp; 0.250\\\end{matrix}\right)$</div></div>
+</div>
+<p>As we can see, the outcome (1, 0, 1, 0) occurs with a probability of 1/8 and produces a maximally entangled spin state.</p>
+</section>
+<section id="Local-corrections">
+<h2>Local corrections<a class="headerlink" href="#Local-corrections" title="Link to this heading"></a></h2>
+<p>Similar to Bell-state measurements and fundamental to quantum communication, there are multiple outcomes that indicate a successful gate was applied to the qubits but only up to local corrections. Without corrections, averaging over all the successful outcomes will produce a channel that does not perform the desired gate. Let’s illustrate this explicitly by averaging over all the successful outcomes and seeing what it does to our initial state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>successes = [(0, 1, 0, 1), (0, 1, 1, 0), (1, 0, 0, 1), (1, 0, 1, 0)]
+channel_success = sum(channels[success] for success in successes)
+final_state = channel_success(initial_state)
+entanglement_efficiency = abs(final_state.tr())
+print(&#39;Efficiency:&#39;, entanglement_efficiency)
+final_state = final_state / entanglement_efficiency
+print(&#39;Concurrence:&#39;, qt.concurrence(final_state))
+final_state.tidyup(1e-5)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Efficiency: 0.5000011131732003
+Concurrence: 0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = False $ \\ \left(\begin{matrix}0.250 &amp; 0.0 &amp; 0.0 &amp; -0.250\\0.0 &amp; 0.250 &amp; -0.250 &amp; 0.0\\0.0 &amp; -0.250 &amp; 0.250 &amp; 0.0\\-0.250 &amp; 0.0 &amp; 0.0 &amp; 0.250\\\end{matrix}\right)$</div></div>
+</div>
+<p>We can see that we get a successful outcome with a 1/2 probability but the average state of the spin qubits is completely unentangled. This particular effect of destroying the entanglement by averaging the outcomes is the exact reason why faster-than-light communication cannot be achived using quantum communication. To recover an entangled state, it is necessary to communicate which outcome was observed in order to perform local corrections on the spin qubits. The corrections for each case are
+given in [<a class="reference external" href="https://arxiv.org/abs/2311.05605">G. de Gliniasty et al., arXiv:2311.05605 (2023)</a>]. For (1, 0, 1, 0) and (0, 1, 0, 1), the correction is <span class="math notranslate nohighlight">\(S_aS_b^\dagger\)</span> where <span class="math notranslate nohighlight">\(S_i=\sqrt{Z_i}\)</span> and <span class="math notranslate nohighlight">\(Z_i\)</span> is the Pauli Z gate applied to spin qubit <span class="math notranslate nohighlight">\(i\)</span>. For the other two successful outcomes (0, 1, 1, 0) and (1, 0, 0, 1), the correction is simply the conjugate <span class="math notranslate nohighlight">\(S_a^\dagger S_b\)</span>. We could, in principle, evaluate these local channels by simulating the time dynamics. If they
+are accomplished deterministically and without measuring light, a realistic local gate can be simulated using the devices module in qutip rather than ZPGenerator. For this example, we will simply construct the ideal gates using the qip.circuit module in qutip.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sa = qt.qip.circuit.Gate(name=&#39;RZ&#39;, targets=[0], arg_value=np.pi / 2)
+sb_dag = qt.qip.circuit.Gate(name=&#39;RZ&#39;, targets=[1], arg_value=-np.pi / 2)
+c = qt.qip.circuit.QubitCircuit(2)
+c.add_gate(sa)
+c.add_gate(sb_dag)
+correction = prod(c.propagators())
+correction_1 = qt.sprepost(correction, correction.dag())
+correction_2 = correction_1.dag()
+</pre></div>
+</div>
+</div>
+<p>We can now average over the channels after having applied the appropriate corrections to obtain to total successful channel.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>successes =  {(0, 1, 0, 1): correction_1, (0, 1, 1, 0): correction_2, (1, 0, 0, 1): correction_2, (1, 0, 1, 0): correction_1}
+channel_success = sum(correction * channels[outcome] for outcome, correction in successes.items())
+final_state = channel_success(initial_state)
+entanglement_efficiency = abs(final_state.tr())
+print(&#39;Efficiency:&#39;, entanglement_efficiency)
+final_state = final_state / entanglement_efficiency
+print(&#39;Concurrence:&#39;, qt.concurrence(final_state))
+final_state.tidyup(1e-5)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Efficiency: 0.5000011131732003
+Concurrence: 0.9999952186737039
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = False $ \\ \left(\begin{matrix}0.250 &amp; 0.250 &amp; 0.250 &amp; -0.250\\0.250 &amp; 0.250 &amp; 0.250 &amp; -0.250\\0.250 &amp; 0.250 &amp; 0.250 &amp; -0.250\\-0.250 &amp; -0.250 &amp; -0.250 &amp; 0.250\\\end{matrix}\right)$</div></div>
+</div>
+<p>As we can see, the channel now appears to perform a successful CZ gate with a probability of 1/2 as desired. However, to be sure that we have a CZ gate and are not simply replicating the action of a CZ on one initial state, we must check the fidelity of our channel.</p>
+</section>
+<section id="Gate-fidelity">
+<h2>Gate fidelity<a class="headerlink" href="#Gate-fidelity" title="Link to this heading"></a></h2>
+<p>To understand how close our protocol implements a CZ gate, we can look at the average gate fideity, which is the average fidelity of the output state of the channel relative to the ideal state given a Haar random input state. This average gate fidelity can be computed using qutip once we have simulated our channel using ZPGenerator.</p>
+<p>First, let’s construct the ideal CZ gate for reference, using QuTiP.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cz = qt.qip.circuit.Gate(name=&#39;CZ&#39;, targets=[0], controls=[1])
+gate_ideal = qt.qip.circuit.QubitCircuit(2)
+gate_ideal.add_gate(cz)
+gate_ideal = gate_ideal.propagators()[0]
+print(gate_ideal)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Quantum object: dims = [[2, 2], [2, 2]], shape = (4, 4), type = oper, isherm = True
+Qobj data =
+[[ 1.  0.  0.  0.]
+ [ 0.  1.  0.  0.]
+ [ 0.  0.  1.  0.]
+ [ 0.  0.  0. -1.]]
+</pre></div></div>
+</div>
+<p>Since the channel we simulated is probabilistic, it is not normalized. This must be taken into account when comparing it to a deterministic gate, such as the CZ gate. For any trace-preserving (TP) channel, i.e. a deterministic channel, the trace of the channel’s Choi matrix representation should be unity. The Choi matrix can be computed using the qutip function super_to_choi(), albeit qutip follows a convention where the trace of a TP Choi matrix is <span class="math notranslate nohighlight">\(2^d\)</span> where <span class="math notranslate nohighlight">\(d\)</span> is the number of
+qubits. Taking this into account, we can renormalize the successful channel so that it is trace preserving.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>norm = qt.super_to_choi(channel_success).tr() / 4
+channel_success_TP = channel_success / norm
+</pre></div>
+</div>
+</div>
+<p>Now, we can use qutip to compute the average gate fidelity of the normalized simulated channel and the ideal CZ gate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qt.average_gate_fidelity(channel_success_TP, gate_ideal)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.9999980912954907
+</pre></div></div>
+</div>
+<p>As we can see, the protocol we simulated indeed performs a CZ gate with an average gate fidelity of unity to within the precision of the simulation.</p>
+<p>A different perspective is to first compute the error channel, which is the same as applying the simulated channel followed by the inverse channel corresponding to the ideal gate. This inverse ideal channel can be computed by converting the ideal CZ gate into a superoperator using sprepost function in qutip.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>channel_error = qt.sprepost(gate_ideal.dag(), gate_ideal) * channel_success_TP
+</pre></div>
+</div>
+</div>
+<p>Notably, we can see that the error channel is the identity channel, which corresponds to the fact that the ideal inverse exactly cancels the simulated channel. To get a better visualization of this, we can convert the error channel into the <span class="math notranslate nohighlight">\(\chi\)</span> representation in the Pauli basis and then plot the elements.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pauli_basis = [[qt.qeye(2), qt.sigmax(), qt.sigmay(), qt.sigmaz()]] * 2
+pauli_labels = [[&quot;i&quot;, &quot;x&quot;, &quot;y&quot;, &quot;z&quot;]] * 2
+chi = qt.qpt(channel_error, op_basis_list=pauli_basis)
+qt.qpt_plot_combined(chi, lbls_list=pauli_labels)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_40_0.png" src="../_images/notebooks_RUS_gate_40_0.png" />
+</div>
+</div>
+<p>This illustration clearly shows that the identity component is unity while all other Pauli operators are zero, indicating a noiseless channel.</p>
+</section>
+<section id="Repeat-until-success">
+<h2>Repeat until success<a class="headerlink" href="#Repeat-until-success" title="Link to this heading"></a></h2>
+<p>An interesting feature of this implementation of a CZ gate is that some outcomes that do not implement the gate, such as (2, 0, 0, 0), do not actually dephase the qubit states. That is, the purity of the final spin-spin state is still unity, indicating that it can be ‘reset’ using an appropriate correction. A type of outcome such as this is known as a ‘failure with insurance’, rather than a complete failure. Let’s take a look at the purity along with the concurrence for all possible outcomes:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[87]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;{:&lt;12} | {:&lt;7} | {:&lt;5} | {:}&quot;.format(&#39;Outcome&#39;,  &#39;Eff.&#39;, &#39;Purity&#39;, &#39;Concurrence&#39;))
+for k, channel in channels.items():
+    final_state = channel(initial_state)
+    eff = abs(final_state.tr())
+    if eff &gt; 10**-5:
+        final_state = final_state / eff
+        print(&quot;{:&lt;12} | {:.5f} | {:.4f} | {:.5f}&quot;.format(str(k), eff, (final_state * final_state.dag()).tr(), qt.concurrence(final_state)))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Outcome      | Eff.    | Purity | Concurrence
+(0, 0, 0, 2) | 0.12500 | 1.0000 | 0.00000
+(0, 0, 2, 0) | 0.12500 | 1.0000 | 0.00000
+(0, 1, 0, 1) | 0.12500 | 1.0000 | 1.00000
+(0, 1, 1, 0) | 0.12500 | 1.0000 | 1.00000
+(0, 2, 0, 0) | 0.12500 | 1.0000 | 0.00000
+(1, 0, 0, 1) | 0.12500 | 1.0000 | 1.00000
+(1, 0, 1, 0) | 0.12500 | 1.0000 | 1.00000
+(2, 0, 0, 0) | 0.12500 | 1.0000 | 0.00000
+</pre></div></div>
+</div>
+<p>As we can see, outcomes that give zero concurrence actually produce states that are still pure. To know what gate we are applying when we detect outcome (2, 0, 0, 0), for example, we can again visualize its <span class="math notranslate nohighlight">\(\chi\)</span> matrix.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[88]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>failures = [(2, 0, 0, 0), (0, 2, 0, 0), (0, 0, 2, 0), (0, 0, 0, 2)]
+fig = plt.figure(figsize=(15, 15))
+for i, outcome in enumerate(failures):
+    ax = fig.add_subplot(2, 2, i + 1, projection=&#39;3d&#39;)
+    qt.qpt_plot_combined(qt.qpt(4 * channels[outcome] / qt.super_to_choi(channels[outcome]).tr(), op_basis_list=pauli_basis),
+                         lbls_list=pauli_labels, ax=ax, figsize=(2, 2), title=&#39;Outcome: &#39; + str(outcome))
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_46_0.png" src="../_images/notebooks_RUS_gate_46_0.png" />
+</div>
+</div>
+<p>Here we can see that outcomes (2, 0, 0, 0) and (0, 2, 0, 0) perform the identity while outcomes (0, 0, 2, 0) and (0, 0, 0, 2) perform a separable <span class="math notranslate nohighlight">\(Z_aZ_b\)</span> gate, which is consistent with [<a class="reference external" href="https://arxiv.org/abs/2311.05605">G. de Gliniasty et al., arXiv:2311.05605 (2023)</a>]. This means that we can reset these failures by applying the inverse transformation, which is just <span class="math notranslate nohighlight">\(Z_aZ_b\)</span> for those latter two outcomes. Once that is done, we can run the protocol again. In principle, this can
+be repeated as many times as we want. In this ideal scenario, we either have a success or a failure with insurance. Thus, by repeating many times, we can approach a gate efficiency of 100%. This is the main underlying idea behind the Repeat Until Success (RUS) gate.</p>
+<p>Let’s make a dictionary for the gates needed to reset after a failure with insurance.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[89]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c = qt.qip.circuit.QubitCircuit(2)
+c.add_gate(qt.qip.circuit.Gate(name=&#39;Z&#39;, targets=[0]))
+c.add_gate(qt.qip.circuit.Gate(name=&#39;Z&#39;, targets=[1]))
+reset_ZZ = prod(c.propagators())
+reset_ZZ = qt.sprepost(reset_ZZ, reset_ZZ.dag())
+reset_II = qt.qeye([[2, 2], [2, 2]])  # identity superoperator
+retries = {(2, 0, 0, 0): reset_II, (0, 2, 0, 0): reset_II, (0, 0, 2, 0): reset_ZZ, (0, 0, 0, 2): reset_ZZ}
+</pre></div>
+</div>
+</div>
+<p>Now that we have all the information, we can write a recursive algorithm to compute the final successful channel after <span class="math notranslate nohighlight">\(N\)</span> gate attempts.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[90]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def rus_channel(N: int, conditional_channels) -&gt; Qobj:
+    assert N &gt; 0, &quot;Number of attempts must be positive.&quot;
+    channel_success = sum(correction * conditional_channels[outcome] for outcome, correction in successes.items())
+    return channel_success if N == 1 else channel_success + rus_channel(N - 1, conditional_channels) * sum(correction * conditional_channels[outcome] for outcome, correction in retries.items())
+</pre></div>
+</div>
+</div>
+<p>From this perspective, the RUS gate can be considered a deterministic gate where any remaining inefficiency due to truncating <span class="math notranslate nohighlight">\(N\)</span> is simply considered infidelity. So, let’s now look at the average gate fidelity of the RUS gate as a function of the number of attempts.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[91]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fidelity = [qt.average_gate_fidelity(rus_channel(N, channels), gate_ideal) for N in range(1, 10)]
+plt.scatter(range(1, 10), fidelity)
+plt.xlabel(&#39;Number of attempts, $N$&#39;)
+plt.ylabel(&#39;Average gate fidelity&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_52_0.png" src="../_images/notebooks_RUS_gate_52_0.png" />
+</div>
+</div>
+<p>Notice that, quite quickly, the RUS protocol achieves an almost perfect fidelity. To get a better idea of the scaling, let’s look at the error on a log scale plot.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fidelity = [1 - qt.average_gate_fidelity(rus_channel(N, channels), gate_ideal) for N in range(1, 10)]
+_, ax = plt.subplots()
+ax.scatter(range(1, 10), fidelity)
+ax.set_yscale(&#39;log&#39;)
+ax.set_xlabel(&#39;Number of attempts, $N$&#39;)
+ax.set_ylabel(&#39;Average gate error&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_54_0.png" src="../_images/notebooks_RUS_gate_54_0.png" />
+</div>
+</div>
+<p>Now it is more clear that the error is suppressed exponentially fast with increasing number of attempts. To achieve a fidelity of greater than 99%, only 7 attempts are required in the ideal case. For 99.9%, 10 attempts are required.</p>
+</section>
+<section id="Imperfections">
+<h2>Imperfections<a class="headerlink" href="#Imperfections" title="Link to this heading"></a></h2>
+<p>Now that we have fully analyzed the perfect implementation of the RUS gate, we can start to simulate noisy implementations. Note that, once we start to add imperfections, there can be many more outcomes than are possible in the ideal case. These additional outcomes might not all be complete failures, some might be failures with insurance. This aspect introduces a substantial amount of richness and complexity into the problem, which is where ZPGenerator can be useful.</p>
+<section id="Pure-dephasing">
+<h3>Pure dephasing<a class="headerlink" href="#Pure-dephasing" title="Link to this heading"></a></h3>
+<p>Since ZPGenerator is designed to facilitate easy exploration of physical parameters, all we need to do is modify the parameters when simulating our channel. Let’s first add some emitter pure dephasing to see what happens to the average gate fidelity. For now, let’s use the exact same protocol as we derived in the ideal case.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>channels_imperfect = p_rus.conditional_channels(parameters={&#39;dephasing&#39;: 0.1}, basis=basis, select=[1, 3])
+
+fidelity = [1 - qt.average_gate_fidelity(rus_channel(N, channels_imperfect), gate_ideal) for N in range(1, 14)]
+
+_, ax = plt.subplots()
+ax.scatter(range(1, 14), fidelity)
+ax.set_yscale(&#39;log&#39;)
+ax.set_xlabel(&#39;Number of attempts, $N$&#39;)
+ax.set_ylabel(&#39;Average gate error&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_60_0.png" src="../_images/notebooks_RUS_gate_60_0.png" />
+</div>
+</div>
+<p>We can immediately see that, under the current protocol, the presence of emitter pure dephasing prevents us from arbitrarily improving the gate fidelity by increasing the number of attempts. However, the presence of dephasing actually reduces the amount of bunching, allowing for additional outcomes. Copying down the code we used to analyze the perfect case, we can now identify these new outcomes and how the spin state is affected.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;{:&lt;12} | {:&lt;7} | {:&lt;5} | {:}&quot;.format(&#39;Outcome&#39;,  &#39;Eff.&#39;, &#39;Purity&#39;, &#39;Concurrence&#39;))
+for k, channel in channels_imperfect.items():
+    final_state = channel(initial_state)
+    eff = abs(final_state.tr())
+    if eff &gt; 10**-5:
+        final_state = final_state / eff
+        print(&quot;{:&lt;12} | {:.5f} | {:.4f} | {:.5f}&quot;.format(str(k), eff, (final_state * final_state.dag()).tr(), qt.concurrence(final_state)))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Outcome      | Eff.    | Purity | Concurrence
+(0, 0, 0, 2) | 0.11932 | 1.0000 | 0.00000
+(0, 0, 1, 1) | 0.01136 | 1.0001 | 0.00000
+(0, 0, 2, 0) | 0.11932 | 1.0000 | 0.00000
+(0, 1, 0, 1) | 0.12500 | 0.9132 | 0.90909
+(0, 1, 1, 0) | 0.12500 | 0.9132 | 0.90909
+(0, 2, 0, 0) | 0.11932 | 1.0000 | 0.00000
+(1, 0, 0, 1) | 0.12500 | 0.9132 | 0.90909
+(1, 0, 1, 0) | 0.12500 | 0.9132 | 0.90909
+(1, 1, 0, 0) | 0.01136 | 1.0000 | 0.00000
+(2, 0, 0, 0) | 0.11932 | 1.0000 | 0.00000
+</pre></div></div>
+</div>
+<p>Notably, there are now outcomes (0, 0, 1, 1) and (1, 1, 0, 0) due to the failure of Hong-Ou-Mandel (HOM) bunching. Interestingly, these ‘HOM failures’ actually still maintain the purity of the spin state, meaning there is a chance to recover them. This is because, for example, the outcome (1, 1, 0, 0) would have otherwise caused outcome (2, 0, 0, 0) or (0, 2, 0, 0) but both of these cases require the same reset correction and so there is no need to distinguish which one we should have observed.
+This means we can simply modify our list of retries and the associated reset corrections to include these two additional outcomes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>retries.update({(1, 1, 0, 0): reset_II, (0, 0, 1, 1): reset_ZZ})
+</pre></div>
+</div>
+</div>
+<p>Now, let’s see how this change impacts our fidelity.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>channels_imperfect = p_rus.conditional_channels(parameters={&#39;dephasing&#39;: 0.1}, basis=basis, select=[1, 3])
+
+fidelity_mod = [1 - qt.average_gate_fidelity(rus_channel(N, channels_imperfect), gate_ideal) for N in range(1, 14)]
+
+_, ax = plt.subplots()
+ax.scatter(range(1, 14), fidelity, label=&#39;Original protocol&#39;)
+ax.scatter(range(1, 14), fidelity_mod, label=&#39;Corrected protocol&#39;)
+ax.set_yscale(&#39;log&#39;)
+ax.set_xlabel(&#39;Number of attempts, $N$&#39;)
+ax.set_ylabel(&#39;Average gate error&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_66_0.png" src="../_images/notebooks_RUS_gate_66_0.png" />
+</div>
+</div>
+<p>As we can see, by considering the additional two failures caused by photon distinguishability, we have managed to improve the average gate fidelity significantly. However, the presence of dephasing still prevents an arbitrary improvement in fidelity, and this is due to how it impacts the successful outcomes which we cannot compensate for by modifying our selection and correction protocol.</p>
+<p>With this new protocol, let’s see how the asymptotic fidelity (say at <span class="math notranslate nohighlight">\(N=100\)</span>) depends on the indistinguishability of photons produced by the emitters. To do this, we must compute both the indistinguishability and the gate fidelity as we vary the emitter pure dephasing rate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[97]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dephasing_rates = np.logspace(-2, 0, 20)
+asymptotic_error = []
+hom_list = []
+for rate in dephasing_rates:
+    params = {&#39;dephasing&#39;: rate}
+    hom_list.append(trion.hom(parameters=params)[&#39;M&#39;])
+    channels_imperfect = p_rus.conditional_channels(parameters=params, basis=basis, select=[1, 3])
+    asymptotic_error.append(1 - qt.average_gate_fidelity(rus_channel(100, channels_imperfect), gate_ideal))
+
+_, ax = plt.subplots()
+ax.scatter(hom_list, asymptotic_error)
+ax.set_yscale(&#39;log&#39;)
+ax.set_xlabel(&#39;Indistinguishability&#39;)
+ax.set_ylabel(&#39;Asymptotic average gate error&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_68_0.png" src="../_images/notebooks_RUS_gate_68_0.png" />
+</div>
+</div>
+<p>Since ZPGenerator provides us with the full noisy channel, we can get a lot more information about exactly what goes wrong by looking at the error channel. Let’s use a reasonable value of 0.1 for the pure dephasing, corresponding to a indistinguishability of around 91%. This reflects a common lab setting.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {&#39;dephasing&#39;: 0.1}
+ind = trion.hom(parameters=params)[&#39;M&#39;]
+print(&#39;Indistinguishability: &#39;, ind)
+channels_imperfect = p_rus.conditional_channels(parameters=params, basis=basis, select=[1, 3])
+channel_rus = rus_channel(100, channels_imperfect)
+channel_err = qt.sprepost(gate_ideal.dag(), gate_ideal) * channel_rus
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Indistinguishability:  0.9126667573663786
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qt.qpt_plot_combined(qt.qpt(channel_err, op_basis_list=pauli_basis), lbls_list=pauli_labels)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_71_0.png" src="../_images/notebooks_RUS_gate_71_0.png" />
+</div>
+</div>
+<p>We can see that the presence of dephasing causes a <span class="math notranslate nohighlight">\(Z_aZ_b\)</span> correlated dephasing error on the spin qubits.</p>
+</section>
+<section id="Realistic-excitation-pulses">
+<h3>Realistic excitation pulses<a class="headerlink" href="#Realistic-excitation-pulses" title="Link to this heading"></a></h3>
+<p>Let’s now take a look at using a more realistic excitation pulses that may cause multi-photon emission. To do this, we need to rebuild our processor using a different pulse shape. Let’s use a square pulse because it captures globally the same physics as a Gaussian pulse but is faster to simulate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[100]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trion = Source.trion(pulse=Pulse.square(parameters={&#39;width&#39;: 0.1}), parameters={&#39;theta&#39;: 0, &#39;phi&#39;: 0, &#39;theta_c&#39;: np.pi / 4, &#39;phi_c&#39;: -np.pi / 2, &#39;area&#39;: np.sqrt(2) * np.pi})
+p_rus_pulse = Processor() // ([0, 2], trion) // c_rus // (list(range(4)), Detector.pnr(2))
+</pre></div>
+</div>
+</div>
+<p>Let’s quickly take a look at the characterisation of our source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[101]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trion.display_quality()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50012
+1       | 0.49382
+2       | 0.00605
+3       | 0.00001
+4       | 0.00000
+
+Figure of Merit       | Value
+Brightness            | 0.4999
+Average photon number | 0.5060
+Intensity correlation | 0.0475
+
+Figure of Merit                | Value
+First order number coherence   | 0.0066
+Second order number coherence  | 0.0001
+Hong-Ou-Mandel visibility      | 0.9292
+Mean wavepacket overlap        | 0.9690
+
+</pre></div></div>
+</div>
+<p>We can notice that using a more realistic pulse introduces a small probability of producing 2 photons for each excitation pulse. This gives an integrated intensity correlation of about 5%, which also reduces the indistinguishability characterised by the mean wavepacket overlap.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[110]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;{:&lt;12} | {:&lt;6} | {:&lt;5} | {:}&quot;.format(&#39;Outcome&#39;,  &#39;Eff.&#39;, &#39;Purity&#39;, &#39;Concurrence&#39;))
+for k, channel in channels_imperfect.items():
+    final_state = channel(initial_state)
+    eff = abs(final_state.tr())
+    if eff &gt; 10**-4:
+        final_state = final_state / eff
+        print(&quot;{:&lt;12} | {:.4f} | {:.4f} | {:.5f}&quot;.format(str(k), eff, (final_state * final_state.dag()).tr(), qt.concurrence(final_state)))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Outcome      | Eff.   | Purity | Concurrence
+(0, 0, 0, 0) | 0.0051 | 0.3776 | 0.00000
+(0, 0, 0, 1) | 0.0264 | 0.8566 | 0.00717
+(0, 0, 0, 2) | 0.0977 | 0.9932 | 0.00000
+(0, 0, 1, 0) | 0.0264 | 0.8566 | 0.00717
+(0, 0, 1, 1) | 0.0183 | 0.9506 | 0.00000
+(0, 0, 1, 2) | 0.0013 | 0.7336 | 0.67345
+(0, 0, 2, 0) | 0.0977 | 0.9932 | 0.00000
+(0, 0, 2, 1) | 0.0013 | 0.7336 | 0.67344
+(0, 1, 0, 0) | 0.0259 | 0.9130 | 0.00000
+(0, 1, 0, 1) | 0.1061 | 0.8405 | 0.82059
+(0, 1, 0, 2) | 0.0012 | 0.8256 | 0.04553
+(0, 1, 1, 0) | 0.1061 | 0.8405 | 0.82059
+(0, 1, 1, 1) | 0.0024 | 0.8346 | 0.00000
+(0, 1, 2, 0) | 0.0012 | 0.8256 | 0.04552
+(0, 2, 0, 0) | 0.0970 | 0.9976 | 0.00000
+(0, 2, 0, 1) | 0.0011 | 0.9679 | 0.95308
+(0, 2, 1, 0) | 0.0011 | 0.9679 | 0.95307
+(1, 0, 0, 0) | 0.0269 | 0.8901 | 0.00000
+(1, 0, 0, 1) | 0.1074 | 0.8374 | 0.81867
+(1, 0, 0, 2) | 0.0035 | 0.9388 | 0.01579
+(1, 0, 1, 0) | 0.1074 | 0.8374 | 0.81867
+(1, 0, 1, 1) | 0.0028 | 0.6601 | 0.00000
+(1, 0, 2, 0) | 0.0035 | 0.9388 | 0.01579
+(1, 1, 0, 0) | 0.0183 | 0.9681 | 0.00000
+(1, 1, 0, 1) | 0.0026 | 0.7312 | 0.67158
+(1, 1, 1, 0) | 0.0026 | 0.7312 | 0.67158
+(1, 2, 0, 0) | 0.0022 | 0.9977 | 0.00000
+(2, 0, 0, 0) | 0.0983 | 0.9918 | 0.00000
+(2, 0, 0, 1) | 0.0036 | 0.8902 | 0.87184
+(2, 0, 1, 0) | 0.0036 | 0.8902 | 0.87184
+(2, 1, 0, 0) | 0.0004 | 0.9766 | 0.00000
+</pre></div></div>
+</div>
+<p>Right away we can notice that the realistic pulse produces many more outcomes than before due to the possibility of multi-photon emission. The pulse may also fail to excite the source entirely, leaving a small chance to see zero or one photon outcomes as well (even without including other losses). Interestingly, as for dephasing, we can see that many of the outcomes actually maintain a high purity for the spin state and some of the single-photon outcomes even indicate entanglement was achieved.
+This suggests that there may be a way to modify our protocol again in order to compensate for these additional noisy outcomes using corrections and repeat attempts. To keep things simple, however, we will just use the same protocol as for the pure dephasing case and see how the average gate fidelity depends on the intensity correlation of the source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[103]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pulse_widths = np.logspace(-2, 1, 20)
+asymptotic_error = []
+g2_list = []
+for width in pulse_widths:
+    params = {&#39;width&#39;: width}
+    g2_list.append(trion.g2(parameters=params))
+    channels_imperfect = p_rus_pulse.conditional_channels(parameters=params, basis=basis, select=[1, 3])
+    asymptotic_error.append(1 - qt.average_gate_fidelity(rus_channel(100, channels_imperfect), gate_ideal))
+
+_, ax = plt.subplots()
+ax.scatter(g2_list, asymptotic_error)
+ax.set_yscale(&#39;log&#39;)
+ax.set_xlabel(&#39;Intensity correlation, $g^{(2)}$&#39;)
+ax.set_ylabel(&#39;Asymptotic average gate error&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_81_0.png" src="../_images/notebooks_RUS_gate_81_0.png" />
+</div>
+</div>
+<p>Lastly, let’s take a look at the error channel’s <span class="math notranslate nohighlight">\(\chi\)</span> matrix representation to see roughly what is happening when we have multi-photon emission.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[104]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {&#39;width&#39;: 0.1}
+g2 = trion.g2(parameters=params)
+print(&#39;Intensity correlation: &#39;, g2)
+channels_imperfect = p_rus_pulse.conditional_channels(parameters=params, basis=basis, select=[1, 3])
+channel_rus = rus_channel(100, channels_imperfect)
+channel_err = qt.sprepost(gate_ideal.dag(), gate_ideal) * channel_rus
+chi_err = qt.qpt(channel_err, op_basis_list=pauli_basis)
+qt.qpt_plot_combined(chi_err, lbls_list=pauli_labels)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Intensity correlation:  0.0398240844410854
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_83_1.png" src="../_images/notebooks_RUS_gate_83_1.png" />
+</div>
+</div>
+<p>Surprisingly, we can see that the only problem with our error channel is that the weight of the identity is not 1. This means that the presence of multi-photon emission, at least in small amounts, causes an effective inefficiency as its dominant effect. This suggests it is possible to almost fully compensate for it using proper corrections. However, the situation becomes a bit more complicated if some loss is introduced into the system as it will reduce the ability to distinguish different
+multi-photon outcomes.</p>
+</section>
+<section id="Combined-Imperfections">
+<h3>Combined Imperfections<a class="headerlink" href="#Combined-Imperfections" title="Link to this heading"></a></h3>
+<p>Let’s now combine distinguishability, multi-photon emission, and losses together and see what kind of error channel we get.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[105]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trion = Source.trion(pulse=Pulse.square(), parameters={&#39;theta&#39;: 0, &#39;phi&#39;: 0, &#39;theta_c&#39;: np.pi / 4, &#39;phi_c&#39;: -np.pi / 2, &#39;area&#39;: np.sqrt(2) * np.pi})
+p_rus_combined = Processor() // ([0, 2], trion) // Circuit.loss(4, name=&#39;transmission&#39;) // c_rus // (list(range(4)), Detector.pnr(2))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {&#39;width&#39;: 0.2, &#39;dephasing&#39;: 0.2, &#39;transmission/efficiency&#39;: 0.8}
+trion.display_quality(parameters=params)
+
+channels_imperfect = p_rus_combined.conditional_channels(parameters=params, basis=basis, select=[1, 3])
+channel_rus = rus_channel(100, channels_imperfect)
+channel_err = qt.sprepost(gate_ideal.dag(), gate_ideal) * channel_rus
+chi_err = qt.qpt(channel_err, op_basis_list=pauli_basis)
+qt.qpt_plot_combined(chi_err, lbls_list=pauli_labels)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.50292
+1       | 0.48540
+2       | 0.01164
+3       | 0.00004
+4       | 0.00000
+
+Figure of Merit       | Value
+Brightness            | 0.4971
+Average photon number | 0.5088
+Intensity correlation | 0.0909
+
+Figure of Merit                | Value
+First order number coherence   | 0.0137
+Second order number coherence  | 0.0003
+Hong-Ou-Mandel visibility      | 0.7059
+Mean wavepacket overlap        | 0.7968
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_RUS_gate_88_1.png" src="../_images/notebooks_RUS_gate_88_1.png" />
+</div>
+</div>
+<p>By including some significant sources of error, we can now see that the error channel becomes less trivial. However, it appears that, for this set of parameters, the dominant errors are all related to <span class="math notranslate nohighlight">\(Z\)</span> and <span class="math notranslate nohighlight">\(I\)</span> operations. This is likely a result of the symmetry of the protocol, and we might expect other types of errors to arise if the two sources are not fully identical, if the trion is not completely degenerate, or if the entangling circuit is not perfect. Although all these
+other sources of errors can be taken into account using ZPGenerator, it goes beyond the scope of this exercise.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="entanglement_generation.html" class="btn btn-neutral float-left" title="Entanglement Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="component_construction.html" class="btn btn-neutral float-right" title="Component Construction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

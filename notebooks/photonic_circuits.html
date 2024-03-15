@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photonic Circuits &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pulsed Sources" href="pulsed_sources.html" />
+    <link rel="prev" title="Detectors" href="detectors_catalogue.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Photonic Circuits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Building-a-processor">Building a processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Simulating-correlations">Simulating correlations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Threshold-detection">Threshold detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Binned-detectors">Binned detectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Imperfect-sources">Imperfect sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Time-dynamics">Time dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Losses">Losses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Photonic Circuits</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/photonic_circuits.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Photonic-Circuits">
+<h1>Photonic Circuits<a class="headerlink" href="#Photonic-Circuits" title="Link to this heading"></a></h1>
+<p>Photonic circuits are critical for linear-optical quantum computing and play a crucial role in quantum communication. At the top-most level, constructing and simulating photonic circuits in ZPGenerator is very similar to <a class="reference external" href="https://perceval.quandela.net/">Perceval</a>, a framework also developed by Quandela. The main difference is that circuits in ZPGenerator cannot be analysed independent of sources and detectors. This is because ZPGenerator is a source-physics simulator as opposed to Perceval,
+which is a circuit-focused simulator. In ZPGenerator, as in Perceval, the object that combines sources, circuits, and detectors/post-processing is called a Processor.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<section id="Building-a-processor">
+<h2>Building a processor<a class="headerlink" href="#Building-a-processor" title="Link to this heading"></a></h2>
+<p>To simulate a photonic circuit, the first thing to do is create a Processor. The number of discrete processor modes needed will expand dynamically as we add components.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor()
+</pre></div>
+</div>
+</div>
+<p>Once we initialise a processor, we can add components to it using the add() method. We have three types of components to add: (1) sources, (2) circuits, and (3) detectors. Catalogue sources can be easily created using class methods of the Source class. These components have one or more input modes that are vacuum by default, and one or more output modes that contain pulses of light. Sources are usually placed at the beginning of a processor but ZPGenerator also handles cascaded quantum systems
+where the emission from one source can be used to drive another.</p>
+<p>To demonstrate a simple example, we can simulate the Hong-Ou-Mandel (HOM) bunching effect [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.59.2044">C. K. Hong, Z. Y. Ou, and L. Mandel, Phys. Rev. Lett. 59, 2044 (1987)</a>]. To do this, we can add a source of perfect single photon Fock states to modes 0 and 1 of our processor.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.add(0, Source.fock(1))
+qpu.add(1, Source.fock(1))
+</pre></div>
+</div>
+</div>
+<p>Next, we want to add a beam splitter so that our two single photons will interfere. To do this, we can use class methods from the Circuit class to access catalogue linear-optical components.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.add(0, Circuit.bs())
+</pre></div>
+</div>
+</div>
+<p>Finally, we need to place our detectors to monitor the output modes of the beam splitter. This is done using the Detector class that, like the Source and Circuit classes, has class methods to create different catalogue detector types. Since we wish to observe the HOM bunching effect, and we have only two photons, we can use photon-number resolving (PNR) detectors with a resolution of 2.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.add(0, Detector.pnr(2))
+qpu.add(1, Detector.pnr(2))
+</pre></div>
+</div>
+</div>
+<p>Now that we have constructed our processor, we can visualise the basic structure using the display() method. More advanced visualisation methods will be implemented in future updates.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+        _____________
+|0&gt;----|  Component  |----D~
+|0&gt;----|             |----D~
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾
+</pre></div></div>
+</div>
+<p>The total two-mode processor begins with vacuum inputs, one input to each source. The component represents the combination of two Fock state sources and a beam splitter. Finally, the detectors indicate that the output modes are monitored. To break this down, we can also display all the elements composing the component by setting elements=True when displaying the processor.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.display(elements=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+        _______
+|0&gt;--(0|  |1&gt;  |0)--
+        ‾‾‾‾‾‾‾
+
+        _______
+|0&gt;--(1|  |1&gt;  |1)--
+        ‾‾‾‾‾‾‾
+
+        ______
+   --(0|  BS  |0)--
+   --(1|      |1)--
+        ‾‾‾‾‾‾
+
+        ________
+   --(0|  PNRD  |0)--D~
+        ‾‾‾‾‾‾‾‾
+
+        ________
+   --(1|  PNRD  |1)--D~
+        ‾‾‾‾‾‾‾‾
+</pre></div></div>
+</div>
+<p>This function illustrates each element, or subcomponent, with its name and also the arrangement of ports and their labels connecting the different elements together. Note that sources and detectors are just special types of components where all inputs are vacuum, or all outputs are monitored, respectively.</p>
+</section>
+<section id="Simulating-correlations">
+<h2>Simulating correlations<a class="headerlink" href="#Simulating-correlations" title="Link to this heading"></a></h2>
+<p>Now that we have built the processor, the next step is to simulate it. To do this, we can ask for the probabilities using the probs() method of the Processor class.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>probabilities = qpu.probs()
+</pre></div>
+</div>
+</div>
+<p>Detection probabilities are returned as a CorrelationDistribution object that takes tuples of positive integers as keys. To check that we have HOM bunching, we must ensure that the coincidence count outcome corresponding to the tuple (1, 1) has a zero probability of occurring.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>probabilities[1, 1] == 0
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>As expected, our processor never produces the (1, 1) detection pattern due to the HOM bunching effect. We can also diplay the distribution to see all non-negligible probabilities.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>probabilities.display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+2 0     | 0.50000
+0 2     | 0.50000
+
+</pre></div></div>
+</div>
+<p>Because we are using perfect source of single-photon Fock states and we have not included any losses, we never observe single-photon outcomes or vacuum outcomes. The photon-number patterns registered by each detector are ordered, by default, according to their spatial mode. That is, the pattern (2, 0) indicates that ‘PNRD’ monitoring mode 0 detected 2 photons while ‘PNRD’ monitoring mode 1 detected 0 photons.</p>
+<p>It’s important to note that, unlike Perceval, detection probabilities <em>do not</em> always represent state probabilities. Hence, ZPGenerator uses the notation ‘2 0’ and not ‘<a href="#id1"><span class="problematic" id="id2">|</span></a>2,0&gt;’ to represent outcomes. In ZPGenerator, the detection probabilities are integrated over time, and thus can only be considered Fock state probabilities if the state of light is actually in a pure Fock state. Since we are using a perfect source of Fock states in this first example, we can equate measuring ‘2 0’ with measuring
+‘<a href="#id3"><span class="problematic" id="id4">|</span></a>2,0&gt;’ but this is not always true.</p>
+<h5><p>A note on detector resolution</p>
+</h5><p>A very important point about using PNR detectors in ZPGenerator is that they must be given a resolution as large or larger than the largest photon number that it could measure with a non-negligible probability, or else the outcome probabilities will be modified by aliasing. To demonstrate this effect, consider what happens when simulating a 3-photon Fock states using a PNR detector with a resolution of 2.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor()
+qpu.add(0, Source.fock(3))
+qpu.add(0, Detector.pnr(2))
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0       | 1.00000
+
+</pre></div></div>
+</div>
+<p>Notice that we expected 3 photons with a probability of 1, but measured 0 photons instead. This is because any detection probability that exceeds the resolution ‘wraps around’ and adds to the distribution, i.e., modulo the resolution. This behaviour is fully expected based on the theory of how the backend works, and can be a useful feature in some cases. However, it can cause confusion if not taken into account when simulating a processor.</p>
+</section>
+<section id="Threshold-detection">
+<h2>Threshold detection<a class="headerlink" href="#Threshold-detection" title="Link to this heading"></a></h2>
+<p>An interesting feature of ZPGenerator is the ability to simulate threshold detectors without first simulating all the number-resolved outcomes. Threshold detectors detect either zero photons (no click) or at least one photon (click). This type of detector is commonly used to model avalanche photodiode (APD) detectors and non-resolving superconducting nanowire single-photon detectors (SNSPD). Unlike photon-number resolved outcomes, ZPGenerator will not return aliased distributions if the number
+of photons incident exceeds the threshold detector resolution of 1. This is because threshold detection produces a finite set of outcomes that requires no truncation.</p>
+<p>Let’s quickly rewrite the same HOM processor, but now using threshold detectors. In this case, we will use the shorthand // notation to add components and specify lists of integers to add a component to multiple modes at the same time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor() // ([0, 1], Source.fock(1)) // Circuit.bs() // ([0, 1], Detector.threshold())
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 1     | 0.50000
+1 0     | 0.50000
+
+</pre></div></div>
+</div>
+<p>When using threshold detectors, a 0 represents the same outcome as it does for PNR detectors. However, a 1 now indicates at least one photon was detected. Comparing this with our number-resolved simulation of the HOM effect, we can see that threshold detectors register 2-photon outcomes as a single click. In many cases, threshold detection is sufficient to understand how the source and circuit interact, such as this HOM interference experiment where we only want to identify the absence of
+coincidence counts. This is why, in practice, HOM interference experiments used to characterise single-photon sources are performed using threshold detectors.</p>
+<p>In general, ZPGenerator also allows us to mix and match different sources and detectors, or even leave many inputs or outputs empty. As in permanent-based simulators, like Perceval, the time needed to simulate an experiment using ZPGenerator depends on the Hilbert space size of the input states or sources, and the number of outcomes for the outputs being monitored, but not the size of the circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor()
+qpu.add(0, Source.fock(1))
+qpu.add(7, Source.fock(3))
+qpu.add(15, Source.fock(2))
+qpu.add(0, Circuit.haar_random(24))
+qpu.add(0, Detector.threshold(bin_name=&#39;TD 1&#39;))
+qpu.add(12, Detector.threshold(bin_name=&#39;TD 2&#39;))
+qpu.add(8, Detector.pnr(6, bin_name=&#39;PNRD&#39;))
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0 0   | 0.46479
+0 1 0   | 0.09099
+0 2 0   | 0.01460
+0 3 0   | 0.00178
+0 4 0   | 0.00013
+0 0 1   | 0.12664
+0 1 1   | 0.02085
+0 2 1   | 0.00320
+0 3 1   | 0.00030
+0 4 1   | 0.00002
+1 0 0   | 0.19182
+1 1 0   | 0.04545
+1 2 0   | 0.00668
+1 3 0   | 0.00066
+1 4 0   | 0.00004
+1 0 1   | 0.02436
+1 1 1   | 0.00663
+1 2 1   | 0.00100
+1 3 1   | 0.00007
+
+</pre></div></div>
+</div>
+<p>In more complicated experiments such as the example above, it is useful to assign detectors to a unique bin using the ‘bin_name’ keyword, as done above. Then, we can always look to see what the order of the outcomes in the pattern represent by checking the bin_labels property of the processor.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.bin_labels
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;TD 1&#39;, &#39;PNRD&#39;, &#39;TD 2&#39;]
+</pre></div></div>
+</div>
+<p>The bin_name keyword also allows detectors to serve more complex functionalities than just monitoring a single mode for the entirety of the experiment. We may have multiple detectors monitoring the same mode but at different times, or one detector monitoring multiple modes simultaneously and binning the results together.</p>
+</section>
+<section id="Binned-detectors">
+<h2>Binned detectors<a class="headerlink" href="#Binned-detectors" title="Link to this heading"></a></h2>
+<p>Sometimes we do not need to know the individual outcomes for different detectors, but instead only need to know their summed results. For example, this technique of binning detectors together can be used to validate Boson Sampling results [<a class="reference external" href="https://arxiv.org/abs/2212.09643">B. Seron, et al., arXiv: 2212.09643 (2022)</a>]. To bin the results of two detectors in ZPGenerator, we must assign them the same bin name and also ensure that they are the same detector type and have the same resolution.
+Let’s take a look at 4 photons passing through a 24-mode Haar random circuit, but divide the 24 outputs into two groups. Note that, without binning, there are 17750 possible outcomes. But, by binning into two groups, we have just 5 possible outcomes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor()
+qpu.add([0, 1, 2, 3], Source.fock(1))
+qpu.add(0, Circuit.haar_random(24))
+qpu.add(list(range(0, 12)), Detector.pnr(4, bin_name=&#39;bin 0&#39;))
+qpu.add(list(range(12, 24)), Detector.pnr(4, bin_name=&#39;bin 1&#39;))
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+4 0     | 0.08011
+3 1     | 0.25627
+2 2     | 0.35144
+1 3     | 0.24149
+0 4     | 0.07069
+
+</pre></div></div>
+</div>
+<p>At this point, it is worth mentioning that ZPGenerator is generally a lot slower than Perceval for problems that both frameworks can tackle. This is because ZPGenerator is designed to solve general noisy time-dynamic problems, which can be overkill when simulating ideal photons as in the above scenarios. However, the backend is extremely flexible and can provide solutions to a wide range of realistic experimental setups that cannot be simulated using Perceval.</p>
+</section>
+<section id="Imperfect-sources">
+<h2>Imperfect sources<a class="headerlink" href="#Imperfect-sources" title="Link to this heading"></a></h2>
+<p>Without going too deep into source physics, we can also use ZPGenerator to simulate a wide variety of realistic source types. The easiest way to accomplish this is to use the different catalogue sources available from the Source class. To demonstrate, let’s revisit the Hong-Ou-Mandel scenario but using a more realistic source type that includes source inefficiency, multi-photon emission, and non-ideal indistinguishability. To obtain a source that produces a photon with known efficiency,
+integrated intensity correlation ($g^{(2)}), and amount of indistinguishability, we can use the perceval() source model.</p>
+<p>This source type is based on a simplified noise model of a near-ideal single photon produced by the fast excitation of a two-level emitter. Thus, we get at most two photons from each source, and the additional photon of the multiphoton component is completely distinguishable from the single photon component as demonstrated in [<a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.126.063602">H. Ollivier et al., Phys. Rev. Lett. 126, 063602 (2021)</a>]. It is named as such because it is the
+same model that is used in the Source class in Perceval.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = Source.perceval(emission_probability=0.85,
+                         multiphoton_component=0.05,
+                         indistinguishability=0.9)
+qpu = Processor()
+qpu.add([0, 1], source)
+qpu.add(0, Circuit.bs())
+qpu.add([0, 1], Detector.pnr(4))
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0     | 0.02250
+1 0     | 0.12467
+2 0     | 0.32826
+3 0     | 0.00745
+4 0     | 0.00009
+0 1     | 0.12467
+1 1     | 0.03992
+2 1     | 0.00823
+0 2     | 0.32826
+1 2     | 0.00823
+2 2     | 0.00017
+0 3     | 0.00745
+0 4     | 0.00009
+
+</pre></div></div>
+</div>
+<p>By going one step deeper into the physics, we can also modify the physical parameters of catalogue components to create imperfections.</p>
+</section>
+<section id="Parameters">
+<h2>Parameters<a class="headerlink" href="#Parameters" title="Link to this heading"></a></h2>
+<p>ZPGenerator is built to handle components that may be controlled by many different parameters. This is particularly important once we start building new components and time-dynamic control pulses in a composable way. In this section, we will take a look at the basic methods we can use to modify parameters controlling the simulation model.</p>
+<p>All components come with a set of default parameters that can be overwritten when simulating the processor. To see what parameters we can modify, let’s once again build a basic HOM setup and look at the list of parameters automatically included by the included catalogue components. This time, we will define our components first, and then add them to the processor using the shorthand // symbol.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+circuit = Circuit.bs()
+detector = Detector.pnr(2)
+
+qpu = Processor() // ([0, 1], source) // (0, circuit) // ([0, 1], detector)
+
+print(qpu.parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;angle&#39;, &#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<p>By printing the parameters property of the processor, we can see there are many parameters and perhaps their functionalities are not clear because we don’t know which components they belong to. One option is to check the parameters of each component individually.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(source.parameters)
+print(circuit.parameters)
+print(detector.parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;, &#39;delay&#39;, &#39;dephasing&#39;, &#39;efficiency&#39;, &#39;resonance&#39;]
+[&#39;angle&#39;]
+[&#39;efficiency&#39;]
+</pre></div></div>
+</div>
+<p>We can see that each component has its own list of parameters, and together they make all the parameters of the processor. However, we must be <em>very careful</em> because both the source and detector component have the same parameter “efficiency”. So, if we change the efficiency parameter, it will apply twice—once at emission and once at detection. To avoid parameter clashes like this, it is important to always give each component a unique name so that we can control their parameters individually.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source.name = &#39;source&#39;
+circuit.name = &#39;beamsplitter&#39;
+detector.name = &#39;detector&#39;
+print(qpu.parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;beamsplitter/angle&#39;, &#39;detector/efficiency&#39;, &#39;source/decay&#39;, &#39;source/delay&#39;, &#39;source/dephasing&#39;, &#39;source/efficiency&#39;, &#39;source/resonance&#39;]
+</pre></div></div>
+</div>
+<p>Now we can easily see which parameters belong to which component. More importantly, we can specify which parameter to modify. Before doing this, let’s take a look at what the default parameters are.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;source/resonance&#39;: 0.0,
+ &#39;source/dephasing&#39;: 0.0,
+ &#39;source/delay&#39;: 0.0,
+ &#39;source/decay&#39;: 1.0,
+ &#39;source/efficiency&#39;: 1,
+ &#39;beamsplitter/angle&#39;: 0.7853981633974483,
+ &#39;detector/efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>Here, we can see that our source is emitting light that is resonant (resonance = 0) with respect to the global reference. There is also no dephasing impacting the amplitude coherence of the light (dephasing = 0), the ‘delay’ parameter being 0 indicates that the emission occurs at time t=0, and the decay rate of the source (governing the emission timescale) is set to 1. The source also has an efficiency parameter, which can represent a collection efficiency, which is set to 1 by default. The
+beamsplitter is has a 50:50 ratio by default, corresponding to an angle of <span class="math notranslate nohighlight">\(\pi/4\)</span>. Finally, the detector has an efficiency of 1.</p>
+<p>The majority of the time, we don’t care to modify all these default parameters. But, perhaps we want to modify only one or two of them. To do this, we simply specify the parameter to modify when simulating the processor. Let’s increase the source dephasing and see how it impacts the HOM bunching effect.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.probs(parameters={&#39;source/dephasing&#39;: 0.1}).display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+2 0     | 0.47727
+1 1     | 0.04545
+0 2     | 0.47727
+
+</pre></div></div>
+</div>
+<p>By specifying a new value for ‘source/dephasing’ we will add some pure dephasing to the fock state, which leads to some amount of distinguishability, preventing perfect HOM bunching, and thus we observe ‘1 1’ coincidence counts.</p>
+<p>The way parameters work in ZPGenerator allow us to also specify the common part of one or more parameters to modify all parameters with that common name. For example, we have two ‘efficiency’ parameters: ‘source/efficiency’ and ‘detector/efficiency’. We can modify them individually using their full name, or we can modify them both at the same time using their common name.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu.probs(parameters={&#39;source/efficiency&#39;: 0.5}).display()
+qpu.probs(parameters={&#39;efficiency&#39;: 0.5}).display()
+qpu.probs(parameters={&#39;efficiency&#39;: 0.5}) == qpu.probs(parameters={&#39;source/efficiency&#39;: 0.5, &#39;detector/efficiency&#39;: 0.5})
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 0     | 0.25000
+1 0     | 0.25000
+2 0     | 0.12500
+0 1     | 0.25000
+0 2     | 0.12500
+
+Pattern | Probability
+0 0     | 0.56250
+1 0     | 0.18750
+2 0     | 0.03125
+0 1     | 0.18750
+0 2     | 0.03125
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>As you can see, modifying ‘source/efficiency’ to 0.5 will reduce the emission efficiency of the sources to 50%. However, by modifying ‘efficiency’ to 0.5, we will change both ‘source/efficiency’ and ‘detector/efficiency’, resulting in more losses.</p>
+<p>If two components have parameters with the same name but with different default values, no parameter clashes will occur. Thus, another way to avoid parameter clashes is to assign different default parameters to components when creating them or to update their default parameters before simulating the processor.</p>
+<p>In the next section, we will use this approach to take a look at modifying the ‘delay’ parameter, but for each source independently.</p>
+</section>
+<section id="Time-dynamics">
+<h2>Time dynamics<a class="headerlink" href="#Time-dynamics" title="Link to this heading"></a></h2>
+<p>Since ZPGenerator is based on a time-dynamic backend, manipulating relative temporal properties of sources is natural. For example, by shifting the relative delay of the photons as above, we can see that the photons are partially distinguishable allowing for ‘1 1’ coincidences similar to the case when we added dephasing.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>beamsplitter = Circuit.bs()
+detector = Detector.pnr(2)
+
+qpu = Processor()
+qpu.add(0, Source.fock(1, parameters={&#39;delay&#39;: 0}))
+qpu.add(0, Source.fock(1, parameters={&#39;delay&#39;: 0.1}))
+qpu = qpu // beamsplitter // ([0, 1], detector)
+
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+2 0     | 0.47621
+1 1     | 0.04758
+0 2     | 0.47621
+
+</pre></div></div>
+</div>
+<p>Setting parameters in this way is convenient because we do not need to name each component, but we have to be careful to note that it only impacts the default values. If we try to modify ‘delay’, it will modify both the parameter for both sources, which eliminates the relative delay and restores HOM bunching.</p>
+<p>To get a better idea of what is happening in the above simulation, we can sweep the delay of one photon across the other and see how the anti-bunching probability is modified. To make things more interesting, let’s also compare it to delaying a wavepacket when we have additional pure dephasing.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor()
+qpu.add(0, Source.fock(1, name=&#39;source 0&#39;))
+qpu.add(1, Source.fock(1, name=&#39;source 1&#39;))
+qpu.add(0, Circuit.bs())
+qpu.add([0, 1], Detector.threshold())
+
+def pr11(delay: float, dephasing: float):  # make a function to simulate the coincidence probability
+    return qpu.probs(parameters={&#39;source 1/delay&#39;: delay, &#39;dephasing&#39;: dephasing})[1, 1]
+
+# Let&#39;s generate data for a set of delays and for three different regimes of dephasing
+delays = np.linspace(-4, 4, 21)
+coinc_indi = [pr11(tau, 0.0) for tau in delays]  # no dephasing (indistinguishable)
+coinc_deph = [pr11(tau, 0.5) for tau in delays]  # some dephasing (partially distinguishable)
+coinc_dist = [pr11(tau, 10**3) for tau in delays]  # lots of dephasing --&gt; distinguishable
+
+# Now let&#39;s plot them to compare!
+plt.plot(delays, coinc_indi, label = &#39;Indistinguishable&#39;)
+plt.plot(delays, coinc_deph, label = &#39;Partially distinguishable&#39;)
+plt.plot(delays, coinc_dist, label = &#39;Fully distinguishable&#39;)
+plt.xlabel(&#39;Delay, $\\tau$&#39;)
+plt.ylabel(&#39;HOM coincidence probability, $p_{11}(\\tau)$&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_photonic_circuits_64_0.png" src="../_images/notebooks_photonic_circuits_64_0.png" />
+</div>
+</div>
+<p>When there is no dephasing, we see a clear dip in the coincience probability <span class="math notranslate nohighlight">\(p_{11}\)</span> down to zero when the delay <span class="math notranslate nohighlight">\(\tau\)</span> is zero. When we add some dephasing, there is still a dip, but it does not go all the way to <span class="math notranslate nohighlight">\(p_{11}=0\)</span>. In the case where dephasing is very large, we can see that there is no dip at all, corresponding to completely distinguishable photons regardless of how they overlap in time.</p>
+</section>
+<section id="Losses">
+<h2>Losses<a class="headerlink" href="#Losses" title="Link to this heading"></a></h2>
+<p>ZPGenerator also naturally takes into account losses, both uniform and non-uniform, at no additional computational cost. The easiest way to control losses is to add loss components in the circuit. As an example, let’s look at a single photon passing through a Mach-Zehnder interferometer with unbalanced losses.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>qpu = Processor() // Source.fock(1) // Circuit.bs() // Circuit.loss(name=&#39;arm 0&#39;) // Circuit.bs() // ([0, 1], Detector.threshold())
+qpu.probs().display()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pattern | Probability
+0 1     | 1.00000
+
+</pre></div></div>
+</div>
+<p>By default, a circuit loss component will have perfect transmission. In that case, we can see above that the perfect single-photon interference that results in only ‘0 1’ outcomes at the output of the interferometer. However, if we add a small amount of losses, we can disturb the interference. Not only do we reduce ‘0 1’ outcomes, but we can actually <em>increase</em> ‘1 0’ outcomes!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>probs01 = []
+probs10 = []
+efficiencies = [0] + [10**eta for eta in np.linspace(-2, 0, 20)]
+for eta in efficiencies:
+    prbs = qpu.probs(parameters={&#39;arm 0/efficiency&#39;: eta})
+    probs01.append(prbs[0, 1])
+    probs10.append(prbs[1, 0])
+
+plt.plot(efficiencies, probs01, label = &#39;Pr(01)&#39;)
+plt.plot(efficiencies, probs10, label = &#39;Pr(10)&#39;)
+plt.xlabel(&#39;Arm 0 efficiency&#39;)
+plt.ylabel(&#39;Detection probability&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_photonic_circuits_70_0.png" src="../_images/notebooks_photonic_circuits_70_0.png" />
+</div>
+</div>
+<p>This interesting phenomenon is behind a paradox called the ‘interaction free measurement’. Notice that, by detecting the outcome ‘1 0’, we can infer the presence of an absorbing object in one arm of the interferometer. However, since we only used a single photon, and we detected that photon, the photon never interacted with the absorbing object! This interaction free measurement occurs with 25% probability in the limit of a perfectly absorbing object.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="detectors_catalogue.html" class="btn btn-neutral float-left" title="Detectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pulsed_sources.html" class="btn btn-neutral float-right" title="Pulsed Sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

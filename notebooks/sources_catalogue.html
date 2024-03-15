@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sources &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Circuits" href="circuits_catalogue.html" />
+    <link rel="prev" title="Backend" href="backend.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Fock">Fock</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#The-master-equation">The master equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Shaped-laser">Shaped laser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Distinguishable-noise">Distinguishable noise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Two-level">Two-level</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">The master equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Purcell">Purcell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">The master equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#The-Purcell-factor">The Purcell factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Keywords">Keywords</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Exciton">Exciton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Biexciton">Biexciton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Trion">Trion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sources</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/sources_catalogue.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Sources">
+<h1>Sources<a class="headerlink" href="#Sources" title="Link to this heading"></a></h1>
+<p>Here we summarise the catalogue source components and their underlying physical models. These source models can be categorised into two groups: (1) phenomenological source models and (2) physical source models. The first group contains sources designed to replicate a particular property of the light they produce, for example, a source of perfect Fock states or a coherent laser pulse. The second group contains sources based on master equations that represents a particular quantum system. This
+category includes emitter-cavity systems and quantum dot models.</p>
+<p><strong>Phenomenologial source models</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Method</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fock source</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fock</span></code></p></td>
+<td><p>A source of (shaped) photonic states in the Fock basis</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Shaped laser pulse</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shaped_laser</span></code></p></td>
+<td><p>A shaped coherent pulse with finite quantum fluctuations</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Distinguishable noise</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">perceval</span></code></p></td>
+<td><p>A noisy single photon source characterised by brightness, single-photon purity, and indistinguishability</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>The above table summarises the current catalogue phenomenological source types, their associated Source class method, a brief description, and the number of emission modes they couple to.</p>
+<p><strong>Physical source models</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Method</p></th>
+<th class="head"><p>Energy-Level Diagram</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Two-level emitter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">two_level</span></code></p></td>
+<td><p><img alt="image0" src="../_images/two-level-system.png" /></p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cavity-enhanced emitter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">purcell</span></code></p></td>
+<td><p><img alt="image1" src="../_images/purcell.png" /></p></td>
+<td><p>1(2)</p></td>
+</tr>
+<tr class="row-even"><td><p>Quantum dot, exciton</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exciton</span></code></p></td>
+<td><p><img alt="image2" src="../_images/exciton.png" /></p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Quantum dot, biexciton</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">biexction</span></code></p></td>
+<td><p><img alt="image3" src="../_images/biexciton.png" /></p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>Quantum dot, trion</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">trion</span></code></p></td>
+<td><p><img alt="image4" src="../_images/trion.png" /></p></td>
+<td><p>2</p></td>
+</tr>
+</tbody>
+</table>
+<p>Above is a table that summarises the current catalogue physical source types, their associated Source class method, an energy-level diagram to roughly illustrate their behaviour, and the number of active (masked) emission modes they couple to.</p>
+<p>The energy-level diagrams depict the number of basis states each source is constructed from. Some sources may have their state space truncated for numerical simulation (indicated by the vertical dots).</p>
+<p>The straight vertical upward-pointing arrows indicate transitions that can be coherently driven by a classical driving Hamiltonian, specified by giving a Pulse object using the ‘pulse’ keyword when instantiating with the Source class.</p>
+<p>Wavy downward-pointing arrows indicate transitions that can be analysed using methods of the Source class, or coupled to the modes of a processor. Each mode is numbered, indicating the order in which each transition of the source will couple to the modes of a processor. A permutation circuit can be applied to alter this ordering.</p>
+<p>Transition numbers in parentheses indicate that the mode is masked by default, so that the source behaves as if that transition was not being collected by the processor.</p>
+<p>In the following sections, each source type is introduced in more detail.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+</pre></div>
+</div>
+</div>
+<section id="Fock">
+<h2>Fock<a class="headerlink" href="#Fock" title="Link to this heading"></a></h2>
+<p>The Fock source is modelled as a quantum harmonic oscillator. The initial state of the oscillator leaks into the environment with a decay rate that may vary in time to shape the light. When instantiated, the oscillator energy levels are truncated at the highest Fock state in the provided state. If a shape is provided, this shape is fixed even if a parameterised object gave the shape (such as a Pulse object).</p>
+<section id="The-master-equation">
+<h3>The master equation<a class="headerlink" href="#The-master-equation" title="Link to this heading"></a></h3>
+<p>The Fock source is governed by a master equation with a Liouvillian of the form</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(t) = -i\mathcal{H} + \kappa(t)\mathcal{D}_{\hat{a}} + \gamma^\star\mathcal{D}_{\hat{a}^\dagger\hat{a}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{H}\hat{\rho} = [\Delta_a\hat{a}^\dagger\hat{a}, \hat{\rho}]\)</span> and <span class="math notranslate nohighlight">\(\Delta_a\)</span> is the detuning of the harmonic oscillator from the global reference, <span class="math notranslate nohighlight">\(\kappa(t)\)</span> is a time-dependent decay rate, and <span class="math notranslate nohighlight">\(\gamma^\star\)</span> is a pure dephasing rate.</p>
+<p>The parameters of this model are:</p>
+</section>
+<section id="Examples">
+<h3>Examples<a class="headerlink" href="#Examples" title="Link to this heading"></a></h3>
+<p>The default parameters include the model above plus the start of the emission ‘delay’ and the source ‘efficiency’. The ‘decay’ parameter is only relevant if a shape is not specified, as the source defaults to exponential decay.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>The shape of the emitted photonic wavepacket can be specified with the ‘shape’ keyword.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(2, shape=Pulse.gaussian())
+source.photon_statistics().display()
+source.plot_lifetime(label=&#39;|2&gt;&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.00000
+1       | 0.00000
+2       | 1.00000
+3       | 0.00000
+4       | 0.00000
+5       | 0.00000
+6       | 0.00000
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_sources_catalogue_18_1.png" src="../_images/notebooks_sources_catalogue_18_1.png" />
+</div>
+</div>
+<p>The state of light can either be an integer indicating a single Fock state, or a QuTiP Qobj. Shapes can also be customised using the Pulse class. Note that arguments will not be effective in this case, the shape is fixed when instantiating the Fock source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from qutip import fock
+source = Source.fock(state=(fock(4, 0) + fock(4, 1) + fock(4, 2) + fock(4, 3)) / 2,
+                     shape=Pulse.custom(lambda t, args: t**2 - t**4, gate=[-1, 1]))
+source.photon_statistics().display()
+source.plot_lifetime(label=&#39;Custom shape&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number  | Probability
+0       | 0.25000
+1       | 0.25000
+2       | 0.25000
+3       | 0.24999
+4       | 0.00000
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_sources_catalogue_20_1.png" src="../_images/notebooks_sources_catalogue_20_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Shaped-laser">
+<h2>Shaped laser<a class="headerlink" href="#Shaped-laser" title="Link to this heading"></a></h2>
+<p>Almost identical to the Fock state, the shaped laser is a quantum harmonic oscillator with a potentially time-varying decay rate. The difference is that it includes a classical coherent component on top of these dissipative quantum fluctuations. The initial state of these quantum fluctuations is the vacuum state. However, interference of the shaped laser source with other sources of light, followed by photon-counting detection, can project these quantum fluctuations onto a non-vacuum state. This
+approach allows for simulating classical states of light containing many photons, while still capturing quantum effects due to interference with weak quantum states of light.</p>
+<section id="id1">
+<h3>Examples<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Note the addition of the amplitude parameter, governing the amplitude of the classical coherent state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.shaped_laser()
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;delay&#39;: 0,
+ &#39;decay&#39;: 1,
+ &#39;amplitude&#39;: 0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>By specifying a non-zero amplitude, we can see that the photon statistics are classical. By default, the shape of the laser pulse is exponentially decaying in time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.shaped_laser(parameters={&#39;amplitude&#39;: 2})
+source.photon_statistics().plot().show()
+source.plot_lifetime(label=&#39;|$\\alpha=2$&gt;&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_sources_catalogue_27_0.png" src="../_images/notebooks_sources_catalogue_27_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_sources_catalogue_27_1.png" src="../_images/notebooks_sources_catalogue_27_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Distinguishable-noise">
+<h2>Distinguishable noise<a class="headerlink" href="#Distinguishable-noise" title="Link to this heading"></a></h2>
+<p>Coming soon!</p>
+</section>
+<section id="Two-level">
+<h2>Two-level<a class="headerlink" href="#Two-level" title="Link to this heading"></a></h2>
+<p>The two-level emitter is the text-book example of a quantum emitter. It is composed of a single ground state <span class="math notranslate nohighlight">\(| g\rangle\)</span> and a single excited state <span class="math notranslate nohighlight">\(| e\rangle\)</span>. The emitter may be driven by a laser pulse that interacts through a semi-classical dipole driving Hamiltonian under the rotating-wave approximation. For more information about the driven-dissipative two-level system, please see [<a class="reference external" href="https://books.google.fr/books/about/The_Theory_of_Open_Quantum_Systems.html?id=0Yx5VzaMYm8C&amp;redir_esc=y">H. Breuer, and F. Petruccione. Oxford University Press, Great Clarendon Street,
+(2002)</a>] and also [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.79.053838">T. Grange, et al., Phys. Rev. Lett. 114, 193601 (2015)</a>].</p>
+<section id="id2">
+<h3>The master equation<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>We begin by writing the Hamiltonian <span class="math notranslate nohighlight">\(\hat{H}\)</span> of a driven two-level emitter:</p>
+<div class="math notranslate nohighlight">
+\[\hat{H}(t) = \Delta \hat{\sigma}^\dagger\hat{\sigma} + \frac{1}{2}\left(\Omega(t)\hat{\sigma} + \Omega^*(t)\hat{\sigma}^\dagger\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta_\sigma\)</span> is the detuning of the emitter from the global reference, <span class="math notranslate nohighlight">\(\Omega(t)\)</span> is the time-dependent (complex) Rabi frequency, and <span class="math notranslate nohighlight">\(\sigma=|g\rangle\langle e|\)</span> is the lowering operator.</p>
+<p>In addition, we include a dissipative decay rate and a phenomenological dephasing rate. This gives a Markovian master equation of the form <span class="math notranslate nohighlight">\(\dot{\rho}(t)=\mathcal{L}(t)\hat{\rho}(t)\)</span> where the Liouvillian <span class="math notranslate nohighlight">\(\mathcal{L}(t)\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(t) = -i\mathcal{H}(t) + \gamma\mathcal{D}_{\hat{\sigma}} + \gamma^\star\mathcal{D}_{\hat{\sigma}^\dagger\hat{\sigma}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{H}(t)\hat{\rho} = [\hat{H}(t), \hat{\rho}]\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}_{\hat{A}}\hat{\rho} = \hat{A}\hat{\rho}\hat{A}^\dagger - \hat{A}^\dagger\hat{A}\hat{\rho}/2 - \hat{\rho}\hat{A}^\dagger\hat{A}/2\)</span>.</p>
+<p>The parameters of this model are:</p>
+<p>The excitation Rabi frequency <span class="math notranslate nohighlight">\(\Omega(t)\)</span> is defined by the pulse supplied, which could be a Dirac, Gaussian, square, or a custom shape. For catalogue pulse shapes, the variable <span class="math notranslate nohighlight">\(\delta\)</span> is controlled by the ‘detuning’ parameter.</p>
+</section>
+<section id="Example">
+<h3>Example<a class="headerlink" href="#Example" title="Link to this heading"></a></h3>
+<p>The Emitter object underlying the Source object displays the model parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>emitter = Emitter.two_level()
+emitter.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;decay&#39;, &#39;dephasing&#39;, &#39;resonance&#39;]
+</pre></div></div>
+</div>
+<p>Instantiating the corresponding source object includes pulse parameters as well as a source efficiency. These parameters have default values.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.two_level(pulse=Pulse.square())
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;resonance&#39;: 0.0,
+ &#39;decay&#39;: 1.0,
+ &#39;dephasing&#39;: 0.0,
+ &#39;width&#39;: 0.1,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;phase&#39;: 0,
+ &#39;delay&#39;: 0,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>Source characteristics can then be evaluated directly specifying new parameters as desired.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.photon_statistics(parameters={&#39;resonance&#39;: 0.1, &#39;decay&#39;: 10})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{(0,): 0.019922779049259987, (1,): 0.8876029520166906, (2,): 0.09100562979141723, (3,): 0.0014606429339787176, (4,): 7.996208653349387e-06}
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Purcell">
+<h2>Purcell<a class="headerlink" href="#Purcell" title="Link to this heading"></a></h2>
+<p>The theory of cavity QED is very broad and so here we will summarize some of the key results to help introduce the Purcell source type. In particular, we focus on the perspective of dissipative cavity QED using the open quantum systems approach demonstrated in [<a class="reference external" href="https://books.google.fr/books/about/The_Theory_of_Open_Quantum_Systems.html?id=0Yx5VzaMYm8C&amp;redir_esc=y">H. Breuer, and F. Petruccione. Oxford University Press, Great Clarendon Street, (2002)</a>].</p>
+<section id="id3">
+<h3>The master equation<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>We begin by writing a Markovian master equation of the form <span class="math notranslate nohighlight">\(\dot{\rho}(t)=\mathcal{L}(t)\hat{\rho}(t)\)</span> of a two-level emitter coupled with potential pure dephasing coupled to a dissipative cavity mode. For this system, the Liouvillian <span class="math notranslate nohighlight">\(\mathcal{L}(t)\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(t) = -i\mathcal{H}(t) + \gamma\mathcal{D}_{\hat{\sigma}} + \gamma^\star\mathcal{D}_{\hat{\sigma}^\dagger\hat{\sigma}} + \kappa\mathcal{D}_{\hat{a}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{H}(t)\hat{\rho} = [\hat{H}(t), \hat{\rho}]\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}_{\hat{A}}\hat{\rho} = \hat{A}\hat{\rho}\hat{A}^\dagger - \hat{A}^\dagger\hat{A}\hat{\rho}/2 - \hat{\rho}\hat{A}^\dagger\hat{A}/2\)</span>. The Hamiltonian is defined by</p>
+<div class="math notranslate nohighlight">
+\[\hat{H}(t) = \Delta_\sigma\hat{\sigma}^\dagger\hat{\sigma} + \Delta_a\hat{a}^\dagger\hat{a} + \frac{1}{2}\left(\Omega(t)\hat{\sigma}+\Omega^*(t)\hat{\sigma}^\dagger\right) + g\left(\hat{\sigma}\hat{a}^\dagger + \hat{\sigma}^\dagger\hat{a}\right).\]</div>
+<p>The parameters of this model are:</p>
+<p>The excitation Rabi frequency <span class="math notranslate nohighlight">\(\Omega(t)\)</span> is defined by the pulse supplied, which could be a Dirac, Gaussian, square, or a custom shape.</p>
+</section>
+<section id="The-Purcell-factor">
+<h3>The Purcell factor<a class="headerlink" href="#The-Purcell-factor" title="Link to this heading"></a></h3>
+<p>The complete master equation introduced in the previous section is implemented in the ZPG package as the PurcellEmitter class to provide numerical solutions. However, it can be solved analytically in some scenarios. In particular, let’s consider the case where <span class="math notranslate nohighlight">\(\Omega(t)\)</span> is a Dirac function so that the system is prepared in the emitter excited state at <span class="math notranslate nohighlight">\(t=0\)</span>, followed by evolution with <span class="math notranslate nohighlight">\(\Omega(t)=0\)</span>. In this scenario, the characteristics of the source are entirely governed by
+the dissipative-coherent dynamics between the emitter and the cavity.</p>
+<p>Following the methods of [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.79.053838">A. Auffeves, et al., Physical Review A 79, 053838 (2009)</a>], [<a class="reference external" href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.79.053838">T. Grange, et al., Phys. Rev. Lett. 114, 193601 (2015)</a>], we can make the assumption that <span class="math notranslate nohighlight">\(\kappa\)</span> is large compared to <span class="math notranslate nohighlight">\(g\)</span> so that any photons collected by the cavity are almost immediately released into the environment. This criteron, namely when
+<span class="math notranslate nohighlight">\(\kappa &lt; 2g\)</span>, is known as the weak coupling regime. In the deep weak coupling regime, the probability of finding more than one photon in the cavity mode is negligible, and the probability of find a single photon in the cavity mode is proportional to the probability that the emitter is excited. These conditions allow us to adiabatically eliminate the cavity mode from the master equation to recover an effective two-level emitter with modified parameters. In particular, the effective decay
+rate of the cavity-enhanced emitter becomes <span class="math notranslate nohighlight">\(\gamma + R\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}R = \frac{4g^2(\kappa + \gamma + \gamma^\star)}{(\kappa + \gamma + \gamma^\star)^2 + 4\Delta^2}\\\end{split}\]</div>
+<p>is the effective rate of emission via the cavity mode and <span class="math notranslate nohighlight">\(\Delta = \Delta_\sigma - \Delta_a\)</span> is the emitter-cavity detuning. Importantly, this additional decay channel has an effective rate <span class="math notranslate nohighlight">\(R\)</span> that depends crucially on the parameters <span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span>, and <span class="math notranslate nohighlight">\(\kappa\)</span>. It reaches a maximum value when <span class="math notranslate nohighlight">\(\Delta=\gamma^\star=0\)</span> of <span class="math notranslate nohighlight">\(4g^2/(\kappa+\gamma)\)</span>. In addition, in most cases we can have <span class="math notranslate nohighlight">\(\kappa\gg\gamma+\gamma^\star\)</span>, which implies an effective rate
+of</p>
+<div class="math notranslate nohighlight">
+\[R_\text{p} = \frac{4g^2}{\kappa}.\]</div>
+<p>This is the Purcell rate. The ratio of decay via the cavity and the bare spontaneous emission rate <span class="math notranslate nohighlight">\(\gamma\)</span> thus defines the canonical Purcell factor</p>
+<div class="math notranslate nohighlight">
+\[F_\text{p} = \frac{R_\text{p}}{\gamma} = \frac{4g^2}{\kappa\gamma}.\]</div>
+<p>This factor is very commonly used to predict how an emitter-cavity system will behave. However, this form of the Purcell factor as derived from dissipative cavity QED is less common than the classic expression involving the cavity mode volume <span class="math notranslate nohighlight">\(V\)</span> and quality factor <span class="math notranslate nohighlight">\(Q\)</span>. To reach this expression, we must substitute the microscopic definition for our parameters. For <span class="math notranslate nohighlight">\(g\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[g = d\sqrt{\frac{\omega_a}{2n^2\varepsilon_0\hbar V}},\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the emitter dipole magnitude, <span class="math notranslate nohighlight">\(\omega_a\)</span> is the cavity frequency, <span class="math notranslate nohighlight">\(n\)</span> is the cavity-emitter effective index of refraction, <span class="math notranslate nohighlight">\(\varepsilon_0\)</span> is the vacuum permitivity, and <span class="math notranslate nohighlight">\(\hbar\)</span> is Planck’s constant. For <span class="math notranslate nohighlight">\(\kappa\)</span> we have <span class="math notranslate nohighlight">\(\kappa = \frac{\omega_a}{Q}\)</span> and from Fermi’s goldren rule, <span class="math notranslate nohighlight">\(\gamma\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\gamma = \frac{n\omega_\sigma^3d^2}{3\pi\varepsilon_0\hbar c^3},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\omega_\sigma\)</span> is the emitter frequency and <span class="math notranslate nohighlight">\(c\)</span> is the speed of light in vacuum. Substituting these three expressions into <span class="math notranslate nohighlight">\(F_\text{p}\)</span>, while noting that <span class="math notranslate nohighlight">\(\omega_a=\omega_\sigma\)</span> and <span class="math notranslate nohighlight">\(\lambda = 2\pi c/\omega_a\)</span> is the emitter-cavity emission wavelength in free space, we have</p>
+<div class="math notranslate nohighlight">
+\[F_\text{p} = \frac{3}{4\pi^2}\left(\frac{\lambda}{n}\right)^3\left(\frac{Q}{V}\right),\]</div>
+<p>which is the classic expression for the cavity Purcell factor, and it is independent of any emitter properties.</p>
+</section>
+<section id="Keywords">
+<h3>Keywords<a class="headerlink" href="#Keywords" title="Link to this heading"></a></h3>
+<p>The PurcellSource is unlike other catalogue components because the timescale can be heavily modified by the Purcell enhancement. In sources such as two_level(), exciton(), biexciton(), trion(), the timescale is set by the natural spontaneous emission rate of the emitter, which is usually set to 1 to give a reference for the units of other parameters. By default, this is the same for the Purcell source, but the actual source lifetime is no longer dictated by the spontanoues emission rate. It is
+therefore much more natural to tie the timescale of a purcell() source to the Purcell-enhanced emission timescale, which is much faster than the natural one. For this reason, the Source.purcell() class method has some keyword arguments that allow the user to easily fix the timescale and cavity regime parameters, without having to specify the underlying physical parameters of the emitter and cavity directly.</p>
+<p>The three keyword arguments are: ‘purcell_factor’ ‘regime’ ‘timescale’</p>
+<p>The ‘purcell_factor’ keyword fixes the <em>canonical</em> Purcell factor of the source, as defined by:</p>
+<div class="math notranslate nohighlight">
+\[\text{`purcell_factor'} = \frac{4g^2}{\kappa\gamma}.\]</div>
+<p>This factor will impact many attributes of the source, from brightness to indistinguishability. However, as discussed in the theory background, there are different regimes of cavity-emitter interaction and the attributes can vary substantially even for a fixed Purcell factor. Notably, we can fix the regime using the ‘regime’ keyword, which is defined by:</p>
+<div class="math notranslate nohighlight">
+\[\text{`regime'} = \frac{2g}{\kappa}.\]</div>
+<p>If the ‘regime’ is set smaller than 1, it implies a weak-coupling regime. Above 1 implies a strong-coupling regime where a vacuum Rabi splitting will occur.</p>
+<p>The last keyword is the ‘timescale’. This fixes the units of the source relative to the effective (possibly enhanced) decay rate of the source. It is defined by:</p>
+<div class="math notranslate nohighlight">
+\[\text{`timescale'} = \frac{1}{\text{`purcell_factor'}\times\gamma}.\]</div>
+<p>In other words, this is the source lifetime expected in the Purcell regime, where the decay rate of the emitter-cavity system is fully dictated by the canonical Purcell factor. Note that, if we are not far into the weak-coupling regime, or if the system is detuned, the specified timescale may not reflect the effective decay rate of the system. In those cases, it is best to adjust the timescale accordingly or set the physical parameters directly.</p>
+<p>With these three parameters, the source can determine <span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\kappa\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> uniquely, and thus we can avoid setting them manually. However, if any of these three keywords are specified when creating the PurcellSource object, the source will always overwrite values of <span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\kappa\)</span>, and <span class="math notranslate nohighlight">\(g\)</span>. These keyword parameters are very useful if we wish to explore the behaviour in different cavity regimes, rather than model a specific physical source.</p>
+</section>
+</section>
+<section id="Exciton">
+<h2>Exciton<a class="headerlink" href="#Exciton" title="Link to this heading"></a></h2>
+<p>Coming soon!</p>
+</section>
+<section id="Biexciton">
+<h2>Biexciton<a class="headerlink" href="#Biexciton" title="Link to this heading"></a></h2>
+<p>Coming soon!</p>
+</section>
+<section id="Trion">
+<h2>Trion<a class="headerlink" href="#Trion" title="Link to this heading"></a></h2>
+<p>Coming soon!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="backend.html" class="btn btn-neutral float-left" title="Backend" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="circuits_catalogue.html" class="btn btn-neutral float-right" title="Circuits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

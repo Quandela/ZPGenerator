@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cavity QED &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fibonacci States" href="fibonacci_states.html" />
+    <link rel="prev" title="Quantum Dots" href="quantum_dots.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cavity QED</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#The-Purcell-source">The Purcell source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-Purcell-keywords">Using Purcell keywords</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Overcoming-dephasing">Overcoming dephasing</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cavity QED</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/cavity_QED.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Cavity-QED">
+<h1>Cavity QED<a class="headerlink" href="#Cavity-QED" title="Link to this heading"></a></h1>
+<p>ZPGenerator is designed to facilitate the construction of more complicated sources from elementary building blocks. A good example of this is found in cavity quantum electrodynamics (QED) where the emission properties of an emitter can be modified by coupling it to an optical cavity mode. By combining a TwoLevelEmitter object with a CavityEmitter object, and adding a Jaynes-Cummings coupling, we obtain a new emitter object that is a textbook example of cavity QED. This new emitter, called the
+PurcellEmitter, is used to make the PurcellSource that can be constructed using the purcell() class method of the Source class. In this notebook, we will take a look at this source type and what we can learn from it.</p>
+<p>For information about the model underlying the purcell() catalogue source, please see <a class="reference internal" href="sources_catalogue.html"><span class="doc">Sources</span></a>. For information about how to construct complex systems from scratch, see <a class="reference internal" href="component_construction.html"><span class="doc">Constructing Components</span></a>.</p>
+<section id="The-Purcell-source">
+<h2>The Purcell source<a class="headerlink" href="#The-Purcell-source" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+import numpy as np
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+<p>A two-level emitter coupled to a single cavity mode via a Jaynes-Cummings type interaction is available as a catalogue source component using the Source.purcell() class method to construct a PurcellSource object. Let’s make a purcell() source and look at the default parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.purcell()
+source.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;coupling&#39;: 5.0,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;phase&#39;: 0,
+ &#39;delay&#39;: 0,
+ &#39;emitter/resonance&#39;: 0.0,
+ &#39;emitter/decay&#39;: 0.1,
+ &#39;emitter/dephasing&#39;: 0.0,
+ &#39;cavity/resonance&#39;: 0.0,
+ &#39;cavity/dephasing&#39;: 0.0,
+ &#39;cavity/decay&#39;: 99.99999999999999,
+ &#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>By default, we can see that the emitter decay rate is <span class="math notranslate nohighlight">\(\gamma=0.1\)</span>, the cavity-coupling rate is <span class="math notranslate nohighlight">\(g=5.0\)</span>, and the cavity decay rate is <span class="math notranslate nohighlight">\(\kappa=100\)</span>. Together, using the formula <span class="math notranslate nohighlight">\(4g^2/\kappa\gamma\)</span>, this implies a canonical Purcell factor of 10, which we can verify using the method canonical_purcell_factor():</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.canonical_purcell_factor()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.0
+</pre></div></div>
+</div>
+<p>In practice, the actual Purcell enhancement is not exactly equal to the canonical Purcell factor because there is always a finite amount of Purcell saturation due to the finite proximity to the emitter-cavity strong coupling regime. In addition, dephasing or emitter-cavity detuning can further reduce the effective Purcell enhancement. To see what the effective Purcell enhancement is, we can use the effective_purcell_factor() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.effective_purcell_factor()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+9.891196834817015
+</pre></div></div>
+</div>
+<p>Since the dephasing and detuning are zero, this inhibition is due to Purcell saturation. How close the source are to the strong coupling regime is indicated by the regime factor <span class="math notranslate nohighlight">\(2g/\kappa\)</span>, which can be accessed using the regime() method of the PurcellSource class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.regime()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.10000000000000002
+</pre></div></div>
+</div>
+<p>Since the regime factor is much less than 1, this indicates we are in the weak-coupling regime where the canonical Purcell enhancement gives quite an accurate representation of the enhanced decay rate. This is why we observe an effective enhancement of 9.89 that is very close to 10. In this regime, the source behaves very similar to the two_level() source. Looking at the lifetime, we can see that it appears to be a simple exponential decay:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source.plot_lifetime(scale=10, start=-1, end=6, label=&#39;Purcell source&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_cavity_QED_13_0.png" src="../_images/notebooks_cavity_QED_13_0.png" />
+</div>
+</div>
+</section>
+<section id="Using-Purcell-keywords">
+<h2>Using Purcell keywords<a class="headerlink" href="#Using-Purcell-keywords" title="Link to this heading"></a></h2>
+<p>To help easily set up a Purcell source with the right characteristics, the class method has three keywords: ‘purcell_factor’, ‘regime’, and ‘timescale’. Together, these three keywords fix the important decay rate and cavity coupling that determines the qualitative behaviour of the system. Using these keyword parameters, let’s now make a purcell() source with a Purcell factor of 10, a timescale of 1, and that is excited by a Gaussian pulse. To see the impact of the regime keyword, we can plot the
+lifetime for three different regimes: strong coupling, critical coupling, and weak coupling.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>pulse = Pulse.gaussian()
+source = Source.purcell(pulse=pulse, purcell_factor=10, timescale=1)
+for x in [[2, &#39;strong&#39;], [1, &#39;critical&#39;], [0.1, &#39;weak&#39;]]:
+    plot = source.plot_lifetime(parameters={&#39;regime&#39;: x[0]}, end=20, label=x[1])
+plot.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_cavity_QED_16_0.png" src="../_images/notebooks_cavity_QED_16_0.png" />
+</div>
+</div>
+<p>For a fixed source timescale, we can see that moving into the strong coupling regime will actually reduce the Purcell enhancement, which is again a manifestation of Purcell saturation. In addition, there is a pronounced revival in the emission due to the vacuum Rabi oscillations induced between the emitter and cavity. Each of these regimes also give rise to different source quality in terms of brightness, single-photon purity, and indistinguishability. Using the methods available from the
+SourceComponent class, we can easily explore these different characteristics.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>regime_list = np.logspace(-1, 1.5, 40)
+beta_list = [source.beta(parameters={&#39;regime&#39;: x}) for x in regime_list]
+g2_list = [source.g2(parameters={&#39;regime&#39;: x}) for x in regime_list]
+plt.semilogx(regime_list, beta_list, label=&#39;Brightness&#39;)
+plt.semilogx(regime_list, g2_list, label=&#39;g2&#39;)
+plt.ylim([0, 1])
+plt.legend()
+plt.xlabel(&#39;Coupling regime, $2g/\kappa$&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_cavity_QED_18_0.png" src="../_images/notebooks_cavity_QED_18_0.png" />
+</div>
+</div>
+<p>From this plot, we can clearly see the effect of Purcell saturation on the source brightness. As we move into the strong coupling regime, the vacuum Rabi oscillations prolong the interaction between the light and the emitter, allowing for more time for the light to escape via spontaneous emission and thus reducing the amount of light collection from the cavity mode. However, we can also see a very interesting effect on the single-photon purity. Moving toward the strong coupling regime can
+substantially suppress multi-photon emission.</p>
+</section>
+<section id="Overcoming-dephasing">
+<h2>Overcoming dephasing<a class="headerlink" href="#Overcoming-dephasing" title="Link to this heading"></a></h2>
+<p>In addition to providing an enhanced collection efficiency, the acceleration of emission due to the cavity can also improve indistinguishability. The presence of the cavity will open a new decay channel that can extract photons from the emitter before interactions with the environment can degrade the quantum coherence of the emitter. To see this effect, let’s look at adding a ‘dephasing’ value to the emitter in our PurcellSource object. To make a nice comparison, we must fix the emitter decay
+rate relative to the dephasing rate. To do this, we can specify the `timescale’ to be 1/purcell_factor so that <span class="math notranslate nohighlight">\(\gamma = 1\)</span>.</p>
+<p>Let’s consider a pure dephasing rate of <span class="math notranslate nohighlight">\(\gamma^\star = 2\gamma\)</span> and use a Gaussian excitation pulse with a width of <span class="math notranslate nohighlight">\(\tau = 0.004/\gamma\)</span>. For example, if the bare lifetime of the emitter was 1 nanosecond, the pulse width is 4 picoseconds. Now, we can loop over a changing Purcell factor and generate the source figures of merit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.purcell(pulse=Pulse.gaussian({&#39;width&#39;: 0.004}),
+                        regime=0.1, parameters={&#39;emitter/dephasing&#39;: 2})
+purcell_list = np.logspace(-1, 1.5, 20)
+M_list = [source.hom(parameters={&#39;purcell_factor&#39;: x, &#39;timescale&#39;: 1/x},
+                     pseudo_limit=0.1)[&#39;M&#39;] for x in purcell_list]
+g2_list = [source.g2(parameters={&#39;purcell_factor&#39;: x, &#39;timescale&#39;: 1/x},
+                     pseudo_limit=0.1) for x in purcell_list]
+beta_list = [source.beta(parameters={&#39;purcell_factor&#39;: x, &#39;timescale&#39;: 1/x}) for x in purcell_list]
+</pre></div>
+</div>
+</div>
+<p>Plotting this, we have:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>plt.semilogx(purcell_list, M_list, label=&#39;Mean wavepacket overlap&#39;)
+plt.semilogx(purcell_list, beta_list, label=&#39;Brightness&#39;)
+plt.semilogx(purcell_list, g2_list, label=&#39;$g^{(2)}$&#39;)
+plt.ylim([0, 1])
+plt.legend()
+plt.xlabel(&#39;Canonical purcell factor, $4g^2/\kappa\gamma$&#39;)
+plt.ylabel(&#39;Figure of Merit&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_cavity_QED_24_0.png" src="../_images/notebooks_cavity_QED_24_0.png" />
+</div>
+</div>
+<p>From this plot, we can see that increasing the Purcell factor improves the mean wavepacket overlap, which quantifies indistinguishability, in addition to improving the source brightness. Without a cavity, we would expect a mean wavepacket overlap of at most <span class="math notranslate nohighlight">\(M = \gamma/(\gamma+\gamma^\star) = 1/3\)</span>. With a cavity, we can exceed 80%. However, for a fixed pulse width, we can also see that the multiphoton emission is increased. This is because the Purcell effect decreases the effective
+lifetime of the source and makes it more likely that the pulse will cause re-excitation. This increasing <span class="math notranslate nohighlight">\(g^{(2)}\)</span> causes the mean wavepacket overlap to saturate instead of increasing arbitrarily to 1.</p>
+<p>The <span class="math notranslate nohighlight">\(g^{(2)}\)</span> problem can be compensated by decreasing the pulse width. However, this requires a more intense laser pulse, which in turn makes it more difficult to filter out the single photon. In summary, the presence of a cavity can help improve indistinguishability and brightness, but in practice it cannot arbitrarily improve the source figures of merit.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quantum_dots.html" class="btn btn-neutral float-left" title="Quantum Dots" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fibonacci_states.html" class="btn btn-neutral float-right" title="Fibonacci States" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

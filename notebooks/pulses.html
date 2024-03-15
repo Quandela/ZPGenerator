@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulses &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Processors" href="processors.html" />
+    <link rel="prev" title="Parameters" href="parameters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pulses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Dirac">Dirac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Square">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Gaussian">Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Custom">Custom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pulse-area">Pulse area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Sequences">Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circuits_catalogue.html">Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pulses</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/pulses.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Pulses">
+<h1>Pulses<a class="headerlink" href="#Pulses" title="Link to this heading"></a></h1>
+<p>ZPGenerator is a time-dynamic simulation framework, meaning that sources are time-evolving quantum systems. Capturing the quantum time dynamics in this way is necessary to explore how errors will arise in an information processing setting. This is very similar to how errors in stationary qubits, like superconducting circuits, arise due to the finite pulse shapes used to implement gates.</p>
+<p>Control pulses are created using the Pulse factory class. Let’s take a look at some of the basic features of this class.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+</pre></div>
+</div>
+</div>
+<p>The pulse class currently has three class methods that can be used to instantiate common pulse shapes: (1) the dirac() method, (2) the square() method, and the (3) gaussian() method.</p>
+<section id="Dirac">
+<h2>Dirac<a class="headerlink" href="#Dirac" title="Link to this heading"></a></h2>
+<p>The Dirac pulse is an instantaneous pulse applied to a component at an instant in time. This is often used to explore idealised behaviour where operations are applied instantly to the quantum state of a source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>instant_pulse = Pulse.dirac()
+instant_pulse.parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;area&#39;, &#39;delay&#39;, &#39;phase&#39;]
+</pre></div></div>
+</div>
+<p>The Dirac pulse has three parameters. The ‘area’ is the integrated area of the pulse, determining how strongly the pulse interacts with the system; the ‘delay’ parameter determines the instant that pulse interacts with the system; and the ‘phase’ parameter determines the complex phase of the pulse amplitude.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>instant_pulse.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;area&#39;: 3.141592653589793, &#39;phase&#39;: 0, &#39;delay&#39;: 0}
+</pre></div></div>
+</div>
+<p>By default, the Dirac pulse arrives at time <span class="math notranslate nohighlight">\(t=0\)</span> with a phase of 0 and an integrated area of <span class="math notranslate nohighlight">\(\pi\)</span>. This type of pulse would instantaneously invert a two-level emitter.</p>
+</section>
+<section id="Square">
+<h2>Square<a class="headerlink" href="#Square" title="Link to this heading"></a></h2>
+<p>The square pulse is a pulse with a constant amplitude during a specified interval of time. This is often the first generalisation taken to mimic a realistic pulse because it allows for emission to occur during the pulse timescale, which can cause errors to arise relative to an ideal protocol.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>square_pulse = Pulse.square()
+square_pulse.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;width&#39;: 0.1, &#39;area&#39;: 3.141592653589793, &#39;phase&#39;: 0, &#39;delay&#39;: 0}
+</pre></div></div>
+</div>
+<p>In addition to the three parameters seen for the Dirac pulse, we also have a ‘width’ parameter. Thus, the pulse will begin at ‘delay’ - ‘width’/2 and end at time ‘delay’ + ‘width’/2. For the default values, this corresponds to time <span class="math notranslate nohighlight">\(t=-0.05\)</span> until time <span class="math notranslate nohighlight">\(t=0.05\)</span>.</p>
+<p>For non-instantaneous pulses, we can visualise their shapes easily using the plot().show() method that calls matplotlib.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>square_pulse.plot(start=-0.1, end=0.1).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulses_14_0.png" src="../_images/notebooks_pulses_14_0.png" />
+</div>
+</div>
+</section>
+<section id="Gaussian">
+<h2>Gaussian<a class="headerlink" href="#Gaussian" title="Link to this heading"></a></h2>
+<p>The Gaussian pulse is a much more realistic shape to model a laser pulse.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>gaussian_pulse = Pulse.gaussian()
+gaussian_pulse.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;width&#39;: 0.1,
+ &#39;area&#39;: 3.141592653589793,
+ &#39;delay&#39;: 0,
+ &#39;detuning&#39;: 0,
+ &#39;phase&#39;: 0,
+ &#39;window&#39;: 6}
+</pre></div></div>
+</div>
+<p>In addition to the parameters already seen for the previous two pulses, we also have the ‘window’ parameter. This parameter is in units of the width, which is the standard deviation of the Gaussian shape. The window determines how many standard deviations to evaluate before assuming the pulse has an amplitude of exactly 0.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>gaussian_pulse.plot().show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulses_19_0.png" src="../_images/notebooks_pulses_19_0.png" />
+</div>
+</div>
+</section>
+<section id="Custom">
+<h2>Custom<a class="headerlink" href="#Custom" title="Link to this heading"></a></h2>
+<p>In addition to the three basic pulse shapes, the Pulse class also allows for custom shapes to be created using the custom() method. To use this method, we simply need to provide a function f(t, args) along with an interval of time, or ‘gate’, over which to evaluate the function. Note that even if we do not use the args dictionary, we must always provide it as an argument. If we do use args to parameterise the pulse, we must specify a dictionary of default values using the ‘parameters’ keyword.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>my_pulse = Pulse.custom(shape=lambda t, args: args[&#39;a&#39;] + args[&#39;b&#39;] * t + args[&#39;c&#39;] * t**2,
+                        gate=[0, 1],
+                        parameters={&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 1})
+my_pulse.plot().show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulses_22_0.png" src="../_images/notebooks_pulses_22_0.png" />
+</div>
+</div>
+<p>Having parameterised the pulse allows for easy modification of the pulse later on.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>my_pulse.plot(parameters={&#39;a&#39;: 1}, label=&#39;a=1&#39;)
+my_pulse.plot(parameters={&#39;a&#39;: 1, &#39;b&#39;: 5}, label=&#39;a=1, b=5&#39;)
+my_pulse.plot(parameters={&#39;a&#39;: 2}, label=&#39;a=2&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulses_24_0.png" src="../_images/notebooks_pulses_24_0.png" />
+</div>
+</div>
+</section>
+<section id="Pulse-area">
+<h2>Pulse area<a class="headerlink" href="#Pulse-area" title="Link to this heading"></a></h2>
+<p>The integrated area of a pulse will influence many aspects of the quantum system evolution. For this reason, it is either specified as a parameter for pre-built shapes, or one can evaluate it for custom shapes using the area() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>my_pulse.area()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.9999999999999996
+</pre></div></div>
+</div>
+<p>In addition, when creating a custom pulse, it is possible to have the shape be automatically normalised. When using this feature, it is best to give the shape an ‘area’ parameter that multiplies the entire shape, and set its default value to 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>my_pulse = Pulse.custom(shape=lambda t, args: args[&#39;area&#39;] * (args[&#39;a&#39;] + args[&#39;b&#39;] * t + args[&#39;c&#39;] * t**2),
+                        gate=[0, 1],
+                        parameters={&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 1, &#39;area&#39;: 1},
+                        auto_normalise=True)
+my_pulse.area()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.9999999999999998
+</pre></div></div>
+</div>
+<p>The default pulse area can be updated afterward.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>my_pulse.update_default_parameters({&#39;area&#39;: 2})
+my_pulse.area()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.9999999999999996
+</pre></div></div>
+</div>
+</section>
+<section id="Sequences">
+<h2>Sequences<a class="headerlink" href="#Sequences" title="Link to this heading"></a></h2>
+<p>Most often, pulses need to be combined into pulse sequences to control a quantum system. Alternatively, more complex shapes might be most easily constructed by summing together multiple basic shapes. In either case, the Pulse class also serves as a way to collect and organise multiple pulses into one object.</p>
+<p>As a simple example, we can add together some of the pulses we built earlier and then visualise the new composite pulse using the plot() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>sequence = Pulse()
+sequence.add(gaussian_pulse)
+sequence.add(my_pulse)
+
+gaussian_pulse.plot(label=&#39;Gaussian&#39;)
+my_pulse.plot(label=&#39;Custom&#39;)
+sequence.plot(label=&#39;Gaussian + Custom&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_pulses_34_0.png" src="../_images/notebooks_pulses_34_0.png" />
+</div>
+</div>
+<p>Combined with parameter namespaces (see <a class="reference internal" href="parameters.html"><span class="doc">Parameters</span></a>), pulse sequences are extremely useful for manipulating the parameters of large sequences of pulses. See also the <a class="reference internal" href="pulsed_sources.html"><span class="doc">Pulsed Sources</span></a> tutorial for a detailed introduction to using the Pulse class along with the Source class to produce light with different characteristics.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parameters.html" class="btn btn-neutral float-left" title="Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="processors.html" class="btn btn-neutral float-right" title="Processors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

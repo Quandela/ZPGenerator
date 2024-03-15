@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circuits &mdash; ZPGenerator 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Detectors" href="detectors_catalogue.html" />
+    <link rel="prev" title="Sources" href="sources_catalogue.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ZPGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Catalogue Components</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sources_catalogue.html">Sources</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Circuits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Beam-splitter">Beam splitter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Phase-shifter">Phase shifter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Permutation">Permutation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Switch">Switch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Loss">Loss</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Gate">Gate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Haar-random">Haar random</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Custom">Custom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conversion-from-Perceval">Conversion from Perceval</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="detectors_catalogue.html">Detectors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photonic_circuits.html">Photonic Circuits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulsed_sources.html">Pulsed Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_dots.html">Quantum Dots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cavity_QED.html">Cavity QED</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fibonacci_states.html">Fibonacci States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_functions.html">Wigner Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entanglement_generation.html">Entanglement Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUS_gate.html">The RUS Gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component_construction.html">Component Construction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/code_reference.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ZPGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Circuits</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/circuits_catalogue.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Circuits">
+<h1>Circuits<a class="headerlink" href="#Circuits" title="Link to this heading"></a></h1>
+<p>Here we summarise the catalogue circuit components and their underlying physical models.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Method</p></th>
+<th class="head"><p>Circuit Diagram</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Beam splitter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bs</span></code></p></td>
+<td><p><img alt="image0" src="../_images/beamsplitter.png" /></p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Phase shifter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ps</span></code></p></td>
+<td><p><img alt="image1" src="../_images/phaseshifter.png" /></p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Permutation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">perm</span></code></p></td>
+<td><p><img alt="image2" src="../_images/perm.png" /></p></td>
+<td><p>2+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Switch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch</span></code></p></td>
+<td><p><img alt="image3" src="../_images/switch.png" /></p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>Loss</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">loss</span></code></p></td>
+<td><p><img alt="image4" src="../_images/loss.png" /></p></td>
+<td><p>1+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gate</span></code></p></td>
+<td><p><img alt="image5" src="../_images/gate.png" /></p></td>
+<td><p>1+</p></td>
+</tr>
+<tr class="row-even"><td><p>Haar random unitary</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">haar_random</span></code></p></td>
+<td><p><img alt="image6" src="../_images/haar.png" /></p></td>
+<td><p>1+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Custom scattering matrix</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">custom</span></code></p></td>
+<td><p><img alt="image7" src="../_images/custom_u.png" /></p></td>
+<td><p>1+</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following sections give more detail on each circuit component.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[105]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from zpgenerator import *
+</pre></div>
+</div>
+</div>
+<section id="Beam-splitter">
+<h2>Beam splitter<a class="headerlink" href="#Beam-splitter" title="Link to this heading"></a></h2>
+<p>The beam splitter implements a unitary transformation on two modes that is defined by the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{U}_\text{bs} = \begin{pmatrix}
+\cos(\theta) &amp; i\sin(\theta)\\
+i\sin(\theta) &amp; \cos(\theta)
+\end{pmatrix}.\end{split}\]</div>
+<p>Other variants of the beam splitter, such as the Hadamard unitary, can be implemented by placing the appropriate phase shifters on the input and output ports. Alternatively, the circuit can be constructed using <a class="reference external" href="https://perceval.quandela.net/docs/components.html">Perceval’s circuit components</a> and then converted to ZPGenerator.</p>
+<p>The parameters of this component are:</p>
+<section id="Examples">
+<h3>Examples<a class="headerlink" href="#Examples" title="Link to this heading"></a></h3>
+<p>The beam splitter defaults to <span class="math notranslate nohighlight">\(\theta=\pi/4\)</span>, indicating a 50:50 splitting ratio.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.bs()
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[106]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;angle&#39;: 0.7853981633974483}
+</pre></div></div>
+</div>
+<p>All circuit elements have a time argument, even if they are time independent. They can be evaluated to a matrix in QuTiP Qobj format.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[107]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[107]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = False $ \\ \left(\begin{matrix}0.707 &amp; 0.707j\\0.707j &amp; 0.707\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+<section id="Phase-shifter">
+<h2>Phase shifter<a class="headerlink" href="#Phase-shifter" title="Link to this heading"></a></h2>
+<p>The phase shifter implements a unitary transformation on one mode that is defined by the matrix</p>
+<div class="math notranslate nohighlight">
+\[\hat{U}_\text{ps} = \begin{pmatrix}
+e^{i\phi}
+\end{pmatrix}.\]</div>
+<p>This impact is only seen relative to the phase of light in other modes. The parameters of this component are:</p>
+<section id="id1">
+<h3>Examples<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>By default, the phase is shifted by <span class="math notranslate nohighlight">\(\pi\)</span>, which is equivalent to multiplying the amplitude of the light by -1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[108]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.ps()
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[108]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;phase&#39;: 3.141592653589793}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[1], [1]], shape = (1, 1), type = bra $ \\ \left(\begin{matrix}-1.0\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+<section id="Permutation">
+<h2>Permutation<a class="headerlink" href="#Permutation" title="Link to this heading"></a></h2>
+<p>The permutation unitary is used to swap modes without having them interact. This is used to organise the locations of the modes so that they can interact properly with other components. The permutation is provided as a list of unique non-negative integers and the order determines the new ordering of the modes. For two modes, the permutation is simply</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{U}_\text{perm} = \begin{pmatrix}
+0 &amp; 1\\
+1 &amp; 0
+\end{pmatrix}.\end{split}\]</div>
+<section id="id2">
+<h3>Examples<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>This component has no parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[110]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.perm()
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[110]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{}
+</pre></div></div>
+</div>
+<p>By default, it swaps two modes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[111]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[111]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True $ \\ \left(\begin{matrix}0.0 &amp; 1.0\\1.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+<p>Providing a permutation as a list of integers, we can configure the reordering.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.perm([1, 0, 4, 2, 3])
+c.evaluate(0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[5], [5]], shape = (5, 5), type = oper, isherm = False $ \\ \left(\begin{matrix}0.0 &amp; 1.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\1.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 1.0\\0.0 &amp; 0.0 &amp; 1.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 1.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+<section id="Switch">
+<h2>Switch<a class="headerlink" href="#Switch" title="Link to this heading"></a></h2>
+<p>The switch is a time-dynamic component used to actively change the spatial mode of light during its evolution. It is a Mach-Zehnder interferometer composed of beam splitters and a phase shifter. The only difference is that the phase of the phase shifter is controlled in time. The parameters of this component are all user-defined.</p>
+<section id="id3">
+<h3>Examples<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>The switch can be instantiated with a function that determines the state of the switch over time. A value of 0 indicates the switch is fully off and all the light is transmitted in the same mode it enters, a value of 1 indicates the switch is fully on and the modes are swapped (with an appropriate phase factor). In addition to the function, it is necessary to supply an interval over which the function is applied to the switch and any default parameters needed to evaluate the function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.switch(function=lambda t, args: (t - args[&#39;start&#39;])/args[&#39;end&#39;],
+                   interval=[&#39;start&#39;, &#39;end&#39;],
+                   parameters={&#39;start&#39;: 0, &#39;end&#39;: 1})
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;start&#39;: 0, &#39;end&#39;: 1}
+</pre></div></div>
+</div>
+<p>By evaluating the circuit we can see that the unitary changes over time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[114]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[114]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True $ \\ \left(\begin{matrix}1.0 &amp; 0.0\\0.0 &amp; 1.0\\\end{matrix}\right)$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True $ \\ \left(\begin{matrix}0.0 &amp; -1.0\\-1.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+<p>Do demonstrate its impact, we can split a photon into two spatial modes and compare the intensity of the light as a function of time before and after the switch.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[116]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+p = Processor() // source // c
+source.plot_lifetime(start=0, end=5, label=&#39;source&#39;)
+p.plot_lifetime(port=0, start=0, end=5, label=&#39;mode 0&#39;)
+p.plot_lifetime(port=1, start=0, end=5, label=&#39;mode 1&#39;).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_circuits_catalogue_36_0.png" src="../_images/notebooks_circuits_catalogue_36_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Loss">
+<h2>Loss<a class="headerlink" href="#Loss" title="Link to this heading"></a></h2>
+<p>The loss component implements a non-unitary transformation on one mode that is defined by the matrix</p>
+<div class="math notranslate nohighlight">
+\[\hat{S}_\text{loss} = \begin{pmatrix}
+\sqrt{\eta}
+\end{pmatrix}.\]</div>
+<p>This is equivalent to a beam splitter (or linear) loss model where the amplitude of light dampened linearly. That is, a value of <span class="math notranslate nohighlight">\(\eta=1/2\)</span> will halve the average photon number of the light.</p>
+<section id="id4">
+<h3>Examples<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>By default, the loss component does nothing.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[117]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.loss()
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[117]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;efficiency&#39;: 1}
+</pre></div></div>
+</div>
+<p>By evaluating it, we can verify the underlying model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[118]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0, parameters={&#39;efficiency&#39;: 0.5})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[118]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[1], [1]], shape = (1, 1), type = bra $ \\ \left(\begin{matrix}0.707\\\end{matrix}\right)$</div></div>
+</div>
+<p>Using the ‘modes’ keyword, we can apply the same loss value to multiple modes simultaneously. We may also specify the default efficiency value when instantiating the object. This can be done through the ‘efficiency’ keyword or by passing a dictionary using the ‘parameters’ keyword.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[119]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.loss(efficiency=0.5, modes=5)
+c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[119]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[5], [5]], shape = (5, 5), type = oper, isherm = True $ \\ \left(\begin{matrix}0.707 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.707 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.707 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.707 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.707\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+<section id="Gate">
+<h2>Gate<a class="headerlink" href="#Gate" title="Link to this heading"></a></h2>
+<p>The gate component implements a piece-wise time-independent non-unitary transformation on one mode that is defined by the matrix</p>
+<div class="math notranslate nohighlight">
+\[\hat{S}_\text{gate}(t) = \begin{pmatrix}
+\sqrt{\eta(t)}
+\end{pmatrix}.\]</div>
+<p>where <span class="math notranslate nohighlight">\(\eta(t)=1\)</span> for <span class="math notranslate nohighlight">\(t\)</span> within a specified interval of time and <span class="math notranslate nohighlight">\(\eta(t)=0\)</span> otherwise. This is equivalent to a switch where mode 1 is ignored and the function is a square pulse Like the switch, all parameters are user-defined.</p>
+<section id="id5">
+<h3>Examples<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>When instantiating, we can specify parameters directly as strings in the interval list. Similar to the loss component, we can also specify the number of modes that are impacted by the gate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.gate(interval=[&#39;start&#39;, &#39;end&#39;],
+                 parameters={&#39;start&#39;: 0, &#39;end&#39;: 1},
+                 modes=3)
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;start&#39;: 0, &#39;end&#39;: 1}
+</pre></div></div>
+</div>
+<p>The value of the scattering matrix will depend on time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[121]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=-1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[121]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[3], [3]], shape = (3, 3), type = oper, isherm = True $ \\ \left(\begin{matrix}0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0.5)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[3], [3]], shape = (3, 3), type = oper, isherm = True $ \\ \left(\begin{matrix}1.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 1.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 1.0\\\end{matrix}\right)$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[123]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=2)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[123]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[3], [3]], shape = (3, 3), type = oper, isherm = True $ \\ \left(\begin{matrix}0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0\\\end{matrix}\right)$</div></div>
+</div>
+<p>We can use this to truncate emission from a source, either to model a realistic protocol or to analyse its behaviour.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[124]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>source = Source.fock(1)
+p = Processor() // source // c
+params = {&#39;start&#39;: 0.5, &#39;end&#39;: 1.5}
+source.plot_lifetime(start=0, end=5, label=&#39;source&#39;, parameters=params)
+p.plot_lifetime(port=0, start=0, end=5, label=&#39;gated source&#39;, parameters=params).show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_circuits_catalogue_56_0.png" src="../_images/notebooks_circuits_catalogue_56_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Haar-random">
+<h2>Haar random<a class="headerlink" href="#Haar-random" title="Link to this heading"></a></h2>
+<p>The Haar random component is simply a Haar random unitary transformation applied to a specified number of modes. The unitary matrix is generated randomly using the QuTiP function <a class="reference external" href="https://qutip.org/docs/latest/apidoc/functions.html?highlight=haar%20random#qutip.random_objects.rand_unitary_haar">‘rand_unitary_haar’</a>. The Haar random component has no parameters.</p>
+<section id="id6">
+<h3>Examples<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>We can specify the number of modes when creating the object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[125]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.haar_random(modes=5)
+c.default_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[125]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{}
+</pre></div></div>
+</div>
+<p>The circuit is not time dependent.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[126]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.is_time_dependent()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[126]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[127]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[127]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[5], [5]], shape = (5, 5), type = oper, isherm = False $ \\ \left(\begin{matrix}(0.475-0.204j) &amp; (0.387-0.301j) &amp; (0.371-0.197j) &amp; (-0.476+0.222j) &amp; (-0.197+0.037j)\\(0.088-0.455j) &amp; (0.222+0.308j) &amp; (-0.120+0.442j) &amp; (0.013-0.012j) &amp; (0.060+0.654j)\\(-0.168-0.544j) &amp; (-0.103-0.296j) &amp; (0.031+0.261j) &amp; (-0.039-0.524j) &amp; (-0.353-0.328j)\\(-0.403+0.084j) &amp; (0.603-0.018j) &amp; (-0.371+0.159j) &amp; (0.005+0.364j) &amp; (-0.350-0.220j)\\(0.025+0.153j) &amp; (0.029-0.391j) &amp; (-0.617-0.033j) &amp; (-0.486-0.282j) &amp; (0.316+0.162j)\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+<section id="Custom">
+<h2>Custom<a class="headerlink" href="#Custom" title="Link to this heading"></a></h2>
+<p>To make a custom circuit component, one can use the ‘custom’ method and specify the desired scattering matrix directly. Note that it doesn’t need to be a unitary matrix, but to obtain physically-meaningful results, it should at least be a scattering matrix with singular values between 0 and 1. For example, we can create a scattering matrix causing a loss of <span class="math notranslate nohighlight">\(0.5^2=0.25\)</span> on the second mode of a two-mode circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[128]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.custom(matrix=[[1.0, 0], [0, 0.5]])
+c.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[128]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True $ \\ \left(\begin{matrix}1.0 &amp; 0.0\\0.0 &amp; 0.500\\\end{matrix}\right)$</div></div>
+</div>
+<p>To ensure physically meaningful results, it is always recommended to build scattering matrices by combining diagonal loss matrices, as shown above, with unitary matrices.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>lossy_bs = Circuit.bs() // c
+lossy_bs.evaluate(t=0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = False $ \\ \left(\begin{matrix}0.707 &amp; 0.354j\\0.707j &amp; 0.354\\\end{matrix}\right)$</div></div>
+</div>
+<p>Parameters can be introduced by providing a function that returns a QuTiP Qobj, along with a corresponding dictionary of default parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[130]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from numpy import sqrt
+c = Circuit.custom(matrix=lambda args: Qobj([[args[&#39;a&#39;], 0], [0, args[&#39;b&#39;]]]) * Qobj([[1, 1], [1, -1]]) / sqrt(2),
+                   parameters={&#39;a&#39;: 1, &#39;b&#39;: 1})
+c.evaluate(t=0, parameters={&#39;a&#39;: 0.5, &#39;b&#39;: 0.8})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[130]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = False $ \\ \left(\begin{matrix}0.354 &amp; 0.354\\0.566 &amp; -0.566\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+<section id="Conversion-from-Perceval">
+<h2>Conversion from Perceval<a class="headerlink" href="#Conversion-from-Perceval" title="Link to this heading"></a></h2>
+<p>Perceval provides many tools for building photonic circuits and also has many catalogue circuits built to perform linear-optical gates. These circuits can be converted to ZPGenerator simply through their underlying unitary transformation. This conversion cannot account for any heralding or post-processing steps, nor non-unitary components in Perceval.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[131]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>from perceval import BS, catalog
+</pre></div>
+</div>
+</div>
+<section id="id7">
+<h3>Examples<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>We can easily create a Hadamard variation of the beam splitter using the class method of BS in Perceval.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[132]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.from_perceval(BS.H())
+c.evaluate(0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[132]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True $ \\ \left(\begin{matrix}0.707 &amp; 0.707\\0.707 &amp; -0.707\\\end{matrix}\right)$</div></div>
+</div>
+<p>We can also import complicated circuits such as a 12-mode post-processed Toffoli (CCZ) circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[133]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre><span></span>c = Circuit.from_perceval(catalog[&#39;postprocessed ccz&#39;].build_circuit())
+c.evaluate(0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[133]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims = [[12], [12]], shape = (12, 12), type = oper, isherm = False $ \\ \left(\begin{matrix}0.510 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; 0.860 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.510 &amp; 0.0 &amp; (0.321+0.556j) &amp; 0.0 &amp; \cdots &amp; (-0.165-0.286j) &amp; (-0.165+0.286j) &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.510 &amp; 0.0 &amp; 0.0 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.860 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.510 &amp; 0.0 &amp; \cdots &amp; 0.330 &amp; (-0.165-0.286j) &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.510 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.860\\\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\0.0 &amp; (-0.165+0.286j) &amp; 0.0 &amp; 0.330 &amp; 0.0 &amp; \cdots &amp; -0.510 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.0 &amp; (-0.165-0.286j) &amp; 0.0 &amp; (-0.165+0.286j) &amp; 0.0 &amp; \cdots &amp; (-0.321+0.556j) &amp; -0.510 &amp; 0.0 &amp; 0.0 &amp; 0.0\\0.860 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; -0.510 &amp; 0.0 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.860 &amp; 0.0 &amp; 0.0 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; -0.510 &amp; 0.0\\0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.860 &amp; \cdots &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; 0.0 &amp; -0.510\\\end{matrix}\right)$</div></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sources_catalogue.html" class="btn btn-neutral float-left" title="Sources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="detectors_catalogue.html" class="btn btn-neutral float-right" title="Detectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quandela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
