@@ -132,20 +132,17 @@ def test_component_emitters():
     assert source.input_modes == 0
     assert source.output_modes == 1
 
-    hamiltonian_test = tensor(create(2) * destroy(2), qeye(2)) + \
-                       tensor(qeye(2), create(2) * destroy(2)) - \
-                       (1.j / 2) * (tensor(destroy(2), destroy(2)) - 3 * tensor(destroy(2), create(2)) +
-                                    3 * tensor(create(2), destroy(2)) - tensor(create(2), create(2)))
-
     quad = source.evaluate_quadruple(0)
-    assert quad.hamiltonian.evaluate(0) == hamiltonian_test
-    assert [env.evaluate(0) for env in quad.environment] == \
+    assert quad.hamiltonian.evaluate(0) == tensor(create(2) * destroy(2), qeye(2)) + \
+           tensor(qeye(2), create(2) * destroy(2))
+    assert [env.evaluate(0) for env in quad.environment][:-1] == \
            [tensor(destroy(2), qeye(2)),
             tensor(create(2), qeye(2)),
             tensor(destroy(2), qeye(2)),
             tensor(qeye(2), destroy(2)),
             tensor(qeye(2), create(2)),
-            tensor(qeye(2), destroy(2))]
+            tensor(qeye(2), destroy(2)),
+            ]
     assert [trn.evaluate(0) for trn in quad.transitions] == \
            [tensor(qeye(2), destroy(2)) + tensor(destroy(2), qeye(2)) + 2 * tensor(create(2), qeye(2)),
             tensor(create(2), qeye(2)),

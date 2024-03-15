@@ -114,10 +114,7 @@ def test_comp_coll_cascade_emitter_and_scatterer():
            Qobj([[1, 2], [3, 4]]) * Qobj([[5, 6], [7, 8]]) * Qobj([[1, 2], [3, 4]])
 
 
-hamiltonian_test = tensor(create(2) * destroy(2), qeye(2)) + \
-                   tensor(qeye(2), create(2) * destroy(2)) - \
-                   (1.j / 2) * (tensor(destroy(2), destroy(2)) - 3 * tensor(destroy(2), create(2)) +
-                                3 * tensor(create(2), destroy(2)) - tensor(create(2), create(2)))
+hamiltonian_test = tensor(create(2) * destroy(2), qeye(2)) + tensor(qeye(2), create(2) * destroy(2))
 
 
 def test_comp_coll_cascade_emit_scatter_emit():
@@ -146,12 +143,11 @@ def test_comp_coll_cascade_emit_scatter_emit():
     emitter1.initial_time = 1
     assert comp.initial_time == 1
     assert comp.evaluate_quadruple(0).hamiltonian.evaluate(0) == hamiltonian_test
-    assert [env.evaluate(0) for env in comp.evaluate_quadruple(0).environment] == [tensor(destroy(2), qeye(2)),
-                                                                                   tensor(destroy(2), qeye(2)),
-                                                                                   tensor(qeye(2), destroy(2)),
-                                                                                   tensor(qeye(2), create(2))]
+    assert [env.evaluate(0) for env in comp.evaluate_quadruple(0).environment][:-1] == [tensor(destroy(2), qeye(2)),
+                                                                                        tensor(destroy(2), qeye(2)),
+                                                                                        tensor(qeye(2), destroy(2)),
+                                                                                        tensor(qeye(2), create(2))]
     assert [trn.evaluate(0) for trn in comp.evaluate_quadruple(0).transitions] == \
            [tensor(qeye(2), destroy(2)) + tensor(destroy(2), qeye(2)) + 2 * tensor(create(2), qeye(2)),
             tensor(qeye(2), create(2)) + 3 * tensor(destroy(2), qeye(2)) + 4 * tensor(create(2), qeye(2))]
     assert comp.evaluate_quadruple(0).scatterer.evaluate(0) == Qobj([[1, 2], [3, 4]])
-

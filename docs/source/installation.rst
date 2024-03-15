@@ -1,11 +1,11 @@
 Installation
 ------------
 
-To use ZPGenerator, you can directly install the pip wheel in a virtual environment:
+To use ZPGenerator, you can install directly using:
 
 .. code-block:: bash
 
-   (venv) $ pip install zpgenerator
+   (venv) $ pip install git+https://github.com/Quandela/ZPGenerator.git@main
 
 Alternatively, if you are interested in contributing to the project - you can clone the project from github:
 
