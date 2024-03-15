@@ -31,7 +31,7 @@ class EvaluatedQuadruple:
 
         if not self.transitions:
             if scatterer:
-                self.transitions = [EvaluatedOperator(constant=Qobj(inpt=1))] * scatterer.dim
+                self.transitions = [EvaluatedOperator(constant=Qobj(inpt=0))] * scatterer.dim
 
         self.scatterer = EvaluatedOperator(constant=qeye(self.modes)) \
             if scatterer is None else scatterer
@@ -87,16 +87,25 @@ class EvaluatedQuadruple:
             self_vector = [trn.tensor_insert(0, subdims) for trn in self.transitions]
             other_vector = [trn.tensor_insert(1, subdims) for trn in other.transitions]
 
-            hamiltonian = self.hamiltonian.tensor_insert(0, subdims) + \
-                          other.hamiltonian.tensor_insert(1, subdims) - \
-                          (1.j / 2) * (evop_umv([trn.dag() for trn in other_vector], scatterer, self_vector) -
-                                       evop_umv([trn.dag() for trn in self_vector], scatterer.dag(), other_vector))
+            hamiltonian = self.hamiltonian.tensor_insert(0, subdims) + other.hamiltonian.tensor_insert(1, subdims)
 
             environment = [env.tensor_insert(0, subdims) for env in self.environment] + \
                           [env.tensor_insert(1, subdims) for env in other.environment]
 
             transitions = evop_mv(scatterer, self_vector)
             transitions = [transitions[i] + other_vector[i] for i in range(0, len(transitions))]
+
+            # Quantum cascaded interaction superoperator
+            if (not any(v.constant == Qobj([[0]]) for v in other_vector)) and \
+                    (not any(v.constant == Qobj([[0]]) for v in self_vector)):
+                # for v in other_vector:
+                #     print(v.constant)
+                #     for pair in v.variable:
+                #         print(pair.op)
+                LRB = [v.dag().spost() - v.dag().spre() for v in other_vector]
+                RLB = [v.spre() - v.spost() for v in other_vector]
+                environment += [evop_umv(LRB, scatterer, [v.spre() for v in self_vector]) +
+                                evop_umv(RLB, scatterer.dag(), [v.dag().spost() for v in self_vector])]
 
             # reshape() takes subdims with unit dimensions: [1, 2, 1] and changes it to [2]
             hamiltonian.reshape()

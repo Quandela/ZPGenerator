@@ -1,10 +1,11 @@
 from zpgenerator.time.evaluate.quadruple import *
 from zpgenerator.time import OpFuncPair, TimeOperator, CompositeTimeOperator
 from numpy import sin, cos, pi
-from qutip import create, destroy, qeye, tensor, num
+from qutip import create, destroy, qeye, tensor, num, spre, spost, lindblad_dissipator
 from zpgenerator.time.parameters import Parameters
 
 d = Parameters.DELIMITER
+
 
 def test_evaluatequad_init_empty():
     quad = EvaluatedQuadruple()
@@ -141,15 +142,22 @@ def test_quad_cascaded_mul_constant():
     quad1 = make_full_quad(3, 2)
 
     quad2 = quad0 * quad1
-    ham_expected = tensor(create(2) * destroy(2), qeye(3)) + \
-                   tensor(qeye(2), create(3) * destroy(3)) - 2 * (1.j / 2) * (tensor(destroy(2), create(3)) -
-                                                                              tensor(create(2), destroy(3)))
+    ham_expected = tensor(create(2) * destroy(2), qeye(3)) + tensor(qeye(2), create(3) * destroy(3))
+
+    superQ = 2.j * spre((1.j / 2) * (tensor(destroy(2), create(3)) - tensor(create(2), destroy(3)))) + \
+             -2.j * spost((1.j / 2) * (tensor(destroy(2), create(3)) - tensor(create(2), destroy(3)))) - \
+             2 * lindblad_dissipator(tensor(destroy(2), qeye(3))) - \
+             2 * lindblad_dissipator(tensor(qeye(2), destroy(3))) + \
+             2 * lindblad_dissipator(tensor(destroy(2), qeye(3)) + tensor(qeye(2), destroy(3)))
+
     c_ops_expected = [tensor(create(2) * destroy(2), qeye(3)),
                       tensor(destroy(2), qeye(3)),
                       tensor(destroy(2), qeye(3)),
                       tensor(qeye(2), create(3) * destroy(3)),
                       tensor(qeye(2), destroy(3)),
-                      tensor(qeye(2), destroy(3))]
+                      tensor(qeye(2), destroy(3)),
+                      superQ]
+
     assert quad2.hamiltonian.evaluate(0) == ham_expected
     assert [env.evaluate(0) for env in quad2.environment] == c_ops_expected
     assert [trn.evaluate(0) for trn in quad2.transitions] == [
@@ -165,16 +173,21 @@ def test_quad_cascaded_mul_variable():
 
     quad2 = quad0 * quad1
     assert quad2.hamiltonian.evaluate(2, {'a': 2, 'b': 5}) == \
-           tensor(9 * create(2) * destroy(2), qeye(2)) + \
-           tensor(qeye(2), 9 * create(2) * destroy(2)) - \
-           2 * (1.j / 2) * (tensor(11 * destroy(2), 11 * create(2)) - tensor(11 * create(2), 11 * destroy(2)))
+           tensor(9 * create(2) * destroy(2), qeye(2)) + tensor(qeye(2), 9 * create(2) * destroy(2))
+    hamQ = - 2 * (1.j / 2) * (tensor(11 * destroy(2), 11 * create(2)) - tensor(11 * create(2), 11 * destroy(2)))
+    superQ = -1.j * (spre(hamQ) - spost(hamQ)) - \
+             2 * lindblad_dissipator(tensor(11 * destroy(2), qeye(2))) - \
+             2 * lindblad_dissipator(tensor(qeye(2), 11 * destroy(2))) + \
+             2 * lindblad_dissipator(tensor(11 * destroy(2), qeye(2)) + tensor(qeye(2), 11 * destroy(2)))
+
     assert [env.evaluate(2, {'a': 2, 'b': 5}) for env in quad2.environment] == \
            [tensor(9 * create(2) * destroy(2), qeye(2)),
             tensor(11 * destroy(2), qeye(2)),
             tensor(11 * destroy(2), qeye(2)),
             tensor(qeye(2), 9 * create(2) * destroy(2)),
             tensor(qeye(2), 11 * destroy(2)),
-            tensor(qeye(2), 11 * destroy(2))]
+            tensor(qeye(2), 11 * destroy(2)),
+            superQ]
     assert [trn.evaluate(2, {'a': 2, 'b': 5}) for trn in quad2.transitions] == \
            [tensor(11 * destroy(2), qeye(2)) + tensor(qeye(2), 11 * destroy(2)),
             tensor(11 * destroy(2), qeye(2)) + tensor(qeye(2), 11 * destroy(2))]
@@ -184,21 +197,27 @@ def test_quad_cascaded_mul_variable_scattering():
     quad0 = EvaluatedQuadruple(hamiltonian=EvaluatedOperator(constant=create(2) * destroy(2)),
                                environment=[EvaluatedOperator(constant=destroy(2))] * 2,
                                transitions=[EvaluatedOperator(constant=destroy(2)),
-                                       EvaluatedOperator(constant=destroy(2),
-                                                         variable=[OpFuncPair(op=destroy(2),
-                                                                              func=lambda t, args:
-                                                                              args['a'] * t ** 2)])],
+                                            EvaluatedOperator(constant=destroy(2),
+                                                              variable=[OpFuncPair(op=destroy(2),
+                                                                                   func=lambda t, args:
+                                                                                   args['a'] * t ** 2)])],
                                scatterer=EvaluatedOperator(constant=qeye(2),
-                                                      variable=[OpFuncPair(op=create(2) + destroy(2),
-                                                                           func=lambda t, args:
-                                                                           args['b'] * t)]))
+                                                           variable=[OpFuncPair(op=create(2) + destroy(2),
+                                                                                func=lambda t, args:
+                                                                                args['b'] * t)]))
     quad1 = quad0 * quad0
     assert quad1.hamiltonian.evaluate(2, {'a': 1, 'b': 2}) == \
-           tensor(create(2) * destroy(2), qeye(2)) + \
-           tensor(qeye(2), create(2) * destroy(2)) - \
-           (1.j / 2) * (tensor(destroy(2), 21 * create(2)) - tensor(create(2), 21 * destroy(2))) - \
-           (1.j / 2) * (tensor(destroy(2), 5 * 9 * create(2)) - tensor(create(2), 5 * 9 * destroy(2)))
-    assert [env.evaluate(2, {'a': 1, 'b': 2}) for env in quad1.environment] == \
+           tensor(create(2) * destroy(2), qeye(2)) + tensor(qeye(2), create(2) * destroy(2))
+
+    hamQ = - (1.j / 2) * (tensor(destroy(2), 21 * create(2)) - tensor(create(2), 21 * destroy(2))) \
+           - (1.j / 2) * (tensor(destroy(2), 5 * 9 * create(2)) - tensor(create(2), 5 * 9 * destroy(2)))
+    superQ = -1.j * (spre(hamQ) - spost(hamQ)) - \
+             2 * lindblad_dissipator(tensor(destroy(2), qeye(2))) - \
+             2 * lindblad_dissipator(tensor(qeye(2), destroy(2))) + \
+             lindblad_dissipator(tensor(qeye(2), destroy(2)) + 21 * tensor(destroy(2), qeye(2))) + \
+             lindblad_dissipator(tensor(qeye(2), 5 * destroy(2)) + 9 * tensor(destroy(2), qeye(2)))
+
+    assert [env.evaluate(2, {'a': 1, 'b': 2}) for env in quad1.environment][:-1] == \
            [tensor(destroy(2), qeye(2))] * 2 + \
            [tensor(qeye(2), destroy(2))] * 2
     assert [trn.evaluate(2, {'a': 1, 'b': 2}) for trn in quad1.transitions] == \
