@@ -4,6 +4,7 @@ from ..time.evaluate.quadruple import EvaluatedQuadruple
 from abc import abstractmethod
 from qutip import rand_unitary_haar
 from math import prod
+from typing import List
 
 
 class AElement(ATimeOperator):
@@ -27,6 +28,10 @@ class AElement(ATimeOperator):
     @property
     @abstractmethod
     def is_emitter(self) -> bool:
+        pass
+
+    @abstractmethod
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
         pass
 
     @abstractmethod
@@ -70,6 +75,9 @@ class ScattererBase(AScatteringMatrix, CompositeTimeOperator):
             transitions=[EvaluatedOperator()] * self.modes,
             scatterer=self.partial_evaluate(t, parameters))
 
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        return [self.evaluate_quadruple(t, parameters)]
+
     @classmethod
     def haar_random(cls, n: int):
         return cls(TimeOperator(rand_unitary_haar(n)))
@@ -100,6 +108,9 @@ class MultiScatterer(AScatteringMatrix, TimeOperatorCollection):
             transitions=[EvaluatedOperator()] * self.modes,
             scatterer=self.partial_evaluate(t, parameters))
 
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        return [self.evaluate_quadruple(t, parameters)]
+
     @classmethod
     def haar_random(cls, n: int):
         return cls(TimeOperator(rand_unitary_haar(n)))
@@ -128,6 +139,9 @@ class CompositeScatterer(AScatteringMatrix, TimeOperatorCollection):
         return EvaluatedQuadruple(
             transitions=[EvaluatedOperator()] * self.modes,
             scatterer=self.partial_evaluate(t, parameters))
+
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        return [self.evaluate_quadruple(t, parameters)]
 
     @classmethod
     def haar_random(cls, n: int):

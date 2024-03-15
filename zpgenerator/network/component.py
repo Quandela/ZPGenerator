@@ -9,6 +9,7 @@ from abc import abstractmethod
 from copy import deepcopy
 from qutip import Qobj
 from frozendict import frozendict
+from itertools import chain
 
 
 class AComponent(ElementCollection):
@@ -316,10 +317,15 @@ class Component(AComponent):
     @DefaultCache(time_arg=True)
     def evaluate_quadruple(self, t: float, parameters: Union[dict, frozendict] = None):
         if self._elements:
-            return self._rule([component.evaluate_quadruple(t, parameters).match(self.permutations[i])
-                               for i, component in enumerate(self._elements)])
+            return self._rule(self.gather_quadruples(t, parameters))
         else:
             return EvaluatedQuadruple()
+
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        parameters = self.set_parameters(parameters)
+        quad_list = [[quad.match(self.permutations[i]) for quad in component.gather_quadruples(t, parameters)]
+                     for i, component in enumerate(self._elements)]
+        return list(chain(*quad_list))
 
     @DefaultCache(time_arg=True)
     def is_time_dependent(self, t: float, parameters: dict = None) -> bool:

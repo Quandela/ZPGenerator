@@ -116,10 +116,14 @@ class MultiBodyEmitterBase(AQuantumMultiBodyEmitter, SystemCollection):
         return self._rule([system.evaluate_quadruple(t, parameters) for system in self._subsystems],
                           EvaluatedQuadruple())
 
+    def gather_quadruples(self, t: float, parameters: dict = None) -> List[EvaluatedQuadruple]:
+        return [self.evaluate_quadruple(t, parameters)]
+
     def evaluate_dirac(self, t: float, parameters: dict = None) -> EvaluatedDiracOperator:
         parameters = self.set_parameters(parameters)
         return self._rule(id_flatten([op.evaluate_dirac(t, parameters) for op in self._subsystems]),
                           EvaluatedDiracOperator())
+
 
 class MultiBodyEmitter(MultiBodyEmitterBase):
     """
